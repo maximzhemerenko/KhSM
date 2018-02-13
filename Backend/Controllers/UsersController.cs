@@ -1,24 +1,24 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Backend.Data.Database;
 using Backend.Data.Entities;
 using Backend.Domain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers
 {
-    [Route("api/[controller]")]
-    public class UsersController : Controller
+    public class UsersController : ApiController
     {
+        private readonly UsersManager _usersManager;
+
+        public UsersController()
+        {       
+            _usersManager = new UsersManager(DatabaseContext);
+        }
+
         [HttpGet]
         public async Task<IEnumerable<User>> Get()
         {
-            using (var databaseContext = new DatabaseContext())
-            {
-                await databaseContext.Connection.OpenAsync();
-                var usersManager = new UsersManager(databaseContext);
-                return await usersManager.GetUsersAsync();
-            }
+            return await _usersManager.GetUsersAsync();
         }
     }
 }

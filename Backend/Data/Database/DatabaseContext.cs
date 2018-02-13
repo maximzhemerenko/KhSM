@@ -1,8 +1,10 @@
 ﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
 
 namespace Backend.Data.Database
 {
+    [Route("api/[controller]")]
     public class DatabaseContext : IDisposable
     {
         public MySqlConnection Connection { get; }
@@ -10,6 +12,7 @@ namespace Backend.Data.Database
         public DatabaseContext()
         {
             Connection = CreateConnection();
+            Connection.Open();
         }
 
         public void Dispose()
