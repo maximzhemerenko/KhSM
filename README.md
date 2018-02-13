@@ -7,10 +7,8 @@ https://www.draw.io/
 
 **Planning**
 
+|Milestone        |Date  |
+|-----------------|------|
 |Start development|19 Feb|
-|-----------------|------|
-|Prototype alpha  |4 Apr |
-|-----------------|------|
-|Prototype beta   |23 Apr|
-|-----------------|------|
-|Release          |30 Apr|
+|Prototype beta   |4 Apr |
+|Prototype release|23 Apr|
