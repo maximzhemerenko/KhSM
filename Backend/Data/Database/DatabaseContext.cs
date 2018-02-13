@@ -1,14 +1,25 @@
-﻿using MySql.Data.MySqlClient;
+﻿using System;
+using MySql.Data.MySqlClient;
 
 namespace Backend.Data.Database
 {
-    public class DatabaseContext
+    public class DatabaseContext : IDisposable
     {
         public MySqlConnection Connection { get; }
         
-        public DatabaseContext(MySqlConnection connection)
+        public DatabaseContext()
         {
-            Connection = connection;
+            Connection = CreateConnection();
+        }
+
+        public void Dispose()
+        {
+            Connection.Dispose();
+        }
+
+        private static MySqlConnection CreateConnection()
+        {
+            return new MySqlConnection(ConectionString);
         }
 
         private static string ConectionString =>
@@ -21,9 +32,5 @@ namespace Backend.Data.Database
                 Database = "kh_sm"
             }.ToString();
 
-        public static MySqlConnection CreateConnection()
-        {
-            return new MySqlConnection(ConectionString);
-        }
     }
 }

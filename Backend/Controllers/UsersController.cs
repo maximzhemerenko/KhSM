@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Backend.Data.Database;
 using Backend.Data.Entities;
-using Backend.Data.Repositories;
+using Backend.Domain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers
@@ -13,14 +13,11 @@ namespace Backend.Controllers
         [HttpGet]
         public async Task<IEnumerable<User>> Get()
         {
-            using (var connection = DatabaseContext.CreateConnection())
+            using (var databaseContext = new DatabaseContext())
             {
-                await connection.OpenAsync();
-                
-                var databaseContext = new DatabaseContext(connection);
-                var userRepository = new UserRepository(databaseContext);
-
-                return await userRepository.GetUsersAsync();    
+                await databaseContext.Connection.OpenAsync();
+                var usersManager = new UsersManager(databaseContext);
+                return await usersManager.GetUsersAsync();
             }
         }
     }

@@ -6,9 +6,9 @@ using MySql.Data.MySqlClient;
 
 namespace Backend.Data.Repositories
 {
-    public class UserRepository : BaseRepository
+    public class UsersRepository : BaseRepository
     {
-        public UserRepository(DatabaseContext databaseContext) : base(databaseContext)
+        public UsersRepository(DatabaseContext databaseContext) : base(databaseContext)
         {
         }
 
