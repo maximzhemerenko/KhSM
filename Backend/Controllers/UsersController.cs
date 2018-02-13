@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers
 {
+    [Route("api/[controller]")]
     public class UsersController : ApiController
     {
         private readonly UsersManager _usersManager;
