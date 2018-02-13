@@ -1,18 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Backend.Data.Database;
 using Backend.Data.Entities;
 using Backend.Data.Repositories;
 
 namespace Backend.Domain
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class UsersManager
     {
         private readonly UsersRepository _usersRepository;
 
-        public UsersManager(DatabaseContext databaseContext)
+        public UsersManager(UsersRepository usersRepository)
         {
-            _usersRepository = new UsersRepository(databaseContext);
+            _usersRepository = usersRepository;
         }
 
         public async Task<IEnumerable<User>> GetUsersAsync()

@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Backend.Data.Database;
+using Backend.Data.Repositories;
+using Backend.Domain;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace Backend
 {
@@ -24,6 +21,10 @@ namespace Backend
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            services.AddScoped<DatabaseContext>();
+            services.AddScoped<UsersRepository>();
+            services.AddScoped<UsersManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
