@@ -11,15 +11,16 @@ namespace Backend.Controllers
     {
         private readonly UsersManager _usersManager;
 
-        public UsersController()
-        {       
-            _usersManager = new UsersManager(DatabaseContext);
+        public UsersController(UsersManager usersManager)
+        {
+            _usersManager = usersManager;
         }
 
         [HttpGet]
         public async Task<IEnumerable<User>> Get()
         {
-            return await _usersManager.GetUsersAsync();
+            var users = await _usersManager.GetUsersAsync();
+            return users;
         }
     }
 }
