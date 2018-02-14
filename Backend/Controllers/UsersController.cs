@@ -19,7 +19,8 @@ namespace Backend.Controllers
         [HttpGet]
         public async Task<IEnumerable<User>> Get()
         {
-            return await _usersManager.GetUsersAsync();
+            var users = await _usersManager.GetUsersAsync();
+            return users;
         }
     }
 }

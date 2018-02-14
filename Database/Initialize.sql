@@ -1,4 +1,4 @@
-drop schema `kh_sm`;
+drop schema if exists `kh_sm`;
 create schema `kh_sm`;
 use kh_sm;
 
