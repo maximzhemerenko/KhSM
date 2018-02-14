@@ -1,46 +1,58 @@
 package com.khsm.app;
 
-import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
-import java.io.IOException;
+import com.khsm.app.data.api.entities.User;
+import com.khsm.app.domain.UsersManager;
+
 import java.util.List;
 
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
+    private CompositeDisposable disposable;
+
+    private UsersManager usersManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        LoadUsersAsyncTask loadUsersAsyncTask = new LoadUsersAsyncTask();
-        loadUsersAsyncTask.execute();
+        disposable = new CompositeDisposable();
+
+        usersManager = new UsersManager();
+
+        loadUsers();
     }
 
-    private class LoadUsersAsyncTask extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected Void doInBackground(Void... voids) {
-            try {
-                // подключить через gradle retrofit
-                // описать метод нашего бекенда в интерфейсе и указать его ретрофиту
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://10.0.2.2:5000/")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
 
-                Link service = retrofit.create(Link.class);
+        disposable.clear();
+    }
 
-                List<User> users = service.getUsers().execute().body();
-                users.toString();
-                // сделать запрос на сервер с помощью ретрофита и получить результат
-                // в режиме отладки убедиться что приход\т правильные данные
-                return null;
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
+    private void loadUsers() {
+        Disposable disposable = usersManager.getUsers() // получить операцию по загрузке пользователей из сети
+                .subscribeOn(Schedulers.io()) // установить чтобы запрос выполнятся не в главном потоке а асинхронно
+                .observeOn(AndroidSchedulers.mainThread()) // установить чтобы ответ вернулся в главном потоке
+                .subscribe( // обработать ответ
+                        this::setUsers, // ссылка на метод, метод будет вызван при успешном ответе сервера
+                        this::handleError // ссылка на метод для обработки ошибки
+                );
+        this.disposable.add(disposable); // добавление операции в массив, все операции будут отмененты при закрытии окна
+    }
+
+    private void setUsers(List<User> users) {
+        users.toString();
+    }
+
+    private void handleError(Throwable throwable) {
+        throwable.printStackTrace();
     }
 }
