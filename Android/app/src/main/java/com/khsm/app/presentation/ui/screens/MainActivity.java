@@ -1,10 +1,13 @@
-package com.khsm.app;
+package com.khsm.app.presentation.ui.screens;
 
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.khsm.app.presentation.ui.adapters.UserListAdapter;
+import com.khsm.app.R;
 import com.khsm.app.data.api.entities.User;
 import com.khsm.app.domain.UsersManager;
 
@@ -20,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
     private UsersManager usersManager;
 
+    private RecyclerView recyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
         disposable = new CompositeDisposable();
 
         usersManager = new UsersManager();
+
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         loadUsers();
     }
@@ -51,20 +59,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUsers(List<User> users) {
-        String s = users.toString();
-
-        // создать адаптер
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        DataRecyclerAdapter adapter = new DataRecyclerAdapter(this, users);
-
-        // добавть recycler
+        UserListAdapter adapter = new UserListAdapter(this, users);
         recyclerView.setAdapter(adapter);
     }
 
     private void handleError(Throwable throwable) {
         throwable.printStackTrace();
+
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.Error)
+                .setMessage(throwable.getMessage())
+                .setPositiveButton(R.string.OK, null)
+                .show();
     }
 }
