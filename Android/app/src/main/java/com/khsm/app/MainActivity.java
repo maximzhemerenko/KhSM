@@ -2,6 +2,8 @@ package com.khsm.app;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
 import com.khsm.app.data.api.entities.User;
 import com.khsm.app.domain.UsersManager;
@@ -49,7 +51,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUsers(List<User> users) {
-        users.toString();
+        String s = users.toString();
+
+        // создать адаптер
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        DataRecyclerAdapter adapter = new DataRecyclerAdapter(this, users);
+
+        // добавть recycler
+        recyclerView.setAdapter(adapter);
     }
 
     private void handleError(Throwable throwable) {
