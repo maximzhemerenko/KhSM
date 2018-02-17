@@ -23,29 +23,30 @@ Response: [Session](#session)
 # Entities
 
 ## CreateSessionRequest 
-- "email": String,
+- "email": String
 - "password": String
 
 ## Session
 - "email": String,
-- "userId": Integer,
-- "roles": Array<[Role](#role)>
+- "userId": Integer
+- "roles": Array<[Role](#role)> // maybe we should move this field to User entity?
 - "token": String
+- "user": [User](#user)
 
 ## Role
-- "roleId": Integer,
-- "name": String,
+- "roleId": Integer
+- "name": String
 - "key": String
 
 ## CreateUserRequest
-- "user": [User](#user),
+- "user": [User](#user)
 - "password": String
 
 ## User
 - "id": Integer
-- "firstName": String,
-- "lastName": String,
-- "email": String,
+- "firstName": String
+- "lastName": String
+- "email": String
 - "gender": [String\<Gender\>](#stringgender)>
 
 ## String\<Gender\>
