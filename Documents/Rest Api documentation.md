@@ -7,9 +7,9 @@ Endpoint: {server_url}/api/
 ## Login
 POST sessions
 
-Request: [CreateSessionRequest](#CreateSessionRequest)
+Request: [CreateSessionRequest](#createsessionrequest)
 
-Response: [Session](#Session)
+Response: [Session](#session)
 
 # Entities
 
@@ -23,7 +23,7 @@ Response: [Session](#Session)
 {
   "email": String,
   "userId": Integer,
-  "roles": Array<[Role](#Role)>
+  "roles": Array<[Role](#role)>
   "token": String
 }
 
