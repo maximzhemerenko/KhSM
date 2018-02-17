@@ -1,3 +1,5 @@
+# Information
+
 Version 1.0
 
 Endpoint: {server_url}/api/
