@@ -14,10 +14,9 @@ Response: [Session](#session)
 ## Register
 POST users
 
-Query:
-- createSession: Nullable\<Boolean\>
-
 Request: [CreateUserRequest](#createuserrequest)
+
+Response: [Session](#session)
 
 # Entities
 
@@ -54,7 +53,7 @@ Request: [CreateUserRequest](#createuserrequest)
   "firstName": String,
   "lastName": String,
   "email": String,
-  Gender: [String\<Gender\>](string-gender)>
+  Gender: [String\<Gender\>](#stringgender)>
 }
 
 ## String\<Gender\>
