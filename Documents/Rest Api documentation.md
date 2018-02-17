@@ -1,8 +1,8 @@
 Version 1.0
 
-# Methods
-
 Endpoint: {server_url}/api/
+
+# Methods
 
 ## Login
 POST sessions
