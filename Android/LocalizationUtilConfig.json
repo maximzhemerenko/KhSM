@@ -1,0 +1,42 @@
+{
+    "Project": "KhSM",
+    "Source": {
+        "Type": "Excel",
+        "Placement": {
+            "Type": "OneDrive",
+            "Config": {
+                "ResId": "2070159ADC0E0C6D!547845",
+                "AuthKey": "!AI6G3iRYQtxbdyg"
+            }
+        },
+        "Config": {
+            "LanguageColumns": {
+                "English (default)": {
+                    "Id": "en",
+                    "Name": "English"
+                },
+                "Russian": {
+                    "Id": "ru",
+                    "Name": "Russian"
+                }
+            },
+            "PlatformKeyColumns": {
+                "Key (Android)": "Android"
+            }
+        }
+    },
+    "DestinationPath": null,
+    "Destinations": [
+        {
+            "Type": "Android",
+            "Path": "app/src/main/res",
+            "Files": {
+                "en": "values/strings_generated.xml",
+                "ru": "values-ru/strings_generated.xml"
+            },
+            "Filter": {
+              "App": [ null ]
+            }
+        }
+    ]
+}
