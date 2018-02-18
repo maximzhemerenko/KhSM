@@ -4,7 +4,7 @@ Version: 1.0
 
 Endpoint: {server_url}/api/
 
-Authentication: Send `Authorization` http header to authorize request.
+Authentication: Use `Authorization` http header to authorize request.
 
 # Methods
 
@@ -22,6 +22,28 @@ Request: [CreateUserRequest](#createuserrequest)
 
 Response: [Session](#session)
 
+## Get user
+GET users/{id}
+
+Response: [User](#user)
+
+## Update user
+PUT users/{id}
+
+Request: [User](#user)
+
+Response: [User](#user)
+
+## Get user records
+GET users/{id}/records
+
+Response: List<[DisciplineRecord](#disciplinerecord)>
+
+## Get user results
+GET users/{id}/results
+
+Response: Array<[DisciplineResults](#disciplineresults)>
+
 ## Get meetings
 GET meetings
 
@@ -35,7 +57,22 @@ Response: [Meeting](#meeting)
 ## Get meeting results
 GET meetings/{id}/results
 
-Response: Array<[DisciplineResults](#disciplineresults)>
+Response: Array\<[DisciplineResults](#disciplineresults)\>
+
+## Get disciplines
+GET disciplines
+
+Response: Array\<[Discipline](#discipline)\>
+
+## Get rankings
+GET rankings
+
+Query:
+- type: "average" | "single"
+- sort: "ascending" | "descending"
+- gender: [String\<Gender\>](#stringgender)
+
+Response: Array\<[DisciplineResults](#disciplineresults)\>
 
 # Entities
 
@@ -65,6 +102,10 @@ Response: Array<[DisciplineResults](#disciplineresults)>
 - email: String
 - gender: [String\<Gender\>](#stringgender)
 - roles: Array\<[Role](#role)\>
+- wcaId: String
+- city: String
+- birth_date: Date
+- phoneNumber: String
 
 ## String\<Gender\>
 - "female"
@@ -85,8 +126,14 @@ Response: Array<[DisciplineResults](#disciplineresults)>
 - discipline: [Discipline](#discipline)
 - results: Array\<[Result](#result)\>
 
+## DisciplineRecord
+- discipline: [Discipline](#discipline)
+- bestTime: [Result](#result)
+- bestOverageTime: [Result](#result)
+
 ## Result
 - id: Integer
+- meetings: [Meeting](#meeting)
 - user: [User](#user)
 - average: Nullable\<Float\>
 - attempts: Array\<Nullable\<Float\>\>
