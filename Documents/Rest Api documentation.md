@@ -67,7 +67,7 @@ Response: Array<[DisciplineResults](#disciplineresults)>
 - roles: Array\<[Role](#role)\>
 
 ## String\<Gender\>
-- "emale"
+- "female"
 - "male"
 
 ## Meeting
