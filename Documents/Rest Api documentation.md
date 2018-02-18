@@ -4,7 +4,7 @@ Version: 1.0
 
 Endpoint: {server_url}/api/
 
-Authentication: Send `Authorization` http header to authorize request.
+Authentication: Use `Authorization` http header to authorize request.
 
 # Methods
 
@@ -21,6 +21,18 @@ POST users
 Request: [CreateUserRequest](#createuserrequest)
 
 Response: [Session](#session)
+
+## Get user
+GET users/{id}
+
+Response: [User](#user)
+
+## Update user
+PUT users/{id}
+
+Request: [User](#user)
+
+Response: [User](#user)
 
 ## Get meetings
 GET meetings
@@ -65,6 +77,10 @@ Response: Array<[DisciplineResults](#disciplineresults)>
 - email: String
 - gender: [String\<Gender\>](#stringgender)
 - roles: Array\<[Role](#role)\>
+- wcaId: String
+- city: String
+- birth_date: Date
+- phoneNumber: String
 
 ## String\<Gender\>
 - "female"
