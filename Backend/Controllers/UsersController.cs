@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Backend.Data.Entities;
 using Backend.Domain;
@@ -6,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers
 {
-    [Route("api/[controller]")]
     public class UsersController : ApiController
     {
         private readonly UsersManager _usersManager;
@@ -17,10 +17,10 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(User), 200)]
         public async Task<IEnumerable<User>> Get()
         {
-            var users = await _usersManager.GetUsersAsync();
-            return users;
+            return await _usersManager.GetUsersAsync();
         }
     }
 }

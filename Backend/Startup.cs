@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace Backend
 {
@@ -22,6 +23,11 @@ namespace Backend
         {
             services.AddMvc();
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info {Title = "KhSM API", Version = "v1"});
+            });
+
             services.AddScoped<DatabaseContext>();
             services.AddScoped<UsersRepository>();
             services.AddScoped<UsersManager>();
@@ -34,6 +40,12 @@ namespace Backend
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "KhSM API v1");
+            });
 
             app.UseMvc();
         }
