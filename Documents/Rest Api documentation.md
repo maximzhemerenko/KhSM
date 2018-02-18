@@ -34,6 +34,11 @@ Request: [User](#user)
 
 Response: [User](#user)
 
+## Get user records
+Get users/{id}/records
+
+Response: List<[DisciplineRecord](#disciplinerecord)>
+
 ## Get meetings
 GET meetings
 
@@ -101,8 +106,14 @@ Response: Array<[DisciplineResults](#disciplineresults)>
 - discipline: [Discipline](#discipline)
 - results: Array\<[Result](#result)\>
 
+## DisciplineRecord
+- discipline: [Discipline](#discipline)
+- bestTime: [Result](#result)
+- bestOverageTime: [Result](#result)
+
 ## Result
 - id: Integer
+- meetings: [Meeting](#meeting)
 - user: [User](#user)
 - average: Nullable\<Float\>
 - attempts: Array\<Nullable\<Float\>\>
