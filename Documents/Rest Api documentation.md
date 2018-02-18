@@ -64,6 +64,16 @@ GET disciplines
 
 Response: Array\<[Discipline](#discipline)\>
 
+## Get renkings
+GET rankings
+
+Query:
+- type: "average" | "single"
+- sort: "ascending" | "descending"
+- gender: [String\<Gender\>](#stringgender)
+
+Response: Array\<[DisciplineResults](#disciplineresults)\>
+
 # Entities
 
 ## CreateSessionRequest 
