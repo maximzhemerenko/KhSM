@@ -22,6 +22,24 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
+task updateLocalizationResources {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+    def projectPathProperty = 'com.SpryRocks.AppLocalizationUtil.ProjectPath'
+    def configFileProperty = 'com.SpryRocks.AppLocalizationUtil.ConfigFile'
+
+    def projectPath = properties.getProperty(projectPathProperty)
+    if (projectPath != null) {
+        exec {
+            executable "dotnet"
+            args 'run',
+                    '--project', projectPath,
+                    '--ConfigFile', project.property(configFileProperty)
+        }
+    }
+}
+
 project.ext {
     compileSdkVersion = 27
     minSdkVersion = 16
