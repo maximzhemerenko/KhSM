@@ -35,12 +35,12 @@ Request: [User](#user)
 Response: [User](#user)
 
 ## Get user records
-Get users/{id}/records
+GET users/{id}/records
 
 Response: List<[DisciplineRecord](#disciplinerecord)>
 
 ## Get user results
-Get users/{id}/results
+GET users/{id}/results
 
 Response: Array<[DisciplineResults](#disciplineresults)>
 
@@ -57,7 +57,12 @@ Response: [Meeting](#meeting)
 ## Get meeting results
 GET meetings/{id}/results
 
-Response: Array<[DisciplineResults](#disciplineresults)>
+Response: Array\<[DisciplineResults](#disciplineresults)\>
+
+## Get disciplines
+GET disciplines
+
+Response: Array\<[Discipline](#discipline)\>
 
 # Entities
 
