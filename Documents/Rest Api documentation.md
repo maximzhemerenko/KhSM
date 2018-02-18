@@ -64,7 +64,7 @@ GET disciplines
 
 Response: Array\<[Discipline](#discipline)\>
 
-## Get renkings
+## Get rankings
 GET rankings
 
 Query:
