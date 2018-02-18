@@ -39,6 +39,11 @@ Get users/{id}/records
 
 Response: List<[DisciplineRecord](#disciplinerecord)>
 
+## Get user results
+Get users/{id}/results
+
+Response: Array<[DisciplineResults](#disciplineresults)>
+
 ## Get meetings
 GET meetings
 
