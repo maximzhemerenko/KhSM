@@ -37,7 +37,7 @@ Response: [User](#user)
 ## Get user records
 GET users/{id}/records
 
-Response: List<[DisciplineRecord](#disciplinerecord)>
+Response: Array<[DisciplineRecord](#disciplinerecord)>
 
 ## Get user results
 GET users/{id}/results
@@ -81,8 +81,6 @@ Response: Array\<[DisciplineResults](#disciplineresults)\>
 - password: String
 
 ## Session
-- email: String,
-- userId: Integer
 - token: String
 - user: [User](#user)
 
