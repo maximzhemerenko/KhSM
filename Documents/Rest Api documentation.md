@@ -4,7 +4,7 @@ Version: 1.0
 
 Endpoint: {server_url}/api/
 
-Authentication: To use most of methods client should send `Authorization` http header.
+Authentication: Send `Authorization` http header to authorize request.
 
 # Methods
 
