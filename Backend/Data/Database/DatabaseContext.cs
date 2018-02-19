@@ -4,7 +4,6 @@ using MySql.Data.MySqlClient;
 
 namespace Backend.Data.Database
 {
-    [Route("api/[controller]")]
     public class DatabaseContext : IDisposable
     {
         public MySqlConnection Connection { get; }
