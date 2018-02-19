@@ -22,15 +22,15 @@ create table User
 
 create table Meeting
 (
-	meeting_id int primary key auto_increment not null,
+    meeting_id int primary key auto_increment not null,
     meeting_number int not null,
-	`date` date not null
+	  `date` date not null
 );
 
 create table News
 (
-	news_id int primary key auto_increment not null,
-	user_id int not null,
+	  news_id int primary key auto_increment not null,
+	  user_id int not null,
     `text` text not null,
     date_and_time datetime not null,
     foreign key (user_id) references user(user_id)
@@ -38,7 +38,7 @@ create table News
 
 create table Discipline
 (
-	discipline_id int primary key auto_increment not null,
+	  discipline_id int primary key auto_increment not null,
     `name` varchar(32) not null,
     description text null,
     attempt_count int not null
@@ -46,7 +46,7 @@ create table Discipline
 
 create table Result
 (
-	result_id int primary key auto_increment not null,
+	  result_id int primary key auto_increment not null,
     average decimal(5, 2) null,
     meeting_id int not null unique,
     user_id int not null unique,
@@ -58,7 +58,7 @@ create table Result
 
 create table Attempt
 (
-	attempt_id int primary key auto_increment not null,
+	  attempt_id int primary key auto_increment not null,
     result_id int not null,
     `time` decimal(5, 2) null,
     foreign key (result_id) references Result(result_id)
@@ -66,14 +66,14 @@ create table Attempt
 
 create table Role
 (
-	role_id int primary key auto_increment not null,
+	  role_id int primary key auto_increment not null,
     `name` varchar(16) not null unique,
     role_key varchar(16) not null unique
 );
 
 create table UserRole
 (
-	user_id int primary key auto_increment not null,
+	  user_id int primary key auto_increment not null,
     role_id int not null,
     foreign key (user_id) references User(user_id),
     foreign key (role_id) references Role(role_id)
@@ -81,7 +81,7 @@ create table UserRole
 
 create table Login
 (
-	user_id int primary key auto_increment not null unique,
+	  user_id int primary key auto_increment not null unique,
     password_hash binary not null,
     password_salt int not null,
     disabled date null,
@@ -90,7 +90,7 @@ create table Login
 
 create table `Session`
 (
-	session_id int primary key auto_increment not null,
+	  session_id int primary key auto_increment not null,
     user_id int not null,
     session_key binary not null unique,
     created date not null,
