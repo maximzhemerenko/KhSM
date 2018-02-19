@@ -1,9 +1,8 @@
-package com.khsm.app.presentation.ui.screens.meetings;
+package com.khsm.app.data.entities;
 
 import java.util.Date;
 
 public class Meeting {
-
     private Integer id;
     private Integer number;
     private Date date;

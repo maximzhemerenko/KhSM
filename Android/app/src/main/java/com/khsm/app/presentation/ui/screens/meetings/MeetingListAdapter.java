@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.khsm.app.R;
+import com.khsm.app.data.entities.Meeting;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -20,7 +21,7 @@ public class MeetingListAdapter extends RecyclerView.Adapter<MeetingListAdapter.
     private LayoutInflater inflater;
     private List<Meeting> meetings;
 
-    public MeetingListAdapter(Context context, List<Meeting> meetings) {
+    MeetingListAdapter(Context context, List<Meeting> meetings) {
         this.meetings = meetings;
         this.inflater = LayoutInflater.from(context);
 
@@ -45,7 +46,7 @@ public class MeetingListAdapter extends RecyclerView.Adapter<MeetingListAdapter.
         return meetings.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         final TextView dateMeeting;
         ViewHolder(View view){
             super(view);
