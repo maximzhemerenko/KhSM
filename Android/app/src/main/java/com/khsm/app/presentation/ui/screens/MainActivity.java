@@ -1,38 +1,32 @@
 package com.khsm.app.presentation.ui.screens;
 
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.widget.ProgressBar;
 
-import com.khsm.app.presentation.ui.adapters.UserListAdapter;
 import com.khsm.app.R;
-import com.khsm.app.data.api.entities.User;
-import com.khsm.app.domain.UsersManager;
-
-import java.util.List;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
+import com.khsm.app.presentation.ui.screens.meetings.MeetingListFragment;
 
 public class MainActivity extends AppCompatActivity {
-    private CompositeDisposable disposable;
+    /*private CompositeDisposable disposable;
 
     private UsersManager usersManager;
 
     private RecyclerView recyclerView;
-    private ProgressBar progressBar;
+    private ProgressBar progressBar;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        disposable = new CompositeDisposable();
+        if (savedInstanceState == null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.content, MeetingListFragment.newInstance())
+                    .commit();
+        }
+
+        /*disposable = new CompositeDisposable();
 
         usersManager = new UsersManager();
 
@@ -42,16 +36,19 @@ public class MainActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(ProgressBar.INVISIBLE);
 
-        loadUsers();
+        loadUsers();*/
     }
 
+    /*
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
         disposable.clear();
     }
+    */
 
+    /*
     private void loadUsers() {
         progressBar.setVisibility(ProgressBar.VISIBLE);
 
@@ -83,4 +80,5 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton(R.string.OK, null)
                 .show();
     }
+    */
 }
