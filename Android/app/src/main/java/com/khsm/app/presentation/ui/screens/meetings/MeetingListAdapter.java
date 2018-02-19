@@ -9,16 +9,22 @@ import android.widget.TextView;
 
 import com.khsm.app.R;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class MeetingListAdapter extends RecyclerView.Adapter<MeetingListAdapter.ViewHolder> {
+
+    private SimpleDateFormat dateFormat;
 
     private LayoutInflater inflater;
     private List<Meeting> meetings;
 
-    MeetingListAdapter(Context context, List<Meeting> meetings) {
+    public MeetingListAdapter(Context context, List<Meeting> meetings) {
         this.meetings = meetings;
         this.inflater = LayoutInflater.from(context);
+
+        dateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.US);
     }
 
     @Override
@@ -31,8 +37,7 @@ public class MeetingListAdapter extends RecyclerView.Adapter<MeetingListAdapter.
     @Override
     public void onBindViewHolder(MeetingListAdapter.ViewHolder holder, int position) {
         Meeting meeting = meetings.get(position);
-        holder.dateMeeting.setText((CharSequence) meeting.getDate());
-
+        holder.dateMeeting.setText(dateFormat.format(meeting.getDate()));
     }
 
     @Override

@@ -1,10 +1,17 @@
 package com.khsm.app.presentation.ui.screens;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 
 import com.khsm.app.R;
+import com.khsm.app.presentation.ui.screens.meetings.Meeting;
+import com.khsm.app.presentation.ui.screens.meetings.MeetingListAdapter;
 import com.khsm.app.presentation.ui.screens.meetings.MeetingListFragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     /*private CompositeDisposable disposable;
