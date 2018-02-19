@@ -5,6 +5,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ProgressBar;
 
 import com.khsm.app.presentation.ui.adapters.UserListAdapter;
 import com.khsm.app.R;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private UsersManager usersManager;
 
     private RecyclerView recyclerView;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(ProgressBar.INVISIBLE);
+
         loadUsers();
     }
 
@@ -48,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadUsers() {
+        progressBar.setVisibility(ProgressBar.VISIBLE);
+
         Disposable disposable = usersManager.getUsers() // получить операцию по загрузке пользователей из сети
                 .subscribeOn(Schedulers.io()) // установить чтобы запрос выполнятся не в главном потоке а асинхронно
                 .observeOn(AndroidSchedulers.mainThread()) // установить чтобы ответ вернулся в главном потоке
@@ -59,11 +66,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUsers(List<User> users) {
+        progressBar.setVisibility(ProgressBar.INVISIBLE);
+
         UserListAdapter adapter = new UserListAdapter(this, users);
         recyclerView.setAdapter(adapter);
     }
 
     private void handleError(Throwable throwable) {
+        progressBar.setVisibility(ProgressBar.INVISIBLE);
+
         throwable.printStackTrace();
 
         new AlertDialog.Builder(this)
