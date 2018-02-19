@@ -11,34 +11,39 @@ import com.khsm.app.R;
 import com.khsm.app.data.entities.Meeting;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class MeetingListAdapter extends RecyclerView.Adapter<MeetingListAdapter.ViewHolder> {
-
     private SimpleDateFormat dateFormat;
 
     private LayoutInflater inflater;
     private List<Meeting> meetings;
 
-    MeetingListAdapter(Context context, List<Meeting> meetings) {
-        this.meetings = meetings;
+    MeetingListAdapter(Context context) {
+        this.meetings = new ArrayList<>();
+
         this.inflater = LayoutInflater.from(context);
 
-        dateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.US);
+        this.dateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
+    }
+
+    public void setMeetings(List<Meeting> meetings) {
+        this.meetings = meetings;
+        notifyDataSetChanged();
     }
 
     @Override
     public MeetingListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-        View view = inflater.inflate(R.layout.meeting_list_item, parent, false);
+        View view = inflater.inflate(R.layout.meetings_list_item, parent, false);
         return new MeetingListAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(MeetingListAdapter.ViewHolder holder, int position) {
         Meeting meeting = meetings.get(position);
-        holder.dateMeeting.setText(dateFormat.format(meeting.getDate()));
+        holder.dateMeeting.setText(dateFormat.format(meeting.date));
     }
 
     @Override

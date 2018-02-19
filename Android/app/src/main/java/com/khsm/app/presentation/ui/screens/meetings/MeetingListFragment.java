@@ -1,7 +1,5 @@
 package com.khsm.app.presentation.ui.screens.meetings;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.khsm.app.R;
 import com.khsm.app.data.entities.Meeting;
@@ -22,6 +21,7 @@ import java.util.List;
 import java.util.Objects;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class MeetingListFragment extends Fragment{
@@ -29,41 +29,82 @@ public class MeetingListFragment extends Fragment{
         return new MeetingListFragment();
     }
 
+    private MeetingsManager meetingsManager;
+
+    @Nullable
+    private Disposable loadDisposable;
+
+    private MeetingListAdapter adapter;
+
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private Toolbar toolbar;
+    @SuppressWarnings("FieldCanBeLocal")
     private RecyclerView recyclerView;
+    private ProgressBar progressBar;
 
-    @SuppressLint("CheckResult")
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        meetingsManager = new MeetingsManager();
+
+        adapter = new MeetingListAdapter(getContext());
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (loadDisposable != null) {
+            loadDisposable.dispose();
+            loadDisposable = null;
+        }
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.meetings_fragment, container, false);
-
-        Context context = getContext();
+        View view = inflater.inflate(R.layout.meetings_list_fragment, container, false);
 
         toolbar = view.findViewById(R.id.toolbar);
         recyclerView = view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(adapter);
 
-        MeetingsManager meetingsManager = new MeetingsManager();
+        progressBar = view.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.INVISIBLE);
 
-        meetingsManager.getMeetings()
+        loadMeetings();
+
+        return view;
+    }
+
+    private void loadMeetings() {
+        progressBar.setVisibility(View.VISIBLE);
+
+        if (loadDisposable != null) {
+            loadDisposable.dispose();
+            loadDisposable = null;
+        }
+
+        loadDisposable = meetingsManager.getMeetings()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         this::setMeetings,
                         this::handleError
                 );
-
-        return view;
     }
 
     private void setMeetings(List<Meeting> meetings) {
-        MeetingListAdapter adapter = new MeetingListAdapter(getContext(), meetings);
-        recyclerView.setAdapter(adapter);
+        progressBar.setVisibility(View.INVISIBLE);
+
+        adapter.setMeetings(meetings);
     }
 
     private void handleError(Throwable throwable) {
+        progressBar.setVisibility(View.INVISIBLE);
+
         new AlertDialog.Builder(Objects.requireNonNull(getContext()))
                 .setTitle(R.string.Error)
                 .setMessage(throwable.getMessage())
