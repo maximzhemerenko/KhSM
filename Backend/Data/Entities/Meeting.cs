@@ -10,6 +10,6 @@ namespace Backend.Data.Entities
         [Required]
         public int Number { get; set; }
         [Required]
-        public DateTimeOffset DateTimeOffset { get; set; }
+        public DateTimeOffset Date { get; set; }
     }
 }

@@ -29,6 +29,7 @@ namespace Backend
             });
 
             services.AddScoped<DatabaseContext>();
+            services.AddScoped<MeetingsRepository>();
             services.AddScoped<MeetingsManager>();
         }
 

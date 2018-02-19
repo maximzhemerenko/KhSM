@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using Backend.Data.Entities;
 using Backend.Domain;
 using Microsoft.AspNetCore.Mvc;
@@ -16,9 +15,9 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Meeting>> Get()
+        public IEnumerable<Meeting> Get()
         {
-            return await _meetingsManager.GetMeetingsAsync();
+            return _meetingsManager.GetMeetingsAsync();
         }
     }
 }
