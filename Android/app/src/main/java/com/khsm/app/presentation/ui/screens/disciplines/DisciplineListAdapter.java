@@ -6,13 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.khsm.app.R;
 import com.khsm.app.data.entities.Discipline;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.annotations.Nullable;
 
 public class DisciplineListAdapter extends RecyclerView.Adapter<DisciplineListAdapter.ViewHolder> {
     private DisciplineListFragment disciplineListFragment;
@@ -37,21 +38,26 @@ public class DisciplineListAdapter extends RecyclerView.Adapter<DisciplineListAd
     public DisciplineListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.disciplines_list_item, parent, false);
 
+        ViewHolder viewHolder = new ViewHolder(view);
+
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //disciplineListFragment.onItemClicked();
-                Toast.makeText(v.getContext(), "jkjk", Toast.LENGTH_SHORT).show();
+                Discipline discipline = viewHolder.discipline;
+                if (discipline == null)
+                    return;
+                disciplineListFragment.onItemClicked(discipline);
             }
         });
 
-        return new DisciplineListAdapter.ViewHolder(view);
+        return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(DisciplineListAdapter.ViewHolder holder, int position) {
         Discipline discipline = disciplines.get(position);
         holder.disciplineName.setText(discipline.name);
+        holder.discipline = discipline;
     }
 
     @Override
@@ -61,6 +67,7 @@ public class DisciplineListAdapter extends RecyclerView.Adapter<DisciplineListAd
 
     class ViewHolder extends RecyclerView.ViewHolder {
         final TextView disciplineName;
+        @Nullable Discipline discipline;
         ViewHolder(View view){
             super(view);
             disciplineName = view.findViewById(R.id.disciplineName);

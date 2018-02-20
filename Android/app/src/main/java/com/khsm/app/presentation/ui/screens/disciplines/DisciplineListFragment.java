@@ -110,4 +110,7 @@ public class DisciplineListFragment extends Fragment {
     }
 
 
+    public void onItemClicked(@NonNull Discipline discipline) {
+        // TODO: 20.02.2018 display discipline details fragment
+    }
 }
