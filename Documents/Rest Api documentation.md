@@ -118,7 +118,7 @@ Response: Array\<[DisciplineResults](#disciplineresults)\>
 - id: Integer
 - name: String
 - description: String
-- attempsCount: Integer
+- attemptsCount: Integer
 
 ## DisciplineResults
 - discipline: [Discipline](#discipline)

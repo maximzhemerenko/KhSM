@@ -1,6 +1,7 @@
 package com.khsm.app.data.api;
 
 import com.khsm.app.data.api.base.ApiBase;
+import com.khsm.app.data.entities.Discipline;
 import com.khsm.app.data.entities.Meeting;
 
 import java.util.List;
@@ -16,6 +17,11 @@ public class Api extends ApiBase {
 
     public Single<List<Meeting>> getMeetings() {
         return restApi.getMeetings()
+                .compose(this::processResponse);
+    }
+
+    public Single<List<Discipline>> getDisciplines() {
+        return restApi.getDisciplines()
                 .compose(this::processResponse);
     }
 }
