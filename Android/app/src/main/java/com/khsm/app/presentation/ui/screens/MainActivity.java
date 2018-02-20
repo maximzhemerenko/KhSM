@@ -6,26 +6,25 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.khsm.app.R;
 import com.khsm.app.presentation.ui.screens.meetings.MeetingListFragment;
+import com.spryrocks.android.modules.ui.routing.context.IFrameRoutingContext;
+import com.spryrocks.android.modules.ui.routing.context.IRoutingContext;
 
 public class MainActivity extends AppCompatActivity {
+    private IFrameRoutingContext frameRoutingContext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        frameRoutingContext = IRoutingContext.frame(this, R.id.content);
+
         if (savedInstanceState == null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.content, MeetingListFragment.newInstance())
-                    .commit();
+            frameRoutingContext.replaceFragment(MeetingListFragment.newInstance(), false);
         }
     }
 
     public void replaceFragment(Fragment fragment) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.content, fragment)
-                .addToBackStack(null)
-                .commit();
+        frameRoutingContext.replaceFragment(fragment, false);
     }
 }

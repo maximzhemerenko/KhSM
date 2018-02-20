@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import com.khsm.app.R;
 
 public class MeetingResultsFragment extends Fragment {
-
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private Toolbar toolbar;
 

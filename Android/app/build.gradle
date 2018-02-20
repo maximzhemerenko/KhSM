@@ -25,6 +25,9 @@ android {
 }
 
 dependencies {
+    implementation project(":android.modules.ui")
+    implementation project(":android.modules.ui.routing")
+
     // com.android.support
     implementation "com.android.support:appcompat-v7:$project.ANDROID_SUPPORT_VERSION"
     implementation "com.android.support.constraint:constraint-layout:$project.CONSTRAINT_LAYOUT_VERSION"
