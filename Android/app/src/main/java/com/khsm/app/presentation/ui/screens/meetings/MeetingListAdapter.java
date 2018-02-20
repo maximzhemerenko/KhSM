@@ -15,8 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import io.reactivex.annotations.Nullable;
+
 public class MeetingListAdapter extends RecyclerView.Adapter<MeetingListAdapter.ViewHolder> {
-    private SimpleDateFormat dateFormat;
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
 
     private MeetingListFragment meetingListFragment;
 
@@ -29,8 +31,6 @@ public class MeetingListAdapter extends RecyclerView.Adapter<MeetingListAdapter.
         this.meetingListFragment = meetingListFragment;
 
         this.inflater = LayoutInflater.from(context);
-
-        this.dateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
     }
 
     public void setMeetings(List<Meeting> meetings) {
@@ -42,20 +42,26 @@ public class MeetingListAdapter extends RecyclerView.Adapter<MeetingListAdapter.
     public MeetingListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.meetings_list_item, parent, false);
 
+        ViewHolder viewHolder = new ViewHolder(view);
+
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                meetingListFragment.onItemClicked();
+                Meeting meeting = viewHolder.meeting;
+                if (meeting == null)
+                    return;
+                meetingListFragment.onItemClicked(meeting);
             }
         });
 
-        return new MeetingListAdapter.ViewHolder(view);
+        return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(MeetingListAdapter.ViewHolder holder, int position) {
         Meeting meeting = meetings.get(position);
         holder.meetingDate.setText(dateFormat.format(meeting.date));
+        holder.meeting = meeting;
     }
 
     @Override
@@ -65,6 +71,7 @@ public class MeetingListAdapter extends RecyclerView.Adapter<MeetingListAdapter.
 
     class ViewHolder extends RecyclerView.ViewHolder {
         final TextView meetingDate;
+        @Nullable Meeting meeting;
         ViewHolder(View view){
             super(view);
             meetingDate = view.findViewById(R.id.meetingDate);

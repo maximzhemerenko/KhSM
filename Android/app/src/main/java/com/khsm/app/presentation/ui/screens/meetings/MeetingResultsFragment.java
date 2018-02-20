@@ -11,16 +11,41 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.khsm.app.R;
+import com.khsm.app.data.entities.Meeting;
+
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class MeetingResultsFragment extends Fragment {
+    private static final String KET_MEETING = "KET_MEETING";
+
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
+
+    public static MeetingResultsFragment newInstance(Meeting meeting) {
+        MeetingResultsFragment fragment = new MeetingResultsFragment();
+
+        Bundle arguments = new Bundle();
+        arguments.putSerializable(KET_MEETING, meeting);
+
+        fragment.setArguments(arguments);
+
+        return fragment;
+    }
+
+    private Meeting meeting;
 
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private Toolbar toolbar;
 
     private TabLayout tabLayout;
 
-    public static MeetingResultsFragment newInstance() {
-        return new MeetingResultsFragment();
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Bundle arguments = getArguments();
+
+        meeting = (Meeting) arguments.getSerializable(KET_MEETING);
     }
 
     @Override
@@ -29,6 +54,8 @@ public class MeetingResultsFragment extends Fragment {
         View view = inflater.inflate(R.layout.meeting_results_fragment, container, false);
 
         toolbar = view.findViewById(R.id.toolbar);
+
+        toolbar.setTitle(dateFormat.format(meeting.date));
 
         tabLayout = view.findViewById(R.id.tabLayout);
 
