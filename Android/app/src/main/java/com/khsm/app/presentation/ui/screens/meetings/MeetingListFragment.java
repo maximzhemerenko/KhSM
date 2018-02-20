@@ -3,7 +3,6 @@ package com.khsm.app.presentation.ui.screens.meetings;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +15,10 @@ import android.widget.ProgressBar;
 import com.khsm.app.R;
 import com.khsm.app.data.entities.Meeting;
 import com.khsm.app.domain.MeetingsManager;
-import com.khsm.app.presentation.ui.screens.MainActivity;
+import com.khsm.app.presentation.ui.screens.Fragment;
+import com.spryrocks.android.modules.ui.routing.context.IFrameTarget;
+import com.spryrocks.android.modules.ui.routing.endpoints.FragmentEndpoint;
+import com.spryrocks.android.modules.ui.routing.endpoints.IFrameEndpoint;
 
 import java.util.List;
 
@@ -24,9 +26,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class MeetingListFragment extends Fragment{
-    public static MeetingListFragment newInstance() {
-        return new MeetingListFragment();
+public class MeetingListFragment extends Fragment {
+    public static IFrameEndpoint endpoint(IFrameTarget target) {
+        return new FragmentEndpoint<>(target, MeetingListFragment.class);
     }
 
     private MeetingsManager meetingsManager;
@@ -113,7 +115,6 @@ public class MeetingListFragment extends Fragment{
     }
 
     public void onItemClicked() {
-        MainActivity mainActivity = (MainActivity) getActivity();
-        mainActivity.replaceFragment(MeetingResultsFragment.newInstance());
+        MeetingResultsFragment.endpoint(frameRoutingContext()).navigate();
     }
 }

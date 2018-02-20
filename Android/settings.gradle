@@ -1,1 +1,1 @@
-include ':app', ':android.modules.ui.routing', ':android.modules.ui'
+include ':app', ':android.modules.ui.routing', ':android.modules.ui', ':android.modules'

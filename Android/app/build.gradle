@@ -25,6 +25,7 @@ android {
 }
 
 dependencies {
+    implementation project(":android.modules")
     implementation project(":android.modules.ui")
     implementation project(":android.modules.ui.routing")
 

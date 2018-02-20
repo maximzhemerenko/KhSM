@@ -10,14 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.khsm.app.R;
+import com.spryrocks.android.modules.ui.routing.context.IFrameTarget;
+import com.spryrocks.android.modules.ui.routing.endpoints.FragmentEndpoint;
+import com.spryrocks.android.modules.ui.routing.endpoints.IFrameEndpoint;
 
 public class MeetingResultsFragment extends Fragment {
+    public static IFrameEndpoint endpoint(IFrameTarget target) {
+        return new FragmentEndpoint<>(target, MeetingResultsFragment.class);
+    }
+
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private Toolbar toolbar;
-
-    public static MeetingResultsFragment newInstance() {
-        return new MeetingResultsFragment();
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
