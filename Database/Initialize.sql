@@ -12,9 +12,9 @@ create table User
     user_id int primary key auto_increment not null,
     first_name varchar(32) not null,
     last_name varchar(32) not null,
-    city varchar(32) not null,
-    wca_id varchar(16) not null,
-    phone_number varchar(16) not null,
+    city varchar(32) null,
+    wca_id varchar(16) null,
+    phone_number varchar(16) null,
     gender varchar(8) not null,
     birth_date date null,
     approved date null
@@ -71,7 +71,7 @@ create table Role
     role_key varchar(16) not null unique
 );
 
-create table UserRole
+create table User_Role
 (
 	  user_id int primary key auto_increment not null,
     role_id int not null,

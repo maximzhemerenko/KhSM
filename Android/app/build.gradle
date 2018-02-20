@@ -33,6 +33,7 @@ dependencies {
     implementation "com.android.support:appcompat-v7:$project.ANDROID_SUPPORT_VERSION"
     implementation "com.android.support.constraint:constraint-layout:$project.CONSTRAINT_LAYOUT_VERSION"
     implementation "com.android.support:recyclerview-v7:$project.ANDROID_SUPPORT_VERSION"
+    implementation "com.android.support:design:$project.ANDROID_SUPPORT_VERSION"
 
     // io.reactivex.rxjava2
     implementation "io.reactivex.rxjava2:rxandroid:$project.RX_ANDROID_VERSION"

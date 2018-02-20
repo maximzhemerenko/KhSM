@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.khsm.app.R;
+import com.khsm.app.presentation.ui.screens.disciplines.DisciplineListFragment;
 import com.khsm.app.presentation.ui.screens.meetings.MeetingListFragment;
 import com.spryrocks.android.modules.ui.routing.context.IFrameRoutingContext;
 import com.spryrocks.android.modules.ui.routing.context.IRoutingContext;

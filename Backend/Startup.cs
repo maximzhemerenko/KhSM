@@ -31,6 +31,8 @@ namespace Backend
             services.AddScoped<DatabaseContext>();
             services.AddScoped<MeetingsRepository>();
             services.AddScoped<MeetingsManager>();
+            services.AddScoped<DisciplinesRepository>();
+            services.AddScoped<DisciplinesManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,8 +1,9 @@
-package com.khsm.app.presentation.ui.screens.meetings;
+package com.khsm.app.presentation.ui.screens.disciplines;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,12 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.khsm.app.R;
-import com.khsm.app.data.entities.Meeting;
-import com.khsm.app.domain.MeetingsManager;
-import com.khsm.app.presentation.ui.screens.Fragment;
-import com.spryrocks.android.modules.ui.routing.context.IFrameTarget;
-import com.spryrocks.android.modules.ui.routing.endpoints.FragmentEndpoint;
-import com.spryrocks.android.modules.ui.routing.endpoints.IFrameEndpoint;
+import com.khsm.app.data.entities.Discipline;
+import com.khsm.app.domain.DisciplinesManager;
 
 import java.util.List;
 
@@ -26,31 +23,28 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class MeetingListFragment extends Fragment {
-    public static IFrameEndpoint endpoint(IFrameTarget target) {
-        return new FragmentEndpoint<>(target, MeetingListFragment.class);
+public class DisciplineListFragment extends Fragment {
+    public static DisciplineListFragment newInstance() {
+        return new DisciplineListFragment();
     }
 
-    private MeetingsManager meetingsManager;
+    private DisciplinesManager disciplinesManager;
+
+    private DisciplineListAdapter adapter;
+
+    private Toolbar toolbar;
+    private RecyclerView recyclerView;
+    private ProgressBar progressBar;
 
     @Nullable
     private Disposable loadDisposable;
 
-    private MeetingListAdapter adapter;
-
-    @SuppressWarnings({"FieldCanBeLocal", "unused"})
-    private Toolbar toolbar;
-    @SuppressWarnings("FieldCanBeLocal")
-    private RecyclerView recyclerView;
-    private ProgressBar progressBar;
-
-    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        meetingsManager = new MeetingsManager();
+        disciplinesManager = new DisciplinesManager();
 
-        adapter = new MeetingListAdapter(getContext(), this);
+        adapter = new DisciplineListAdapter(getContext(), this);
     }
 
     @Override
@@ -66,7 +60,7 @@ public class MeetingListFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.meetings_list_fragment, container, false);
+        View view = inflater.inflate(R.layout.disciplines_list_fragment, container, false);
 
         toolbar = view.findViewById(R.id.toolbar);
         recyclerView = view.findViewById(R.id.recyclerView);
@@ -76,12 +70,12 @@ public class MeetingListFragment extends Fragment {
         progressBar = view.findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
 
-        loadMeetings();
+        loadDisciplines();
 
         return view;
     }
 
-    private void loadMeetings() {
+    private void loadDisciplines() {
         progressBar.setVisibility(View.VISIBLE);
 
         if (loadDisposable != null) {
@@ -89,19 +83,19 @@ public class MeetingListFragment extends Fragment {
             loadDisposable = null;
         }
 
-        loadDisposable = meetingsManager.getMeetings()
+        loadDisposable = disciplinesManager.getDisciplines()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        this::setMeetings,
+                        this::setDisciplines,
                         this::handleError
                 );
     }
 
-    private void setMeetings(List<Meeting> meetings) {
+    private void setDisciplines(List<Discipline> disciplines) {
         progressBar.setVisibility(View.INVISIBLE);
 
-        adapter.setMeetings(meetings);
+        adapter.setDisciplines(disciplines);
     }
 
     private void handleError(Throwable throwable) {
@@ -114,7 +108,7 @@ public class MeetingListFragment extends Fragment {
                 .show();
     }
 
-    public void onItemClicked(@NonNull Meeting meeting) {
-        MeetingResultsFragment.endpoint(frameRoutingContext()).navigate();
+    public void onItemClicked(@NonNull Discipline discipline) {
+        // TODO: 20.02.2018 display discipline details fragment
     }
 }
