@@ -18,11 +18,15 @@ import java.util.Locale;
 public class MeetingListAdapter extends RecyclerView.Adapter<MeetingListAdapter.ViewHolder> {
     private SimpleDateFormat dateFormat;
 
+    private MeetingListFragment meetingListFragment;
+
     private LayoutInflater inflater;
     private List<Meeting> meetings;
 
-    MeetingListAdapter(Context context) {
+    MeetingListAdapter(Context context, MeetingListFragment meetingListFragment) {
         this.meetings = new ArrayList<>();
+
+        this.meetingListFragment = meetingListFragment;
 
         this.inflater = LayoutInflater.from(context);
 
@@ -37,13 +41,21 @@ public class MeetingListAdapter extends RecyclerView.Adapter<MeetingListAdapter.
     @Override
     public MeetingListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.meetings_list_item, parent, false);
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                meetingListFragment.onItemClicked();
+            }
+        });
+
         return new MeetingListAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(MeetingListAdapter.ViewHolder holder, int position) {
         Meeting meeting = meetings.get(position);
-        holder.dateMeeting.setText(dateFormat.format(meeting.date));
+        holder.meetingDate.setText(dateFormat.format(meeting.date));
     }
 
     @Override
@@ -52,10 +64,10 @@ public class MeetingListAdapter extends RecyclerView.Adapter<MeetingListAdapter.
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        final TextView dateMeeting;
+        final TextView meetingDate;
         ViewHolder(View view){
             super(view);
-            dateMeeting = view.findViewById(R.id.dateMeeting);
+            meetingDate = view.findViewById(R.id.meetingDate);
         }
     }
 }

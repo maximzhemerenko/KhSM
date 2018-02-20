@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,13 +11,13 @@ import android.view.ViewGroup;
 
 import com.khsm.app.R;
 
-public class MeetingResultsFramgnet extends Fragment {
+public class MeetingResultsFragment extends Fragment {
 
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private Toolbar toolbar;
 
-    public static MeetingResultsFramgnet newInstance() {
-        return new MeetingResultsFramgnet();
+    public static MeetingResultsFragment newInstance() {
+        return new MeetingResultsFragment();
     }
 
     @Override

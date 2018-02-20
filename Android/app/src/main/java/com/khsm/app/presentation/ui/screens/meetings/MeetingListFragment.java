@@ -16,9 +16,9 @@ import android.widget.ProgressBar;
 import com.khsm.app.R;
 import com.khsm.app.data.entities.Meeting;
 import com.khsm.app.domain.MeetingsManager;
+import com.khsm.app.presentation.ui.screens.MainActivity;
 
 import java.util.List;
-import java.util.Objects;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -48,7 +48,7 @@ public class MeetingListFragment extends Fragment{
 
         meetingsManager = new MeetingsManager();
 
-        adapter = new MeetingListAdapter(getContext());
+        adapter = new MeetingListAdapter(getContext(), this);
     }
 
     @Override
@@ -110,5 +110,10 @@ public class MeetingListFragment extends Fragment{
                 .setMessage(throwable.getMessage())
                 .setPositiveButton(R.string.OK, null)
                 .show();
+    }
+
+    public void onItemClicked() {
+        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity.replaceFragment(MeetingResultsFragment.newInstance());
     }
 }

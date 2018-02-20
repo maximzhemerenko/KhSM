@@ -1,6 +1,7 @@
 package com.khsm.app.presentation.ui.screens;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
 import com.khsm.app.R;
@@ -18,5 +19,13 @@ public class MainActivity extends AppCompatActivity {
                     .replace(R.id.content, MeetingListFragment.newInstance())
                     .commit();
         }
+    }
+
+    public void replaceFragment(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 }

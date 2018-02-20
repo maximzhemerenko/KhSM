@@ -3,11 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
-
+    android:padding="16dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="?android:attr/selectableItemBackground">
 
     <TextView
-        android:id="@+id/dateMeeting"
+        android:id="@+id/meetingDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
