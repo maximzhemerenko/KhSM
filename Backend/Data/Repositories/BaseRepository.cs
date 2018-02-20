@@ -1,4 +1,5 @@
-﻿using Backend.Data.Database;
+﻿using System.Collections.Generic;
+using Backend.Data.Database;
 using MySql.Data.MySqlClient;
 
 namespace Backend.Data.Repositories
@@ -11,6 +12,7 @@ namespace Backend.Data.Repositories
         }
 
         private DatabaseContext DatabaseContext { get; }
-        protected MySqlConnection Connection => DatabaseContext.Connection;
+        public MySqlConnection Connection => DatabaseContext.Connection;
+        public MySqlTransaction Transaction { get; set; }
     }
 }

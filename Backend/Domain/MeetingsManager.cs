@@ -13,10 +13,15 @@ namespace Backend.Domain
         {
             _meetingsRepository = meetingsRepository;
         }
-        
-        public IEnumerable<Meeting> GetMeetingsAsync()
+
+        public IEnumerable<Meeting> GetMeetings()
         {
             return _meetingsRepository.GetMeetings();
+        }
+
+        public Meeting GetMeeting(int id)
+        {
+            return _meetingsRepository.GetMeeting(id);
         }
     }
 }
