@@ -19,7 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top"
         android:background="@color/colorPrimary"
-        app:tabTextColor="@color/white">
+        app:tabTextColor="@color/white"
+        app:tabSelectedTextColor="@color/white">
 
     </android.support.design.widget.TabLayout>
 

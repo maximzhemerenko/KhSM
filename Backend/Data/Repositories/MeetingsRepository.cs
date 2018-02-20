@@ -5,6 +5,7 @@ using MySql.Data.MySqlClient;
 
 namespace Backend.Data.Repositories
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class MeetingsRepository : BaseRepository
     {
         public MeetingsRepository(DatabaseContext databaseContext) : base(databaseContext)
@@ -13,24 +14,41 @@ namespace Backend.Data.Repositories
 
         public IEnumerable<Meeting> GetMeetings()
         {
-            using(var transaction = Connection.BeginTransaction())
-            using (var command = new MySqlCommand("select * from meeting", Connection, transaction))
+            using (var command = new MySqlCommand("select * from meeting", Connection, Transaction))
             using (var reader = command.ExecuteReader())
             {
                 var meetings = new List<Meeting>();
 
                 while (reader.Read())
                 {
-                    meetings.Add(new Meeting
-                    {
-                        Id = reader.GetInt32("meeting_id"),
-                        Number = reader.GetInt32("meeting_number"),
-                        Date = reader.GetDateTimeOffset("date")
-                    });
+                    meetings.Add(GetMeeting(reader));
                 }
 
                 return meetings;
             }
+        }
+
+        public Meeting GetMeeting(int id)
+        {
+            using (var command =
+                new MySqlCommand("select * from meeting where meeting_id = @meeting_id", Connection, Transaction)
+                {
+                    Parameters = {new MySqlParameter("meeting_id", id)}
+                })
+            using (var reader = command.ExecuteReader())
+            {
+                return reader.Read() ? GetMeeting(reader) : null;
+            }
+        }
+
+        private static Meeting GetMeeting(MySqlDataReader reader)
+        {
+            return new Meeting
+            {
+                Id = reader.GetInt32("meeting_id"),
+                Number = reader.GetInt32("meeting_number"),
+                Date = reader.GetDateTimeOffset("date")
+            };
         }
     }
 }
