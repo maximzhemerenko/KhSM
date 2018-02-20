@@ -105,7 +105,7 @@ public class MeetingListFragment extends Fragment{
     private void handleError(Throwable throwable) {
         progressBar.setVisibility(View.INVISIBLE);
 
-        new AlertDialog.Builder(Objects.requireNonNull(getContext()))
+        new AlertDialog.Builder(getContext())
                 .setTitle(R.string.Error)
                 .setMessage(throwable.getMessage())
                 .setPositiveButton(R.string.OK, null)
