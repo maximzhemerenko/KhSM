@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Backend.Data.Database;
+﻿using Backend.Data.Database;
 using MySql.Data.MySqlClient;
 
 namespace Backend.Data.Repositories

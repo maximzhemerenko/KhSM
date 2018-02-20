@@ -8,10 +8,12 @@ namespace Backend.Domain
     public class MeetingsManager
     {
         private readonly MeetingsRepository _meetingsRepository;
+        private readonly DisciplinesRepository _disciplinesRepository;
 
-        public MeetingsManager(MeetingsRepository meetingsRepository)
+        public MeetingsManager(MeetingsRepository meetingsRepository, DisciplinesRepository disciplinesRepository)
         {
             _meetingsRepository = meetingsRepository;
+            _disciplinesRepository = disciplinesRepository;
         }
 
         public IEnumerable<Meeting> GetMeetings()
@@ -22,6 +24,22 @@ namespace Backend.Domain
         public Meeting GetMeeting(int id)
         {
             return _meetingsRepository.GetMeeting(id);
+        }
+
+        public IEnumerable<DisciplineResults> GetMeetingResults(int meetingId)
+        {
+            var disciplines = _disciplinesRepository.GetDisciplinesByMeetingId(meetingId);
+            if (disciplines == null)
+                return null;
+
+            var results = new List<DisciplineResults>();
+            
+            foreach (var discipline in disciplines)
+            {
+                results.Add(new DisciplineResults{Discipline = discipline});
+            }
+
+            return results;
         }
     }
 }

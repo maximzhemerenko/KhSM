@@ -33,5 +33,17 @@ namespace Backend.Controllers
             
             return Json(meeting);
         }
+
+        [HttpGet("{id}/results")]
+        [ProducesResponseType(typeof(IEnumerable<DisciplineResults>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public IActionResult GetResults(int id)
+        {
+            var disciplineResultses = _meetingsManager.GetMeetingResults(id);
+            if (disciplineResultses == null)
+                return NotFound();
+            
+            return Json(disciplineResultses);
+        }
     }
 }

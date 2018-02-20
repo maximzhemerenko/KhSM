@@ -7,6 +7,9 @@ create user 'kh_sm'@'localhost'
   identified by 'sKiLlet';
 grant select, insert, update, delete on kh_sm.* TO 'kh_sm'@'localhost';
 
+
+-- tables
+
 create table User
 (
     user_id int primary key auto_increment not null,
@@ -24,13 +27,13 @@ create table Meeting
 (
     meeting_id int primary key auto_increment not null,
     meeting_number int not null,
-	  `date` date not null
+    `date` date not null
 );
 
 create table News
 (
-	  news_id int primary key auto_increment not null,
-	  user_id int not null,
+    news_id int primary key auto_increment not null,
+    user_id int not null,
     `text` text not null,
     date_and_time datetime not null,
     foreign key (user_id) references user(user_id)
@@ -46,19 +49,20 @@ create table Discipline
 
 create table Result
 (
-	  result_id int primary key auto_increment not null,
+    result_id int primary key auto_increment not null,
     average decimal(5, 2) null,
-    meeting_id int not null unique,
-    user_id int not null unique,
-    discipline_id int not null unique,
+    meeting_id int not null,
+    user_id int not null,
+    discipline_id int not null,
     foreign key (meeting_id) references Meeting(meeting_id),
     foreign key (user_id) references User(user_id),
-    foreign key (discipline_id) references Discipline(discipline_id)
+    foreign key (discipline_id) references Discipline(discipline_id),
+    unique(meeting_id, user_id, discipline_id)
 );
 
 create table Attempt
 (
-	  attempt_id int primary key auto_increment not null,
+    attempt_id int primary key auto_increment not null,
     result_id int not null,
     `time` decimal(5, 2) null,
     foreign key (result_id) references Result(result_id)
@@ -66,14 +70,14 @@ create table Attempt
 
 create table Role
 (
-	  role_id int primary key auto_increment not null,
+    role_id int primary key auto_increment not null,
     `name` varchar(16) not null unique,
     role_key varchar(16) not null unique
 );
 
 create table User_Role
 (
-	  user_id int primary key auto_increment not null,
+    user_id int primary key auto_increment not null,
     role_id int not null,
     foreign key (user_id) references User(user_id),
     foreign key (role_id) references Role(role_id)
@@ -81,7 +85,7 @@ create table User_Role
 
 create table Login
 (
-	  user_id int primary key auto_increment not null unique,
+    user_id int primary key auto_increment not null unique,
     password_hash binary not null,
     password_salt int not null,
     disabled date null,
@@ -90,9 +94,21 @@ create table Login
 
 create table `Session`
 (
-	  session_id int primary key auto_increment not null,
+    session_id int primary key auto_increment not null,
     user_id int not null,
     session_key binary not null unique,
     created date not null,
     foreign key (user_id) references User(user_id)
 );
+
+
+-- views
+
+create view meeting_discipline as
+select 
+  m.meeting_id, m.meeting_number, m.date, 
+  d.discipline_id, d.name, d.description, d.attempt_count
+from meeting m
+  inner join result r on m.meeting_id = r.meeting_id
+  inner join discipline d on r.discipline_id = d.discipline_id
+group by m.meeting_id, d.discipline_id;
