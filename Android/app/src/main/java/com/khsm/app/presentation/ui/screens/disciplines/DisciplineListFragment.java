@@ -39,7 +39,6 @@ public class DisciplineListFragment extends Fragment {
     @Nullable
     private Disposable loadDisposable;
 
-
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -108,7 +107,6 @@ public class DisciplineListFragment extends Fragment {
                 .setPositiveButton(R.string.OK, null)
                 .show();
     }
-
 
     public void onItemClicked(@NonNull Discipline discipline) {
         // TODO: 20.02.2018 display discipline details fragment

@@ -7,7 +7,6 @@ public class Discipline {
     public final Integer attemptsCount;
 
     public Discipline(Integer id, String name, String description, Integer attemptsCount){
-
         this.id = id;
         this.name = name;
         this.description = description;
