@@ -115,6 +115,6 @@ public class MeetingListFragment extends Fragment {
     }
 
     public void onItemClicked(@NonNull Meeting meeting) {
-        MeetingResultsFragment.endpoint(frameRoutingContext()).navigate();
+        MeetingResultsFragment.endpoint(frameRoutingContext()).navigate(meeting);
     }
 }

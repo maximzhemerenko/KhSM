@@ -11,43 +11,37 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.khsm.app.R;
-import com.spryrocks.android.modules.ui.routing.context.IFrameTarget;
-import com.spryrocks.android.modules.ui.routing.endpoints.FragmentEndpoint;
-import com.spryrocks.android.modules.ui.routing.endpoints.IFrameEndpoint;
 import com.khsm.app.data.entities.Meeting;
+import com.spryrocks.android.modules.ui.routing.context.IFrameTarget;
+import com.spryrocks.android.modules.ui.routing.endpoints.FragmentEndpoint1;
+import com.spryrocks.android.modules.ui.routing.endpoints.IFrameEndpoint1;
+import com.spryrocks.android.modules.ui.routing.endpoints.IFrameEndpointBase;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 public class MeetingResultsFragment extends Fragment {
-    public static IFrameEndpoint endpoint(IFrameTarget target) {
-        return new FragmentEndpoint<>(target, MeetingResultsFragment.class);
+    private static final IFrameEndpointBase.Key<Meeting> MEETING_KEY = new IFrameEndpointBase.Key<>("meeting");
+
+    public static IFrameEndpoint1<Meeting> endpoint(IFrameTarget target) {
+        return new FragmentEndpoint1<>(target, MeetingResultsFragment.class, MEETING_KEY);
     }
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
 
-    public static MeetingResultsFragment newInstance(Meeting meeting) {
-        MeetingResultsFragment fragment = new MeetingResultsFragment();
-
-        Bundle arguments = new Bundle();
-        arguments.putSerializable(KET_MEETING, meeting);
-
-        fragment.setArguments(arguments);
-
-        return fragment;
-    }
-
     private Meeting meeting;
 
+    @SuppressWarnings("FieldCanBeLocal")
+    private Toolbar toolbar;
+
+    @SuppressWarnings("FieldCanBeLocal")
     private TabLayout tabLayout;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Bundle arguments = getArguments();
-
-        meeting = (Meeting) arguments.getSerializable(KET_MEETING);
+        meeting = MEETING_KEY.getArgument(this, true);
     }
 
     @Override
