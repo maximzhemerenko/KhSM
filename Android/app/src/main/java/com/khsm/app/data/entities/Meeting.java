@@ -1,8 +1,9 @@
 package com.khsm.app.data.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Meeting {
+public class Meeting implements Serializable {
     public final Integer id;
     public final Integer number;
     public final Date date;

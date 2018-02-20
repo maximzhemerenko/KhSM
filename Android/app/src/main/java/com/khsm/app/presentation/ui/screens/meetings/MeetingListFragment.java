@@ -112,8 +112,8 @@ public class MeetingListFragment extends Fragment{
                 .show();
     }
 
-    public void onItemClicked() {
+    public void onItemClicked(@NonNull Meeting meeting) {
         MainActivity mainActivity = (MainActivity) getActivity();
-        mainActivity.replaceFragment(MeetingResultsFragment.newInstance());
+        mainActivity.replaceFragment(MeetingResultsFragment.newInstance(meeting));
     }
 }
