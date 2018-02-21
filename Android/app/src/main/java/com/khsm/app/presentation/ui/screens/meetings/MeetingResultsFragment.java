@@ -11,11 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.khsm.app.R;
 import com.khsm.app.data.entities.DisciplineResults;
 import com.khsm.app.data.entities.Meeting;
-import com.khsm.app.domain.MeetingsManager;
 import com.khsm.app.domain.ResultsManager;
 
 import java.text.SimpleDateFormat;
@@ -77,12 +77,7 @@ public class MeetingResultsFragment extends Fragment {
         toolbar.setTitle(dateFormat.format(meeting.date));
 
         tabLayout = view.findViewById(R.id.tabLayout);
-
-
-       /* tabLayout.addTab(tabLayout.newTab().setText("2 x 2"));
-        tabLayout.addTab(tabLayout.newTab().setText("3 x 3"));
-        tabLayout.addTab(tabLayout.newTab().setText("5 x 5"));
-        tabLayout.addTab(tabLayout.newTab().setText("7 x 7"));*/
+        tabLayout.addOnTabSelectedListener(onTabSelectedListener);
 
         progressBar = view.findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
@@ -91,6 +86,22 @@ public class MeetingResultsFragment extends Fragment {
 
         return view;
     }
+
+    private final TabLayout.OnTabSelectedListener onTabSelectedListener = new TabLayout.OnTabSelectedListener() {
+        @Override
+        public void onTabSelected(TabLayout.Tab tab) {
+            DisciplineResults disciplineResults = (DisciplineResults) tab.getTag();
+            onDisciplineClicked(disciplineResults);
+        }
+
+        @Override
+        public void onTabUnselected(TabLayout.Tab tab) {
+        }
+
+        @Override
+        public void onTabReselected(TabLayout.Tab tab) {
+        }
+    };
 
     private void loadResults() {
         progressBar.setVisibility(View.VISIBLE);
@@ -117,8 +128,6 @@ public class MeetingResultsFragment extends Fragment {
         for (DisciplineResults disciplineResult : disciplineResults) {
             tabLayout.addTab(tabLayout.newTab().setText(disciplineResult.discipline.name).setTag(disciplineResult));
         }
-
-        //adapter.setMeetings(meetings);
     }
 
     private void handleError(Throwable throwable) {
@@ -129,5 +138,11 @@ public class MeetingResultsFragment extends Fragment {
                 .setMessage(throwable.getMessage())
                 .setPositiveButton(R.string.OK, null)
                 .show();
+    }
+
+
+    private void onDisciplineClicked(DisciplineResults disciplineResults) {
+        Toast.makeText(getContext(), disciplineResults.discipline.name, Toast.LENGTH_SHORT).show();
+        // TODO: 21.02.2018 show results in recycler view
     }
 }
