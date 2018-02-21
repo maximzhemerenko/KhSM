@@ -18,14 +18,21 @@ namespace Backend.Domain
         {
             return _resultsRepository.GetMeetingResults(meetingId, readDiscipline: true)?
                 .GroupBy(pair => pair.Discipline)
-                .Select(pairs => new DisciplineResults
+                .Select(pairs =>
                 {
-                    Discipline = pairs.Key,
-                    Results = pairs.Select(result =>
+                    var discipline = pairs.Key;
+
+                    discipline.Description = null;
+                    
+                    return new DisciplineResults
                     {
-                        result.Discipline = null;
-                        return result;
-                    })
+                        Discipline = discipline,
+                        Results = pairs.Select(result =>
+                        {
+                            result.Discipline = null;
+                            return result;
+                        })
+                    };
                 });
         }
     }

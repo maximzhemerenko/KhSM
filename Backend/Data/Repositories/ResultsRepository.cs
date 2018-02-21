@@ -83,7 +83,7 @@ namespace Backend.Data.Repositories
             return new Result
             {
                 Id = reader.GetInt32("result_id"),
-                Average = reader.GetFieldValue<decimal?>(reader.GetOrdinal("average"))
+                Average = !reader.IsDBNull(reader.GetOrdinal("average")) ? (decimal?)reader.GetDecimal("average") : null
             };
         }
 
@@ -97,7 +97,7 @@ namespace Backend.Data.Repositories
             return new Attempt
             {
                 Id = reader.GetInt32(attemptIdKey),
-                Time = reader.GetFieldValue<decimal?>(reader.GetOrdinal("time"))
+                Time = !reader.IsDBNull(reader.GetOrdinal("time")) ? (decimal?)reader.GetDecimal("time") : null
             };
         }
     }
