@@ -16,6 +16,8 @@ import android.widget.ProgressBar;
 import com.khsm.app.R;
 import com.khsm.app.data.entities.Discipline;
 import com.khsm.app.domain.DisciplinesManager;
+import com.khsm.app.presentation.ui.screens.MainActivity;
+import com.khsm.app.presentation.ui.screens.meetings.MeetingResultsFragment;
 
 import java.util.List;
 
@@ -109,6 +111,7 @@ public class DisciplineListFragment extends Fragment {
     }
 
     public void onItemClicked(@NonNull Discipline discipline) {
-        // TODO: 20.02.2018 display discipline details fragment
+        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity.replaceFragment(DisciplineDetailsFragment.newInstance(discipline));
     }
 }

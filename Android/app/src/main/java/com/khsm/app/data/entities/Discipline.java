@@ -1,6 +1,8 @@
 package com.khsm.app.data.entities;
 
-public class Discipline {
+import java.io.Serializable;
+
+public class Discipline implements Serializable{
     public final Integer id;
     public final String name;
     public final String description;
