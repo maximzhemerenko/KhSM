@@ -27,7 +27,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class MeetingResultsFragment extends Fragment {
-    private static final String KET_MEETING = "KET_MEETING";
+    private static final String KEY_MEETING = "KEY_MEETING";
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
 
@@ -42,7 +42,7 @@ public class MeetingResultsFragment extends Fragment {
         MeetingResultsFragment fragment = new MeetingResultsFragment();
 
         Bundle arguments = new Bundle();
-        arguments.putSerializable(KET_MEETING, meeting);
+        arguments.putSerializable(KEY_MEETING, meeting);
 
         fragment.setArguments(arguments);
 
@@ -62,7 +62,7 @@ public class MeetingResultsFragment extends Fragment {
 
         Bundle arguments = getArguments();
 
-        meeting = (Meeting) arguments.getSerializable(KET_MEETING);
+        meeting = (Meeting) arguments.getSerializable(KEY_MEETING);
 
         resultsManager = new ResultsManager();
     }
@@ -139,7 +139,6 @@ public class MeetingResultsFragment extends Fragment {
                 .setPositiveButton(R.string.OK, null)
                 .show();
     }
-
 
     private void onDisciplineClicked(DisciplineResults disciplineResults) {
         Toast.makeText(getContext(), disciplineResults.discipline.name, Toast.LENGTH_SHORT).show();
