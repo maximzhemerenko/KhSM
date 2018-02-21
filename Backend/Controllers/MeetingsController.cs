@@ -9,10 +9,12 @@ namespace Backend.Controllers
     public class MeetingsController : ApiController
     {
         private readonly MeetingsManager _meetingsManager;
+        private readonly ResultsManager _resultsManager;
 
-        public MeetingsController(MeetingsManager meetingsManager)
+        public MeetingsController(MeetingsManager meetingsManager, ResultsManager resultsManager)
         {
             _meetingsManager = meetingsManager;
+            _resultsManager = resultsManager;
         }
 
         [HttpGet]
@@ -39,7 +41,7 @@ namespace Backend.Controllers
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public IActionResult GetResults(int id)
         {
-            var disciplineResultses = _meetingsManager.GetMeetingResults(id);
+            var disciplineResultses = _resultsManager.GetMeetingResults(id);
             if (disciplineResultses == null)
                 return NotFound();
             

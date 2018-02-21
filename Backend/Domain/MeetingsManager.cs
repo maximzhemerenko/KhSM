@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Backend.Data.Entities;
 using Backend.Data.Repositories;
 
@@ -23,21 +22,6 @@ namespace Backend.Domain
         public Meeting GetMeeting(int id)
         {
             return _meetingsRepository.GetMeeting(id);
-        }
-
-        public IEnumerable<DisciplineResults> GetMeetingResults(int meetingId)
-        {
-            return _meetingsRepository.GetMeetingResults(meetingId, readDiscipline: true)?
-                .GroupBy(pair => pair.Discipline)
-                .Select(pairs => new DisciplineResults
-                {
-                    Discipline = pairs.Key,
-                    Results = pairs.Select(result =>
-                    {
-                        result.Discipline = null;
-                        return result;
-                    })
-                });
         }
     }
 }

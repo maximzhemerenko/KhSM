@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Backend.Data.Entities
 {
@@ -9,5 +10,23 @@ namespace Backend.Data.Entities
         public Discipline Discipline { get; set; }
         public decimal? Average { get; set; }
         public IEnumerable<decimal?> Attemts { get; set; }
+
+        protected bool Equals(Result other)
+        {
+            return Id == other.Id;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((Result) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return Id;
+        }
     }
 }
