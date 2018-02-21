@@ -66,5 +66,4 @@ public class MeetingResultsFragment extends Fragment {
 
         return view;
     }
-
 }

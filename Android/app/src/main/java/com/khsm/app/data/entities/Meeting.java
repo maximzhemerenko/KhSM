@@ -9,7 +9,6 @@ public class Meeting implements Serializable {
     public final Date date;
 
     public Meeting(Integer id, Integer number, Date date){
-
         this.id = id;
         this.number = number;
         this.date = date;

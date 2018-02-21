@@ -1,7 +1,6 @@
 package com.khsm.app.data.entities;
 
 public class Result {
-
     public final Integer id;
     public final Meeting meetings;
 
