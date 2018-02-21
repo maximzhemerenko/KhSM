@@ -27,14 +27,16 @@ namespace Backend.Domain
 
         public IEnumerable<DisciplineResults> GetMeetingResults(int meetingId)
         {
-            return _meetingsRepository.GetMeetingResults(meetingId, readDiscipline: true)
+            var meetingResults = _meetingsRepository.GetMeetingResults(meetingId, readDiscipline: true);
+
+            return meetingResults?
                 .GroupBy(pair => pair.Discipline)
                 .Select(pairs => new DisciplineResults
                 {
                     Discipline = pairs.Key,
                     Results = pairs.Select(result =>
                     {
-                        result.Discipline = null; 
+                        result.Discipline = null;
                         return result;
                     })
                 });
