@@ -178,12 +178,18 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
 
     private void setResults(List<DisciplineResults> disciplineResults) {
         progressBar.setVisibility(View.INVISIBLE);
-        tabLayout.setVisibility(!disciplineResults.isEmpty() ? View.VISIBLE : View.INVISIBLE);
 
         tabLayout.removeAllTabs();
 
         for (DisciplineResults disciplineResult : disciplineResults) {
             tabLayout.addTab(tabLayout.newTab().setText(disciplineResult.discipline.name).setTag(disciplineResult));
+        }
+
+        boolean showTabs = !disciplineResults.isEmpty();
+        tabLayout.setVisibility(showTabs ? View.VISIBLE : View.INVISIBLE);
+        if (showTabs) {
+            tabLayout.setAlpha(0);
+            tabLayout.animate().alpha(1).setDuration(300).start();
         }
     }
 
