@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Backend.Data.Entities;
 using Backend.Data.Repositories;
 
@@ -8,12 +9,10 @@ namespace Backend.Domain
     public class MeetingsManager
     {
         private readonly MeetingsRepository _meetingsRepository;
-        private readonly DisciplinesRepository _disciplinesRepository;
 
-        public MeetingsManager(MeetingsRepository meetingsRepository, DisciplinesRepository disciplinesRepository)
+        public MeetingsManager(MeetingsRepository meetingsRepository)
         {
             _meetingsRepository = meetingsRepository;
-            _disciplinesRepository = disciplinesRepository;
         }
 
         public IEnumerable<Meeting> GetMeetings()
@@ -28,18 +27,17 @@ namespace Backend.Domain
 
         public IEnumerable<DisciplineResults> GetMeetingResults(int meetingId)
         {
-            var disciplines = _disciplinesRepository.GetDisciplinesByMeetingId(meetingId);
-            if (disciplines == null)
-                return null;
-
-            var results = new List<DisciplineResults>();
-            
-            foreach (var discipline in disciplines)
-            {
-                results.Add(new DisciplineResults{Discipline = discipline});
-            }
-
-            return results;
+            return _meetingsRepository.GetMeetingResults(meetingId, readDiscipline: true)
+                .GroupBy(pair => pair.Discipline)
+                .Select(pairs => new DisciplineResults
+                {
+                    Discipline = pairs.Key,
+                    Results = pairs.Select(result =>
+                    {
+                        result.Discipline = null; 
+                        return result;
+                    })
+                });
         }
     }
 }

@@ -21,35 +21,7 @@ namespace Backend.Data.Repositories
             }
         }
 
-        public IEnumerable<Discipline> GetDisciplinesByMeetingId(int meetingId)
-        {
-            const string meetingIdKey = "meeting_id";
-            
-            using (var command = new MySqlCommand(Connection, Transaction)
-            {
-                Parameters = {new MySqlParameter(meetingIdKey, meetingId)}
-            })
-            {
-                // check is meeting exists in the db
-                command.CommandText = $"select {meetingIdKey} from meeting where {meetingIdKey} = @{meetingIdKey}";
-                
-                var exists = (int?) command.ExecuteScalar();
-                if (!exists.HasValue)
-                {
-                    return null;
-                }
-
-                // read disciplines from meeting results
-                command.CommandText = $"select * from meeting_discipline where {meetingIdKey} = @{meetingIdKey}";
-
-                using (var reader = command.ExecuteReader())
-                {
-                    return ReadDisciplines(reader);
-                }
-            }
-        }
-
-        private static Discipline GetDiscipline(MySqlDataReader reader)
+        public static Discipline GetDiscipline(MySqlDataReader reader)
         {
             return new Discipline
             {

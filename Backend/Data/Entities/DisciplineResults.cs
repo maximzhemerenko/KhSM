@@ -5,6 +5,6 @@ namespace Backend.Data.Entities
     public class DisciplineResults
     {
         public Discipline Discipline { get; set; }
-        // todo: add results
+        public IEnumerable<Result> Results { get; set; }
     }
 }
