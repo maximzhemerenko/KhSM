@@ -59,6 +59,11 @@ GET meetings/{id}/results
 
 Response: Array\<[DisciplineResults](#disciplineresults)\>
 
+## Get last meeting
+GET meetings/last
+
+Response: [Meeting](#meeting)
+
 ## Get disciplines
 GET disciplines
 

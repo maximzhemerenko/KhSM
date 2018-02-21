@@ -37,10 +37,19 @@ namespace Backend.Data.Repositories
                 })
             using (var reader = command.ExecuteReader())
             {
-                return reader.Read() ? GetMeeting(reader) : null;
+                return ReadMeeting(reader);
             }
         }
-
+        
+        public Meeting GetLastMeeting()
+        {
+            using (var command = new MySqlCommand("select * from meeting order by date desc limit 1", Connection, Transaction))
+            using (var reader = command.ExecuteReader())
+            {
+                return ReadMeeting(reader);
+            }
+        }
+        
         public static Meeting GetMeeting(MySqlDataReader reader)
         {
             return new Meeting
@@ -49,6 +58,11 @@ namespace Backend.Data.Repositories
                 Number = reader.GetInt32("meeting_number"),
                 Date = reader.GetDateTimeOffset("date")
             };
+        }
+
+        public static Meeting ReadMeeting(MySqlDataReader reader)
+        {
+            return reader.Read() ? GetMeeting(reader) : null;
         }
     }
 }

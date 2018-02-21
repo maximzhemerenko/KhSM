@@ -23,5 +23,10 @@ namespace Backend.Domain
         {
             return _meetingsRepository.GetMeeting(id);
         }
+
+        public Meeting GetLastMeeting()
+        {
+            return _meetingsRepository.GetLastMeeting();
+        }
     }
 }

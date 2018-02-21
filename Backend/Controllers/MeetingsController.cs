@@ -36,6 +36,18 @@ namespace Backend.Controllers
             return Json(meeting);
         }
 
+        [HttpGet("last")]
+        [ProducesResponseType(typeof(Meeting), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public IActionResult GetLast()
+        {
+            var meeting = _meetingsManager.GetLastMeeting();
+            if (meeting == null)
+                return NotFound();
+            
+            return Json(meeting);
+        }
+
         [HttpGet("{id}/results")]
         [ProducesResponseType(typeof(IEnumerable<DisciplineResults>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
