@@ -63,7 +63,7 @@ insert into attempt(result_id, `time`)
 values(@result_id, 97.64);
 
 insert into attempt(result_id, `time`)
-values(@result_id, 99.64);
+values(@result_id, null);
 
 insert into attempt(result_id, `time`)
 values(@result_id, 101.64);
