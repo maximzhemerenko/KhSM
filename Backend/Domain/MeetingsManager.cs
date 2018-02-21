@@ -27,9 +27,7 @@ namespace Backend.Domain
 
         public IEnumerable<DisciplineResults> GetMeetingResults(int meetingId)
         {
-            var meetingResults = _meetingsRepository.GetMeetingResults(meetingId, readDiscipline: true);
-
-            return meetingResults?
+            return _meetingsRepository.GetMeetingResults(meetingId, readDiscipline: true)?
                 .GroupBy(pair => pair.Discipline)
                 .Select(pairs => new DisciplineResults
                 {
