@@ -105,6 +105,7 @@ public class MeetingResultsFragment extends Fragment {
 
     private void loadResults() {
         progressBar.setVisibility(View.VISIBLE);
+        tabLayout.setVisibility(View.INVISIBLE);
 
         if (loadDisposable != null) {
             loadDisposable.dispose();
@@ -122,6 +123,7 @@ public class MeetingResultsFragment extends Fragment {
 
     private void setResults(List<DisciplineResults> disciplineResults) {
         progressBar.setVisibility(View.INVISIBLE);
+        tabLayout.setVisibility(!disciplineResults.isEmpty() ? View.VISIBLE : View.INVISIBLE);
 
         tabLayout.removeAllTabs();
 
