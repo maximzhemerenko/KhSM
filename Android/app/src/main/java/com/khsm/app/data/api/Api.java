@@ -30,4 +30,9 @@ public class Api extends ApiBase {
         return restApi.getMeetingResults(id)
                 .compose(this::processResponse);
     }
+
+    public Single<Meeting> getLastMeeting() {
+        return restApi.getLastMeeting()
+                .compose(this::processResponse);
+    }
 }

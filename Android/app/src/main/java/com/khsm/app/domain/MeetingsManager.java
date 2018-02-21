@@ -18,4 +18,8 @@ public class MeetingsManager {
     public Single<List<Meeting>> getMeetings() {
         return api.getMeetings();
     }
+
+    public Single<Meeting> getLastMeeting() {
+        return api.getLastMeeting();
+    }
 }

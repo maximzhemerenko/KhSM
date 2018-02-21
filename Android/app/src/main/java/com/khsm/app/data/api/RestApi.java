@@ -14,6 +14,9 @@ interface RestApi {
     @GET("api/meetings")
     Single<List<Meeting>> getMeetings();
 
+    @GET("api/meetings/last")
+    Single<Meeting> getLastMeeting();
+
     @GET("api/disciplines")
     Single<List<Discipline>> getDisciplines();
 

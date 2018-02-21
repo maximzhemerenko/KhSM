@@ -5,8 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
 import com.khsm.app.R;
-import com.khsm.app.presentation.ui.screens.disciplines.DisciplineListFragment;
-import com.khsm.app.presentation.ui.screens.meetings.MeetingListFragment;
+import com.khsm.app.presentation.ui.screens.meetings.MeetingResultsFragment;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -17,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.content, MeetingListFragment.newInstance())
+                    .replace(R.id.content, MeetingResultsFragment.newInstance(null))
                     .commit();
         }
     }
