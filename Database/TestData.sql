@@ -57,19 +57,19 @@ values(@meeting_id_1, @user_id_maxim, @discipline_id_3_3, 100.64);
 set @result_id = last_insert_id();
 
 insert into attempt(result_id, `time`)
-values(@result_id, 95.64);
+values(@result_id, 15.64);
 
 insert into attempt(result_id, `time`)
-values(@result_id, 97.64);
+values(@result_id, 14.64);
 
 insert into attempt(result_id, `time`)
 values(@result_id, null);
 
 insert into attempt(result_id, `time`)
-values(@result_id, 101.64);
+values(@result_id, 10.64);
 
 insert into attempt(result_id, `time`)
-values(@result_id, 103.64);
+values(@result_id, 13.64);
 
 insert into result(meeting_id, user_id, discipline_id, average)
 values(@meeting_id_1, @user_id_masha, @discipline_id_3_3, 10.00);

@@ -108,10 +108,12 @@ create view meeting_results as
 select
   m.meeting_id, m.meeting_number, m.date,
   d.discipline_id, d.name, d.description, d.attempt_count,
-  r.result_id, r.average, r.user_id,
+  r.result_id, r.average,
+  u.user_id, u.first_name, u.last_name, u.city, u.gender, u.wca_id, u.phone_number, u.birth_date, u.approved, 
   a.attempt_id, a.time
 from meeting m
   inner join result r on m.meeting_id = r.meeting_id
   inner join discipline d on r.discipline_id = d.discipline_id
+  inner join user u on r.user_id = u.user_id
   left join attempt a on r.result_id = a.result_id
 order by m.meeting_id, r.result_id, a.attempt_id;

@@ -14,7 +14,7 @@ namespace Backend.Data.Repositories
         {
         }
 
-        public IEnumerable<Result> GetMeetingResults(int meetingId, bool readMeeting = false, bool readDiscipline = false)
+        public IEnumerable<Result> GetMeetingResults(int meetingId, bool readMeeting = false, bool readDiscipline = false, bool readUser = false)
         {
             const string meetingIdKey = "meeting_id";
             
@@ -32,7 +32,7 @@ namespace Backend.Data.Repositories
                     return null;
                 }
 
-                // read results from meeting results
+                // read results from meeting
                 command.CommandText = $"select * from meeting_results where {meetingIdKey} = @{meetingIdKey}";
 
                 using (var reader = command.ExecuteReader())
@@ -50,6 +50,8 @@ namespace Backend.Data.Repositories
                                 result.Meeting = MeetingsRepository.GetMeeting(reader);
                             if (readDiscipline)
                                 result.Discipline = DisciplinesRepository.GetDiscipline(reader);
+                            if (readUser)
+                                result.User = UserRepository.GetUser(reader);
                             
                             attempts = new List<Attempt>();
                             

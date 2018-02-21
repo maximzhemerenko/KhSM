@@ -10,6 +10,7 @@ namespace Backend.Data.Entities
         [Required]
         public Meeting Meeting { get; set; }
         public Discipline Discipline { get; set; }
+        public User User { get; set; }
         public decimal? Average { get; set; }
         [Required]
         public IEnumerable<decimal?> Attemts { get; set; }
