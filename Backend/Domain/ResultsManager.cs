@@ -5,6 +5,7 @@ using Backend.Data.Repositories;
 
 namespace Backend.Domain
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class ResultsManager
     {
         private readonly ResultsRepository _resultsRepository;

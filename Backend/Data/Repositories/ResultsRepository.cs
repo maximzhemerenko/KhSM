@@ -7,6 +7,7 @@ using MySql.Data.MySqlClient;
 
 namespace Backend.Data.Repositories
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class ResultsRepository : BaseRepository
     {
         public ResultsRepository(DatabaseContext databaseContext) : base(databaseContext)
