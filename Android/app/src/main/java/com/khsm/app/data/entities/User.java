@@ -12,11 +12,11 @@ public class User {
     @SerializedName("wcaid")
     public final String wcaId;
     public final String phoneNumber;
-    public final String gender;
+    public final Gender gender;
     public final Date birthDate;
     public final Date approved;
 
-    public User(Integer id, String firstName, String lastName, String city, String wcaId, String phoneNumber, String gender, Date birthDate, Date approved) {
+    public User(Integer id, String firstName, String lastName, String city, String wcaId, String phoneNumber, Gender gender, Date birthDate, Date approved) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
