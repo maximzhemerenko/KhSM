@@ -122,4 +122,4 @@ from meeting m
   inner join discipline d on r.discipline_id = d.discipline_id
   inner join user u on r.user_id = u.user_id
   left join attempt a on r.result_id = a.result_id
-order by m.meeting_id, r.average;
+order by m.meeting_id, d.discipline_id, r.average;

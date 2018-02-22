@@ -8,17 +8,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.khsm.app.R;
-import com.khsm.app.data.entities.Discipline;
 import com.khsm.app.data.entities.DisciplineResults;
-import com.khsm.app.data.entities.Meeting;
 import com.khsm.app.data.entities.Result;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-
-import io.reactivex.annotations.Nullable;
 
 public class MeetingResultsAdapter extends RecyclerView.Adapter<MeetingResultsAdapter.ViewHolder> {
     private MeetingResultsFragment meetingResultsFragment;
@@ -39,7 +32,7 @@ public class MeetingResultsAdapter extends RecyclerView.Adapter<MeetingResultsAd
 
     @Override
     public MeetingResultsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.discipline_details_result_item, parent, false);
+        View view = inflater.inflate(R.layout.meeting_results_item, parent, false);
 
         ViewHolder viewHolder = new ViewHolder(view);
 
@@ -47,8 +40,9 @@ public class MeetingResultsAdapter extends RecyclerView.Adapter<MeetingResultsAd
     }
 
     @Override
-    public void onBindViewHolder(MeetingResultsAdapter.ViewHolder holder, int position) {;
+    public void onBindViewHolder(MeetingResultsAdapter.ViewHolder holder, int position) {
         Result result = disciplineResults.results.get(position);
+
         holder.userName.setText((position + 1) + " " + result.user.firstName + " " + result.user.lastName);
 
         String results = formatTime(result.average);
