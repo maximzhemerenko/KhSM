@@ -3,4 +3,7 @@
   <!-- Dictionary -->
   <string name="Error">Ошибка</string>
   <string name="OK">OK</string>
+  <string name="Meetings">Встречи</string>
+  <string name="Disciplines">Дисциплины</string>
+  <string name="Last_Meeting">Последняя встреча</string>
 </resources>

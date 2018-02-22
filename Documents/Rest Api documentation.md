@@ -59,6 +59,11 @@ GET meetings/{id}/results
 
 Response: Array\<[DisciplineResults](#disciplineresults)\>
 
+## Get last meeting
+GET meetings/last
+
+Response: [Meeting](#meeting)
+
 ## Get disciplines
 GET disciplines
 
@@ -118,7 +123,7 @@ Response: Array\<[DisciplineResults](#disciplineresults)\>
 - id: Integer
 - name: String
 - description: String
-- attempsCount: Integer
+- attemptsCount: Integer
 
 ## DisciplineResults
 - discipline: [Discipline](#discipline)

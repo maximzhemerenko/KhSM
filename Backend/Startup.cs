@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace Backend
@@ -21,7 +23,15 @@ namespace Backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services
+                .AddMvc()
+                .AddJsonOptions(options =>
+                {
+                    var serializerSettings = options.SerializerSettings;
+                    
+                    serializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                    serializerSettings.Converters.Add(new StringEnumConverter(true));
+                });
 
             services.AddSwaggerGen(c =>
             {
@@ -29,8 +39,14 @@ namespace Backend
             });
 
             services.AddScoped<DatabaseContext>();
-            services.AddScoped<UsersRepository>();
-            services.AddScoped<UsersManager>();
+            
+            services.AddScoped<MeetingsRepository>();
+            services.AddScoped<DisciplinesRepository>();
+            services.AddScoped<ResultsRepository>();
+
+            services.AddScoped<MeetingsManager>();
+            services.AddScoped<DisciplinesManager>();
+            services.AddScoped<ResultsManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

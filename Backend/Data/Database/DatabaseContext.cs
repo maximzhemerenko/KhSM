@@ -1,9 +1,9 @@
 ﻿using System;
-using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
 
 namespace Backend.Data.Database
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class DatabaseContext : IDisposable
     {
         public MySqlConnection Connection { get; }

@@ -11,6 +11,7 @@ namespace Backend.Data.Repositories
         }
 
         private DatabaseContext DatabaseContext { get; }
-        protected MySqlConnection Connection => DatabaseContext.Connection;
+        public MySqlConnection Connection => DatabaseContext.Connection;
+        public MySqlTransaction Transaction { get; set; }
     }
 }
