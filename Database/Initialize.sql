@@ -10,6 +10,11 @@ grant select, insert, update, delete on kh_sm.* TO 'kh_sm'@'localhost';
 
 -- tables
 
+create table Gender
+(
+	gender varchar(8) primary key not null
+);
+
 create table User
 (
     user_id int primary key auto_increment not null,
@@ -20,7 +25,8 @@ create table User
     phone_number varchar(16) null,
     gender varchar(8) not null,
     birth_date date null,
-    approved date null
+    approved date null,
+    foreign key (gender) references Gender(gender)
 );
 
 create table Meeting

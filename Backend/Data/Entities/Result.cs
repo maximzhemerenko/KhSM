@@ -7,7 +7,6 @@ namespace Backend.Data.Entities
     {
         [Required]
         public int Id { get; set; }
-        [Required]
         public Meeting Meeting { get; set; }
         public Discipline Discipline { get; set; }
         public User User { get; set; }

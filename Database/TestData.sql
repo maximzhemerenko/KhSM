@@ -3,10 +3,18 @@ set SQL_SAFE_UPDATES = 0;
 
 delete from attempt;
 delete from result;
-delete from `user`;
 delete from meeting;
 delete from discipline;
+delete from `user`;
+delete from gender;
 
+-- gender
+
+insert into gender(gender)
+values('male');
+
+insert into gender(gender)
+values('female');
 
 -- users
 

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace Backend
@@ -24,7 +25,13 @@ namespace Backend
         {
             services
                 .AddMvc()
-                .AddJsonOptions(options => options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore);
+                .AddJsonOptions(options =>
+                {
+                    var serializerSettings = options.SerializerSettings;
+                    
+                    serializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                    serializerSettings.Converters.Add(new StringEnumConverter(true));
+                });
 
             services.AddSwaggerGen(c =>
             {
