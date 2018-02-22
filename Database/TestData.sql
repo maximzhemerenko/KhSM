@@ -15,7 +15,7 @@ values ('Максим', 'Жемеренко', 'male');
 SET @user_id_maxim = last_insert_id();
 
 insert into `user`(first_name, last_name, gender)
-values ('Маша', 'Мазел', 'male');
+values ('Маша', 'Мазел', 'female');
 SET @user_id_masha = last_insert_id();
 
 -- meetigs
@@ -76,7 +76,7 @@ values(@meeting_id_1, @user_id_masha, @discipline_id_3_3, 10.00);
 set @result_id = last_insert_id();
 
 insert into result(meeting_id, user_id, discipline_id, average)
-values(@meeting_id_1, @user_id_masha, @discipline_id_2_2, 5.00);
+values(@meeting_id_1, @user_id_masha, @discipline_id_2_2, null);
 set @result_id = last_insert_id();
 
 insert into result(meeting_id, user_id, discipline_id, average)

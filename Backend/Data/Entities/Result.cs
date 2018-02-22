@@ -13,7 +13,7 @@ namespace Backend.Data.Entities
         public User User { get; set; }
         public decimal? Average { get; set; }
         [Required]
-        public IEnumerable<decimal?> Attemts { get; set; }
+        public IEnumerable<decimal?> Attempts { get; set; }
 
         protected bool Equals(Result other)
         {

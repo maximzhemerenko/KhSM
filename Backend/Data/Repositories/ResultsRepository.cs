@@ -73,7 +73,7 @@ namespace Backend.Data.Repositories
                     {
                         var result = pair.Key;
                         
-                        result.Attemts = pair.Value.Select(attempt => attempt.Time);
+                        result.Attempts = pair.Value.Select(attempt => attempt.Time);
                         
                         return result;
                     });

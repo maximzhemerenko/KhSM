@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -46,6 +48,9 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
         return fragment;
     }
 
+    @SuppressWarnings("FieldCanBeLocal")
+    private RecyclerView recyclerView;
+
     private ProgressBar progressBar;
 
     @Nullable
@@ -61,6 +66,8 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
 
     private TabLayout tabLayout;
 
+    private MeetingResultsAdapter adapter;
+
     private boolean lastMeetingMode;
 
     @Nullable
@@ -72,6 +79,7 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
 
         meetingsManager = new MeetingsManager();
         resultsManager = new ResultsManager();
+        adapter = new MeetingResultsAdapter(getContext(), this);
     }
 
     @Override
@@ -100,6 +108,10 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
         tabLayout.setVisibility(View.INVISIBLE);
         tabLayout.addOnTabSelectedListener(onTabSelectedListener);
 
+        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(adapter);
+
         progressBar = view.findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
 
@@ -117,7 +129,7 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
         @Override
         public void onTabSelected(TabLayout.Tab tab) {
             DisciplineResults disciplineResults = (DisciplineResults) tab.getTag();
-            onDisciplineClicked(disciplineResults);
+            setDisciplineResults(disciplineResults);
         }
 
         @Override
@@ -171,12 +183,12 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        this::setResults,
+                        this::setDisciplineResults,
                         this::handleError
                 );
     }
 
-    private void setResults(List<DisciplineResults> disciplineResults) {
+    private void setDisciplineResults(List<DisciplineResults> disciplineResults) {
         progressBar.setVisibility(View.INVISIBLE);
 
         tabLayout.removeAllTabs();
@@ -190,6 +202,8 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
         if (showTabs) {
             tabLayout.setAlpha(0);
             tabLayout.animate().alpha(1).setDuration(300).start();
+            recyclerView.setAlpha(0);
+            recyclerView.animate().alpha(1).setDuration(300).start();
         }
     }
 
@@ -203,9 +217,8 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
                 .show();
     }
 
-    private void onDisciplineClicked(DisciplineResults disciplineResults) {
-        Toast.makeText(getContext(), disciplineResults.discipline.name, Toast.LENGTH_SHORT).show();
-        // TODO: 21.02.2018 show results in recycler view
+    private void setDisciplineResults(DisciplineResults disciplineResults) {
+        adapter.setResults(disciplineResults);
     }
 
     private void showMeetingList() {
