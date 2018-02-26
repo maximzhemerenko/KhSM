@@ -20,7 +20,8 @@ public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
 
-    ImageView avatar_imageView;
+    @SuppressWarnings("FieldCanBeLocal")
+    private ImageView avatar_imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
