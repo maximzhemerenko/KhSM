@@ -20,10 +20,21 @@ public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
 
+    ImageView avatar_imageView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+
+        avatar_imageView = headerView.findViewById(R.id.avatar_imageView);
+
+        navigationView.setNavigationItemSelectedListener(onNavigationItemSelectedListener);
 
         if (savedInstanceState == null) {
             getSupportFragmentManager()
@@ -32,42 +43,31 @@ public class MainActivity extends AppCompatActivity {
                     .commit();
         }
 
-        drawerLayout = findViewById(R.id.drawer_layout);
-
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        View headerView = navigationView.getHeaderView(0);
-        ImageView avatar_imageView = headerView.findViewById(R.id.avatar_imageView);
+        // TODO: 26.02.2018 fix this temporary implementation
         Glide.with(this)
                 .load("http://animals.yakohl.com/pic/schneeeule-2592013.jpg")
                 .apply(RequestOptions.circleCropTransform())
                 .into(avatar_imageView);
-
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        // set item as selected to persist highlight
-                        menuItem.setChecked(true);
-                        // close drawer when item is tapped
-                        drawerLayout.closeDrawers();
-
-                        if (menuItem.getItemId() == R.id.last_meeting)
-                        {
-                            replaceFragment(MeetingResultsFragment.newInstance(null));
-                        }
-                        else if (menuItem.getItemId() == R.id.meetings)
-                        {
-                            replaceFragment(MeetingListFragment.newInstance());
-                        }
-                        else if (menuItem.getItemId() == R.id.disciplines)
-                        {
-                            replaceFragment(DisciplineListFragment.newInstance());
-                        }
-
-                        return true;
-                    }
-                });
     }
+
+    private NavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener = new NavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(MenuItem menuItem) {
+            menuItem.setChecked(true);
+
+            if (menuItem.getItemId() == R.id.last_meeting) {
+                replaceFragment(MeetingResultsFragment.newInstance(null));
+            } else if (menuItem.getItemId() == R.id.meetings) {
+                replaceFragment(MeetingListFragment.newInstance());
+            } else if (menuItem.getItemId() == R.id.disciplines) {
+                replaceFragment(DisciplineListFragment.newInstance());
+            }
+
+            drawerLayout.closeDrawers();
+
+            return true;
+        }
+    };
 
     public void replaceFragment(Fragment fragment) {
         getSupportFragmentManager()
