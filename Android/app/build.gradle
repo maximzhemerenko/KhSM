@@ -43,4 +43,8 @@ dependencies {
     // com.squareup.okhttp3
     implementation "com.squareup.okhttp3:okhttp:$project.OKHTTP3_VERSION"
     implementation "com.squareup.okhttp3:logging-interceptor:$project.OKHTTP3_VERSION"
+
+    // glide
+    implementation 'com.github.bumptech.glide:glide:4.6.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
 }

@@ -6,4 +6,8 @@
   <string name="Meetings">Meetings</string>
   <string name="Disciplines">Disciplines</string>
   <string name="Last_Meeting">Last Meeting</string>
+  <string name="My_Profile">My profile</string>
+  <string name="Rankings">Rankings</string>
+  <string name="News">News</string>
+  <string name="Logout">Logout</string>
 </resources>
