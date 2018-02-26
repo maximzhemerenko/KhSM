@@ -38,15 +38,22 @@ namespace Backend
                 c.SwaggerDoc("v1", new Info {Title = "KhSM API", Version = "v1"});
             });
 
+            ConfigDataServices(services);
+        }
+
+        public static void ConfigDataServices(IServiceCollection services)
+        {
             services.AddScoped<DatabaseContext>();
             
             services.AddScoped<MeetingsRepository>();
             services.AddScoped<DisciplinesRepository>();
             services.AddScoped<ResultsRepository>();
+            services.AddTransient<UserRepository>();
 
             services.AddScoped<MeetingsManager>();
             services.AddScoped<DisciplinesManager>();
             services.AddScoped<ResultsManager>();
+            services.AddScoped<UsersManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

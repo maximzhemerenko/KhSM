@@ -27,8 +27,7 @@ namespace Backend.Data.Repositories
             {
                 Id = reader.GetInt32("discipline_id"),
                 Name = reader.GetString("name"),
-                Description = reader.GetString("description"),
-                AttemptsCount = reader.GetInt32("attempt_count")
+                Description = reader.GetString("description")
             };
         }
         

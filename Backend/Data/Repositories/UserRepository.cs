@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Backend.Data.Database;
 using Backend.Data.Entities;
 using MySql.Data.MySqlClient;
@@ -11,12 +12,28 @@ namespace Backend.Data.Repositories
         public UserRepository(DatabaseContext databaseContext) : base(databaseContext)
         {
         }
+        
+        public IEnumerable<User> GetUsers()
+        {
+            using (var command = new MySqlCommand("select * from user", Connection, Transaction))
+            using (var reader = command.ExecuteReader())
+            {
+                var users = new List<User>();
 
+                while (reader.Read())
+                {
+                    users.Add(GetUser(reader));
+                }
+
+                return users;
+            }
+        }
+        
         public static User GetUser(MySqlDataReader reader)
         {
             return new User
             {
-                Id = reader.GetInt32("result_id"),
+                Id = reader.GetInt32("user_id"),
                 FirstName = reader.GetString("first_name"),
                 LastName = reader.GetString("last_name"),
                 City = !reader.IsDBNull(reader.GetOrdinal("city")) ? reader.GetString("city") : null,

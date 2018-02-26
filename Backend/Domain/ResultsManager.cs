@@ -36,5 +36,10 @@ namespace Backend.Domain
                     };
                 });
         }
+
+        public void AddResult(Result result)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
