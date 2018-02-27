@@ -60,6 +60,28 @@ namespace Backend.Data.Repositories
             };
         }
 
+        public void AddMeeting(Meeting meeting, MySqlTransaction transaction)
+        {
+            const string meetingNumberKey = "meeting_number";
+            const string dateKey = "date";
+            
+            using (var command = new MySqlCommand(Connection, transaction)
+            {
+                CommandText = $"insert into meeting({meetingNumberKey}, {dateKey}) " +
+                              $"values(@{meetingNumberKey}, @{dateKey})",
+                Parameters =
+                {
+                    new MySqlParameter(meetingNumberKey, meeting.Number),
+                    new MySqlParameter(dateKey, meeting.Date)
+                }
+            })
+            {
+                command.ExecuteNonQuery();
+
+                meeting.Id = (int) command.LastInsertedId;
+            }
+        }
+        
         public static Meeting ReadMeeting(MySqlDataReader reader)
         {
             return reader.Read() ? GetMeeting(reader) : null;

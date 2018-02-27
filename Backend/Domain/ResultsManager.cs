@@ -40,9 +40,9 @@ namespace Backend.Domain
                 });
         }
 
-        public Result AddResult(Result result)
+        public void AddResult(Result result)
         {
-            return _databaseContext.UseTransaction(transaction =>
+            _databaseContext.UseTransaction(transaction =>
                 _resultsRepository.AddResult(result, transaction)
             );
         }

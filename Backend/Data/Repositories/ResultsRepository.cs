@@ -104,14 +104,14 @@ namespace Backend.Data.Repositories
             };
         }
 
-        public Result AddResult(Result result, MySqlTransaction transaction)
+        public void AddResult(Result result, MySqlTransaction transaction)
         {
             const string userIdKey = "user_id";
             const string meetingIdKey = "meeting_id";
             const string disciplineIdKey = "discipline_id";
             const string averageKey = "average";
             const string attemptCountKey = "attempt_count";
-            
+
             using (var command = new MySqlCommand(Connection, transaction)
             {
                 CommandText = $"insert into result({averageKey}, {userIdKey}, {meetingIdKey}, {disciplineIdKey}, {attemptCountKey}) " +
@@ -129,8 +129,39 @@ namespace Backend.Data.Repositories
                 command.ExecuteNonQuery();
 
                 result.Id = (int) command.LastInsertedId;
+            }
+            
+            foreach (var attemptTime in result.Attempts)
+            {
+                var attempt = new Attempt
+                {
+                    Result = result,
+                    Time = attemptTime
+                };
 
-                return result;
+                AddAttempt(attempt, transaction);
+            }
+        }
+
+        private void AddAttempt(Attempt attempt, MySqlTransaction transaction)
+        {
+            const string resultIdKey = "result_id";
+            const string timeKey = "time";
+            
+            using (var command = new MySqlCommand(Connection, transaction)
+            {
+                CommandText = $"insert into attempt({resultIdKey}, {timeKey}) " +
+                              $"values(@{resultIdKey}, @{timeKey})",
+                Parameters =
+                {
+                    new MySqlParameter(resultIdKey, attempt.Result.Id),
+                    new MySqlParameter(timeKey, attempt.Time)
+                }
+            })
+            {
+                command.ExecuteNonQuery();
+
+                attempt.Id = (int) command.LastInsertedId;
             }
         }
     }

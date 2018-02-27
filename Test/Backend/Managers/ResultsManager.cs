@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Backend;
 using Backend.Data.Entities;
@@ -27,12 +28,26 @@ namespace TestProject.Managers
             _resultsManager = serviceProvider.GetService<Backend.Domain.ResultsManager>();
             _usersManager = serviceProvider.GetService<UsersManager>();
         }
+
+        [Fact]
+        public void AddMeeting()
+        {
+            var meeting = new Meeting
+            {
+                Date = DateTimeOffset.Now
+            };
+            
+            _meetingsManager.AddMeeting(meeting);
+            
+            Assert.True(meeting.Id > 0);
+        }
         
         [Fact]
         public void AddResult()
         {
-            var meeting1 = _meetingsManager.GetMeeting(1);
-            Assert.NotNull(meeting1);
+            var meeting = new Meeting{Date = DateTimeOffset.Now};
+            _meetingsManager.AddMeeting(meeting);
+            Assert.NotNull(meeting);
 
             var discipline = _disciplinesManager.GetDisciplinesAsync().Single(d => d.Name == "3x3");
 
@@ -42,16 +57,15 @@ namespace TestProject.Managers
             {
                 Attempts = Attempts(5, 7, 10, 11, 13),
                 Discipline = discipline,
-                Meeting = meeting1,
+                Meeting = meeting,
                 User = maxim
             };
 
             _resultsManager.AddResult(result);
+            
+            Assert.True(result.Id > 0);
         }
 
-        private IEnumerable<decimal?> Attempts(params decimal?[] attempts)
-        {
-            return attempts.ToArray();
-        }
+        private static IEnumerable<decimal?> Attempts(params decimal?[] attempts) => attempts.ToArray();
     }
 }
