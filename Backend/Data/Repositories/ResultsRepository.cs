@@ -122,7 +122,7 @@ namespace Backend.Data.Repositories
                     new MySqlParameter(meetingIdKey, result.Meeting.Id),
                     new MySqlParameter(disciplineIdKey, result.Discipline.Id),
                     new MySqlParameter(averageKey, result.Average),
-                    new MySqlParameter(attemptCountKey, 1)
+                    new MySqlParameter(attemptCountKey, result.AttemptCount)
                 }
             })
             {

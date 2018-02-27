@@ -55,6 +55,7 @@ namespace Backend.Domain
                 var countingFormula = CountingFormula.Get(discipline.Counting);
 
                 result.Average = countingFormula.ComputeAverage(result.Attempts);
+                result.AttemptCount = countingFormula.AttemptCount;
 
                 _resultsRepository.AddResult(result, transaction);
             });

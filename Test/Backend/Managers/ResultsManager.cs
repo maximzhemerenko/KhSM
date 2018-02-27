@@ -55,7 +55,7 @@ namespace TestProject.Managers
 
             var result = new Result
             {
-                Attempts = Attempts(5, 7, 10, 11, 13),
+                Attempts = Attempts(5, 7, null, 11, 13),
                 Discipline = discipline,
                 Meeting = meeting,
                 User = maxim

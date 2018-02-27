@@ -9,7 +9,9 @@ namespace Backend.Domain.Formula
         private CountingFormula()
         {
         }
-        
+
+        public abstract int AttemptCount { get; }
+
         public abstract decimal? ComputeAverage(IEnumerable<decimal?> attempts);
 
         public static CountingFormula Get(string counting)
@@ -29,6 +31,8 @@ namespace Backend.Domain.Formula
 
         private class Avg5 : CountingFormula
         {
+            public override int AttemptCount => 5;
+
             public override decimal? ComputeAverage(IEnumerable<decimal?> attempts)
             {
                 return attempts.Average(arg => arg); // todo
@@ -37,6 +41,8 @@ namespace Backend.Domain.Formula
 
         private class Mo3 : CountingFormula
         {
+            public override int AttemptCount => 3;
+            
             public override decimal? ComputeAverage(IEnumerable<decimal?> attempts)
             {
                 throw new NotSupportedException();
@@ -45,6 +51,8 @@ namespace Backend.Domain.Formula
 
         private class Bo3 : CountingFormula
         {
+            public override int AttemptCount => 3;
+            
             public override decimal? ComputeAverage(IEnumerable<decimal?> attempts)
             {
                 throw new NotSupportedException();
