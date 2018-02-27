@@ -18,7 +18,7 @@ namespace Backend.Data.Repositories
         {
             const string meetingIdKey = "meeting_id";
             
-            using (var command = new MySqlCommand(Connection, Transaction)
+            using (var command = new MySqlCommand(Connection, null)
             {
                 Parameters = {new MySqlParameter(meetingIdKey, meetingId)}
             })
@@ -102,6 +102,36 @@ namespace Backend.Data.Repositories
                 Id = reader.GetInt32(attemptIdKey),
                 Time = !reader.IsDBNull(reader.GetOrdinal("time")) ? (decimal?)reader.GetDecimal("time") : null
             };
+        }
+
+        public Result AddResult(Result result, MySqlTransaction transaction)
+        {
+            const string userIdKey = "user_id";
+            const string meetingIdKey = "meeting_id";
+            const string disciplineIdKey = "discipline_id";
+            const string averageKey = "average";
+            const string attemptCountKey = "attempt_count";
+            
+            using (var command = new MySqlCommand(Connection, transaction)
+            {
+                CommandText = $"insert into result({averageKey}, {userIdKey}, {meetingIdKey}, {disciplineIdKey}, {attemptCountKey}) " +
+                              $"values(@{averageKey}, @{userIdKey}, @{meetingIdKey}, @{disciplineIdKey}, @{attemptCountKey})",
+                Parameters =
+                {
+                    new MySqlParameter(userIdKey, result.User.Id),
+                    new MySqlParameter(meetingIdKey, result.Meeting.Id),
+                    new MySqlParameter(disciplineIdKey, result.Discipline.Id),
+                    new MySqlParameter(averageKey, 0),
+                    new MySqlParameter(attemptCountKey, 1)
+                }
+            })
+            {
+                command.ExecuteNonQuery();
+
+                result.Id = (int) command.LastInsertedId;
+
+                return result;
+            }
         }
     }
 }

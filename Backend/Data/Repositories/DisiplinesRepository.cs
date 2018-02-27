@@ -14,7 +14,7 @@ namespace Backend.Data.Repositories
 
         public IEnumerable<Discipline> GetDisciplines()
         {
-            using (var command = new MySqlCommand("select * from discipline", Connection, Transaction))
+            using (var command = new MySqlCommand("select * from discipline", Connection))
             using (var reader = command.ExecuteReader())
             {
                 return ReadDisciplines(reader);

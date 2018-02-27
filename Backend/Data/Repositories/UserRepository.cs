@@ -15,7 +15,7 @@ namespace Backend.Data.Repositories
         
         public IEnumerable<User> GetUsers()
         {
-            using (var command = new MySqlCommand("select * from user", Connection, Transaction))
+            using (var command = new MySqlCommand("select * from user", Connection))
             using (var reader = command.ExecuteReader())
             {
                 var users = new List<User>();

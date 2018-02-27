@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Backend.Data.Database;
 using Backend.Data.Entities;
 using Backend.Data.Repositories;
 
@@ -8,10 +9,12 @@ namespace Backend.Domain
     // ReSharper disable once ClassNeverInstantiated.Global
     public class ResultsManager
     {
+        private readonly DatabaseContext _databaseContext;
         private readonly ResultsRepository _resultsRepository;
 
-        public ResultsManager(ResultsRepository resultsRepository)
+        public ResultsManager(DatabaseContext databaseContext, ResultsRepository resultsRepository)
         {
+            _databaseContext = databaseContext;
             _resultsRepository = resultsRepository;
         }
         
@@ -37,9 +40,11 @@ namespace Backend.Domain
                 });
         }
 
-        public void AddResult(Result result)
+        public Result AddResult(Result result)
         {
-            throw new System.NotImplementedException();
+            return _databaseContext.UseTransaction(transaction =>
+                _resultsRepository.AddResult(result, transaction)
+            );
         }
     }
 }
