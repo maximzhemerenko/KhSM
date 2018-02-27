@@ -9,6 +9,7 @@ namespace Backend.Data.Entities
         [Required]
         public string Name { get; set; }
         public string Description { get; set; }
+        public string Counting { get; set; }
 
         protected bool Equals(Discipline other)
         {

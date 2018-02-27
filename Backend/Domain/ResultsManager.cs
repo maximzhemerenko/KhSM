@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Backend.Data.Database;
 using Backend.Data.Entities;
 using Backend.Data.Repositories;
+using Backend.Domain.Formula;
 
 namespace Backend.Domain
 {
@@ -10,12 +12,14 @@ namespace Backend.Domain
     public class ResultsManager
     {
         private readonly DatabaseContext _databaseContext;
+        private readonly DisciplinesRepository _disciplinesRepository;
         private readonly ResultsRepository _resultsRepository;
 
-        public ResultsManager(DatabaseContext databaseContext, ResultsRepository resultsRepository)
+        public ResultsManager(DatabaseContext databaseContext, ResultsRepository resultsRepository, DisciplinesRepository disciplinesRepository)
         {
             _databaseContext = databaseContext;
             _resultsRepository = resultsRepository;
+            _disciplinesRepository = disciplinesRepository;
         }
         
         public IEnumerable<DisciplineResults> GetMeetingResults(int meetingId)
@@ -43,8 +47,17 @@ namespace Backend.Domain
         public void AddResult(Result result)
         {
             _databaseContext.UseTransaction(transaction =>
-                _resultsRepository.AddResult(result, transaction)
-            );
+            {
+                var discipline = _disciplinesRepository.GetDiscipline(result.Discipline.Id, transaction, true);
+                if (discipline == null)
+                    throw new ArgumentException("Bad discipline id is provided");
+
+                var countingFormula = CountingFormula.Get(discipline.Counting);
+
+                result.Average = countingFormula.ComputeAverage(result.Attempts);
+
+                _resultsRepository.AddResult(result, transaction);
+            });
         }
     }
 }
