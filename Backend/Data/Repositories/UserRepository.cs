@@ -52,5 +52,51 @@ namespace Backend.Data.Repositories
 
             return gender;
         }
+
+        public void AddUser(User user, MySqlTransaction transaction)
+        {
+            const string firstNameKey = "first_name";
+            const string lastNameKey = "last_name";
+            const string genderKey = "gender";
+            
+            using (var command = new MySqlCommand(Connection, transaction)
+            {
+                CommandText = $"insert into user({firstNameKey}, {lastNameKey}, {genderKey}) " +
+                              $"values(@{firstNameKey}, @{lastNameKey}, @{genderKey})",
+                Parameters =
+                {
+                    new MySqlParameter(firstNameKey, user.FirstName),
+                    new MySqlParameter(lastNameKey, user.LastName),
+                    new MySqlParameter(genderKey, user.Gender == Gender.Male ? "male" : "female")
+                }
+            })
+            {
+                command.ExecuteNonQuery();
+
+                user.Id = (int) command.LastInsertedId;
+            }
+        }
+
+        public void AddLogin(User user, byte[] passwordHash, MySqlTransaction transaction)
+        {
+            const string userIdKey = "user_id";
+            const string passwordHashKey = "password_hash";
+
+            using (var command = new MySqlCommand(Connection, transaction)
+            {
+                CommandText = $"insert into login({userIdKey}, {passwordHashKey}) " +
+                              $"values(@{userIdKey}, @{passwordHashKey})",
+                Parameters =
+                {
+                    new MySqlParameter(userIdKey, user.Id),
+                    new MySqlParameter(passwordHashKey, passwordHash)
+                }
+            })
+            {
+                command.ExecuteNonQuery();
+
+                user.Id = (int) command.LastInsertedId;
+            }
+        }
     }
 }

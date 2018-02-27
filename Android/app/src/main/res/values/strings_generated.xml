@@ -10,4 +10,12 @@
   <string name="Rankings">Rankings</string>
   <string name="News">News</string>
   <string name="Logout">Logout</string>
+  <string name="First_Name">First Name</string>
+  <string name="Last_Name">Last Name</string>
+  <string name="Email">Email</string>
+  <string name="Male">Male</string>
+  <string name="Female">Female</string>
+  <string name="Register">Register</string>
+  <string name="Password">Password</string>
+  <string name="Confirm_Password">Confirm Password</string>
 </resources>

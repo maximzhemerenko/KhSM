@@ -5,8 +5,7 @@ namespace Backend.Data.Entities
 {
     public class User
     {
-        [Required]
-        public int Id { get; set; }
+        public int? Id { get; set; }
         [Required]
         public string FirstName { get; set; }
         [Required]

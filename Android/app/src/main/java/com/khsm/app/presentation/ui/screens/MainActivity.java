@@ -15,6 +15,7 @@ import com.khsm.app.R;
 import com.khsm.app.presentation.ui.screens.disciplines.DisciplineListFragment;
 import com.khsm.app.presentation.ui.screens.meetings.MeetingListFragment;
 import com.khsm.app.presentation.ui.screens.meetings.MeetingResultsFragment;
+import com.khsm.app.presentation.ui.screens.register.RegisterActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -62,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
                 replaceFragment(MeetingListFragment.newInstance());
             } else if (menuItem.getItemId() == R.id.disciplines) {
                 replaceFragment(DisciplineListFragment.newInstance());
+            } else if (menuItem.getItemId() == R.id.logout) {
+                startActivity(RegisterActivity.newIntent(MainActivity.this));
             }
 
             drawerLayout.closeDrawers();
