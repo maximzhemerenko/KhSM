@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using Backend.Data.Database;
@@ -36,6 +37,31 @@ namespace Backend.Domain
                 
                 var session = CreateSession(createUserRequest.User);
                 
+                _sessionRepository.AddSession(session, transaction);
+                
+                return session;
+            });
+        }
+        
+        public Session Login(CreateSessionRequest createSessionRequest)
+        {
+            return _databaseContext.UseTransaction(transaction =>
+            {
+                var user = _userRepository.GetUserByEmail(createSessionRequest.Email, transaction);
+                if (user == null)
+                    throw new Exception("User does not exist");
+
+                var login = _userRepository.GetLoginByUserId(user.Id, transaction);
+                if (login == null)
+                    throw new Exception("Login does not exist");
+
+                var hash = Hash(createSessionRequest.Password);
+
+                if (!login.Hash.SequenceEqual(hash))
+                    throw new Exception("Password is not correct");
+
+                var session = CreateSession(user);
+
                 _sessionRepository.AddSession(session, transaction);
                 
                 return session;

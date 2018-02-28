@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Backend.Data.Database;
+using Backend.Data.Database.Entities;
 using Backend.Data.Entities;
 using MySql.Data.MySqlClient;
 
@@ -26,6 +27,24 @@ namespace Backend.Data.Repositories
                 }
 
                 return users;
+            }
+        }
+
+        public User GetUserByEmail(string email, MySqlTransaction transaction)
+        {
+            const string emailKey = "email";
+            
+            using (var command = new MySqlCommand(Connection, transaction)
+            {
+                CommandText = $"select * from user where {emailKey} = @{emailKey}",
+                Parameters =
+                {
+                    new MySqlParameter(emailKey, email)
+                }
+            })
+            using (var reader = command.ExecuteReader())
+            {
+                return reader.Read() ? GetUser(reader) : null;
             }
         }
         
@@ -99,6 +118,46 @@ namespace Backend.Data.Repositories
 
                 user.Id = (int) command.LastInsertedId;
             }
+        }
+
+        public Login GetLoginByUserId(int? userId, MySqlTransaction transaction)
+        {
+            const string userIdKey = "user_id";
+            const string passwordHashKey = "password_hash";
+            
+            using (var command = new MySqlCommand(Connection, transaction)
+            {
+                CommandText = $"select * from login where {userIdKey} = @{userIdKey}",
+                Parameters =
+                {
+                    new MySqlParameter(userIdKey, userId)
+                }
+            })
+            using (var reader = command.ExecuteReader())
+            {
+                return reader.Read() ? GetLogin(reader) : null;
+            }
+        }
+
+        private Login GetLogin(MySqlDataReader reader)
+        {
+            var login = new Login
+            {
+                Id = reader.GetInt32("user_id")
+            };
+            
+            var buffer = new byte[20];
+
+            var read = reader.GetBytes(reader.GetOrdinal("password_hash"), 0, buffer, 0, buffer.Length);
+
+            login.Hash = new byte[read];
+
+            for (var i = 0; i < read; i++)
+            {
+                login.Hash[i] = buffer[i];
+            }
+            
+            return login;
         }
     }
 }
