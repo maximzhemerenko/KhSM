@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 using Backend.Data.Database;
@@ -12,11 +13,13 @@ namespace Backend.Domain
     {
         private readonly UserRepository _userRepository;
         private readonly DatabaseContext _databaseContext;
+        private readonly SessionRepository _sessionRepository;
 
-        public UsersManager(UserRepository userRepository, DatabaseContext databaseContext)
+        public UsersManager(UserRepository userRepository, DatabaseContext databaseContext, SessionRepository sessionRepository)
         {
             _userRepository = userRepository;
             _databaseContext = databaseContext;
+            _sessionRepository = sessionRepository;
         }
 
         public IEnumerable<User> GetUsers()
@@ -24,32 +27,59 @@ namespace Backend.Domain
             return _userRepository.GetUsers();
         }
 
-        public void Register(CreateUserRequest createUserRequest)
+        public Session Register(CreateUserRequest createUserRequest)
         {
-            _databaseContext.UseTransaction(transaction =>
+            return _databaseContext.UseTransaction(transaction =>
             {
                 _userRepository.AddUser(createUserRequest.User, transaction);
                 _userRepository.AddLogin(createUserRequest.User, Hash(createUserRequest.Password), transaction);
+                
+                var session = CreateSession(createUserRequest.User);
+                
+                _sessionRepository.AddSession(session, transaction);
+                
+                return session;
             });
         }
         
         static byte[] Hash(string input)
         {
+            return Hash(Encoding.UTF8.GetBytes(input));
+        }
+
+        static byte[] Hash(byte[] input)
+        {
             using (var sha1 = new SHA1Managed())
             {
-                var hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(input));
-                /*var sb = new StringBuilder(hash.Length * 2);
-
-                foreach (byte b in hash)
-                {
-                    // can be "x2" if you want lowercase
-                    sb.Append(b.ToString("X2"));
-                }
-
-                return sb.ToString();*/
-
-                return hash;
+                return sha1.ComputeHash(input);
             }
+        }
+
+        static string ConvertBytesToString(byte[] input)
+        {
+            var sb = new StringBuilder();
+            foreach (var b in input)
+            {
+                sb.Append(b.ToString("X2"));
+            }
+
+            return sb.ToString();
+        }
+
+        private static Session CreateSession(User user)
+        {
+            var random = new Random();
+            
+            var bytes = new byte[40];
+            random.NextBytes(bytes);
+
+            var hash = Hash(bytes);
+
+            return new Session
+            {
+                Token = ConvertBytesToString(hash),
+                User = user
+            };
         }
     }
 }

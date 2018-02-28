@@ -58,16 +58,18 @@ namespace Backend.Data.Repositories
             const string firstNameKey = "first_name";
             const string lastNameKey = "last_name";
             const string genderKey = "gender";
+            const string emailKey = "email";
             
             using (var command = new MySqlCommand(Connection, transaction)
             {
-                CommandText = $"insert into user({firstNameKey}, {lastNameKey}, {genderKey}) " +
-                              $"values(@{firstNameKey}, @{lastNameKey}, @{genderKey})",
+                CommandText = $"insert into user({firstNameKey}, {lastNameKey}, {genderKey}, {emailKey}) " +
+                              $"values(@{firstNameKey}, @{lastNameKey}, @{genderKey}, @{emailKey})",
                 Parameters =
                 {
                     new MySqlParameter(firstNameKey, user.FirstName),
                     new MySqlParameter(lastNameKey, user.LastName),
-                    new MySqlParameter(genderKey, user.Gender == Gender.Male ? "male" : "female")
+                    new MySqlParameter(genderKey, user.Gender == Gender.Male ? "male" : "female"),
+                    new MySqlParameter(emailKey, user.Email)
                 }
             })
             {

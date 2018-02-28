@@ -16,8 +16,7 @@ namespace Backend.Controllers
         [HttpPost]
         public Session Register(CreateUserRequest createUserRequest)
         {
-            _usersManager.Register(createUserRequest);
-            return null;
+            return _usersManager.Register(createUserRequest);
         }
     }
 }

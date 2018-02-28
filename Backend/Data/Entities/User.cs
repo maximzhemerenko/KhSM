@@ -18,5 +18,7 @@ namespace Backend.Data.Entities
         public Gender Gender { get; set; }
         public DateTimeOffset? BirthDate { get; set; }
         public DateTimeOffset? Approved { get; set; }
+        [Required]
+        public string Email { get; set; }
     }
 }

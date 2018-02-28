@@ -9,5 +9,7 @@ namespace Backend.Data.Entities
         public User User { get; set; }
         [Required]
         public string Token { get; set; }
+        [Required]
+        public DateTimeOffset Created { get; set; }
     }
 }
