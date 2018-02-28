@@ -73,7 +73,7 @@ namespace Backend.Data.Repositories
                     {
                         var result = pair.Key;
                         
-                        result.Attempts = pair.Value.Select(attempt => attempt.Time);
+                        result.Attempts = pair.Value.Select(attempt => attempt.Time).ToList();
                         
                         return result;
                     });
@@ -86,7 +86,8 @@ namespace Backend.Data.Repositories
             return new Result
             {
                 Id = reader.GetInt32("result_id"),
-                Average = !reader.IsDBNull(reader.GetOrdinal("average")) ? (decimal?)reader.GetDecimal("average") : null
+                Average = !reader.IsDBNull(reader.GetOrdinal("average")) ? (decimal?)reader.GetDecimal("average") : null,
+                AttemptCount = reader.GetInt32("attempt_count")
             };
         }
 
@@ -121,8 +122,8 @@ namespace Backend.Data.Repositories
                     new MySqlParameter(userIdKey, result.User.Id),
                     new MySqlParameter(meetingIdKey, result.Meeting.Id),
                     new MySqlParameter(disciplineIdKey, result.Discipline.Id),
-                    new MySqlParameter(averageKey, 0),
-                    new MySqlParameter(attemptCountKey, 1)
+                    new MySqlParameter(averageKey, result.Average),
+                    new MySqlParameter(attemptCountKey, result.AttemptCount)
                 }
             })
             {

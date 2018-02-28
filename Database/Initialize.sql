@@ -48,8 +48,7 @@ create table News
 
 create table Counting
 (
-    counting_id varchar(8) primary key not null,
-    attempt_count int not null
+    counting varchar(8) primary key not null
 );
 
 create table Discipline
@@ -57,8 +56,8 @@ create table Discipline
     discipline_id int primary key auto_increment not null,
     `name` varchar(32) not null,
     description text null,
-    counting_id varchar(8) not null,
-    foreign key (counting_id) references Counting(counting_id)
+    counting varchar(8) not null,
+    foreign key (counting) references Counting(counting)
 );
 
 create table Result
@@ -114,7 +113,6 @@ create table `Session`
     created date not null,
     foreign key (user_id) references User(user_id)
 );
-
 
 -- views
 
