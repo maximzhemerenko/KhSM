@@ -6,11 +6,12 @@ namespace Backend.Domain.Formula
 {
     public abstract class CountingFormula
     {
-        private CountingFormula()
-        {
-        }
+        public int AttemptCount { get; }
 
-        public abstract int AttemptCount { get; }
+        private CountingFormula(int attemptCount)
+        {
+            AttemptCount = attemptCount;
+        }
 
         public abstract decimal? ComputeAverage(IEnumerable<decimal?> attempts);
 
@@ -31,17 +32,31 @@ namespace Backend.Domain.Formula
 
         private class Avg5 : CountingFormula
         {
-            public override int AttemptCount => 5;
+            public Avg5() : base(5)
+            {
+            }
 
             public override decimal? ComputeAverage(IEnumerable<decimal?> attempts)
             {
-                return attempts.Average(arg => arg); // todo
+                var orderedAttempts = attempts.OrderBy(a => a).ToList();
+
+                var nullsCount = orderedAttempts.Count(arg => arg == null) + (AttemptCount - orderedAttempts.Count);
+
+                if (nullsCount > 1)
+                    return null;
+                
+                orderedAttempts.RemoveAt(orderedAttempts.Count - 1);
+                orderedAttempts.RemoveAt(0);
+                
+                return orderedAttempts.Average(arg => arg);
             }
         }
 
         private class Mo3 : CountingFormula
-        {
-            public override int AttemptCount => 3;
+        {   
+            public Mo3() : base(3)
+            {
+            }
             
             public override decimal? ComputeAverage(IEnumerable<decimal?> attempts)
             {
@@ -51,7 +66,9 @@ namespace Backend.Domain.Formula
 
         private class Bo3 : CountingFormula
         {
-            public override int AttemptCount => 3;
+            public Bo3() : base(3)
+            {
+            }
             
             public override decimal? ComputeAverage(IEnumerable<decimal?> attempts)
             {

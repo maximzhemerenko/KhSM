@@ -46,16 +46,24 @@ namespace Backend.Domain
 
         public void AddResult(Result result)
         {
+            if (result == null) throw new ArgumentNullException(nameof(result));
+
             _databaseContext.UseTransaction(transaction =>
             {
                 var discipline = _disciplinesRepository.GetDiscipline(result.Discipline.Id, transaction, true);
                 if (discipline == null)
                     throw new ArgumentException("Bad discipline id is provided");
-
+                
                 var countingFormula = CountingFormula.Get(discipline.Counting);
-
-                result.Average = countingFormula.ComputeAverage(result.Attempts);
-                result.AttemptCount = countingFormula.AttemptCount;
+                
+                var attempts = result.Attempts;
+                var attemptCount = countingFormula.AttemptCount;
+                
+                if (attempts.Count > attemptCount)
+                    throw new Exception("Too much attempts provided");
+                
+                result.Average = countingFormula.ComputeAverage(attempts);
+                result.AttemptCount = attemptCount;
 
                 _resultsRepository.AddResult(result, transaction);
             });

@@ -12,7 +12,7 @@ namespace Backend.Data.Entities
         public User User { get; set; }
         public decimal? Average { get; set; }
         [Required]
-        public IEnumerable<decimal?> Attempts { get; set; }
+        public IList<decimal?> Attempts { get; set; }
         public int AttemptCount { get; set; }
 
         protected bool Equals(Result other)
