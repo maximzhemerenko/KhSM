@@ -86,7 +86,8 @@ namespace Backend.Data.Repositories
             return new Result
             {
                 Id = reader.GetInt32("result_id"),
-                Average = !reader.IsDBNull(reader.GetOrdinal("average")) ? (decimal?)reader.GetDecimal("average") : null
+                Average = !reader.IsDBNull(reader.GetOrdinal("average")) ? (decimal?)reader.GetDecimal("average") : null,
+                AttemptCount = reader.GetInt32("attempt_count")
             };
         }
 
