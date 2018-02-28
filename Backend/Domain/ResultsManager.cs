@@ -59,9 +59,6 @@ namespace Backend.Domain
                 var attempts = result.Attempts;
                 var attemptCount = countingFormula.AttemptCount;
                 
-                if (attempts.Count > attemptCount)
-                    throw new Exception("Too much attempts provided");
-                
                 result.Average = countingFormula.ComputeAverage(attempts);
                 result.AttemptCount = attemptCount;
 

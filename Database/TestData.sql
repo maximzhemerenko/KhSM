@@ -30,15 +30,15 @@ SET @user_id_masha = last_insert_id();
 -- counting
 
 SET @counting_avg5 = 'avg5';
-insert into counting(counting_id)
+insert into counting(counting)
 values(@counting_avg5);
 
 SET @counting_mo3 = 'mo3';
-insert into counting(counting_id)
+insert into counting(counting)
 values(@counting_mo3);
 
 SET @counting_bo3 = 'bo3';
-insert into counting(counting_id)
+insert into counting(counting)
 values(@counting_bo3);
 
 -- discipline

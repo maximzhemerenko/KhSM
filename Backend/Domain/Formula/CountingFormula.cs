@@ -40,6 +40,9 @@ namespace Backend.Domain.Formula
             {
                 var orderedAttempts = attempts.OrderBy(a => a).ToList();
 
+                if (orderedAttempts.Count > AttemptCount)
+                    throw new Exception("Too much attempts provided");
+
                 var nullsCount = orderedAttempts.Count(arg => arg == null) + (AttemptCount - orderedAttempts.Count);
 
                 if (nullsCount > 1)
