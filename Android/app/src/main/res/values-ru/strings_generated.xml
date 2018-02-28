@@ -10,4 +10,12 @@
   <string name="Rankings">Рейтинг</string>
   <string name="News">Новости</string>
   <string name="Logout">Выход</string>
+  <string name="First_Name">Имя</string>
+  <string name="Last_Name">Фамилия</string>
+  <string name="Email">Email</string>
+  <string name="Male">Мужской</string>
+  <string name="Female">Женский</string>
+  <string name="Register">Регистрация</string>
+  <string name="Password">Пароль</string>
+  <string name="Confirm_Password">Повторить пароль</string>
 </resources>

@@ -14,7 +14,7 @@ namespace Backend.Data.Repositories
 
         public IEnumerable<Meeting> GetMeetings()
         {
-            using (var command = new MySqlCommand("select * from meeting", Connection, Transaction))
+            using (var command = new MySqlCommand("select * from meeting", Connection))
             using (var reader = command.ExecuteReader())
             {
                 var meetings = new List<Meeting>();
@@ -31,7 +31,7 @@ namespace Backend.Data.Repositories
         public Meeting GetMeeting(int id)
         {
             using (var command =
-                new MySqlCommand("select * from meeting where meeting_id = @meeting_id", Connection, Transaction)
+                new MySqlCommand("select * from meeting where meeting_id = @meeting_id", Connection)
                 {
                     Parameters = {new MySqlParameter("meeting_id", id)}
                 })
@@ -43,7 +43,7 @@ namespace Backend.Data.Repositories
         
         public Meeting GetLastMeeting()
         {
-            using (var command = new MySqlCommand("select * from meeting order by date desc limit 1", Connection, Transaction))
+            using (var command = new MySqlCommand("select * from meeting order by date desc limit 1", Connection))
             using (var reader = command.ExecuteReader())
             {
                 return ReadMeeting(reader);
@@ -60,6 +60,28 @@ namespace Backend.Data.Repositories
             };
         }
 
+        public void AddMeeting(Meeting meeting, MySqlTransaction transaction)
+        {
+            const string meetingNumberKey = "meeting_number";
+            const string dateKey = "date";
+            
+            using (var command = new MySqlCommand(Connection, transaction)
+            {
+                CommandText = $"insert into meeting({meetingNumberKey}, {dateKey}) " +
+                              $"values(@{meetingNumberKey}, @{dateKey})",
+                Parameters =
+                {
+                    new MySqlParameter(meetingNumberKey, meeting.Number),
+                    new MySqlParameter(dateKey, meeting.Date)
+                }
+            })
+            {
+                command.ExecuteNonQuery();
+
+                meeting.Id = (int) command.LastInsertedId;
+            }
+        }
+        
         public static Meeting ReadMeeting(MySqlDataReader reader)
         {
             return reader.Read() ? GetMeeting(reader) : null;

@@ -19,6 +19,47 @@ namespace Backend.Data.Database
             Connection.Dispose();
         }
 
+        public void UseTransaction(Action<MySqlTransaction> action)
+        {
+            MySqlTransaction transaction = null;
+            try
+            {
+                transaction = Connection.BeginTransaction();
+                action(transaction);
+                transaction.Commit();
+            }
+            catch
+            {
+                transaction?.Rollback();
+                throw;
+            }
+            finally
+            {
+                transaction?.Dispose();
+            }
+        }
+
+        public T UseTransaction<T>(Func<MySqlTransaction, T> action)
+        {
+            MySqlTransaction transaction = null;
+            try
+            {
+                transaction = Connection.BeginTransaction();
+                var value = action(transaction);
+                transaction.Commit();
+                return value;
+            }
+            catch
+            {
+                transaction?.Rollback();
+                throw;
+            }
+            finally
+            {
+                transaction?.Dispose();
+            }
+        }
+
         private static MySqlConnection CreateConnection()
         {
             return new MySqlConnection(ConectionString);
@@ -33,6 +74,5 @@ namespace Backend.Data.Database
                 Password = "sKiLlet",
                 Database = "kh_sm"
             }.ToString();
-
     }
 }

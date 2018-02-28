@@ -34,9 +34,7 @@ public class MeetingResultsAdapter extends RecyclerView.Adapter<MeetingResultsAd
     public MeetingResultsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.meeting_results_item, parent, false);
 
-        ViewHolder viewHolder = new ViewHolder(view);
-
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -57,7 +55,7 @@ public class MeetingResultsAdapter extends RecyclerView.Adapter<MeetingResultsAd
                 results += formatTime(attempts.get(i));
             }
 
-            int dnsCount = disciplineResults.discipline.attemptsCount - attempts.size();
+            int dnsCount = result.attemptCount - attempts.size();
             if (dnsCount < 0) dnsCount = 0;
 
             for (int i = 0; i < dnsCount; i++) {

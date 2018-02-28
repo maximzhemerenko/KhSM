@@ -45,12 +45,18 @@ create table News
     foreign key (user_id) references user(user_id)
 );
 
+create table Counting
+(
+    counting varchar(8) primary key not null
+);
+
 create table Discipline
 (
-	  discipline_id int primary key auto_increment not null,
+    discipline_id int primary key auto_increment not null,
     `name` varchar(32) not null,
     description text null,
-    attempt_count int not null
+    counting varchar(8) not null,
+    foreign key (counting) references Counting(counting)
 );
 
 create table Result
@@ -60,6 +66,7 @@ create table Result
     meeting_id int not null,
     user_id int not null,
     discipline_id int not null,
+    attempt_count int not null,
     foreign key (meeting_id) references Meeting(meeting_id),
     foreign key (user_id) references User(user_id),
     foreign key (discipline_id) references Discipline(discipline_id),
@@ -107,14 +114,13 @@ create table `Session`
     foreign key (user_id) references User(user_id)
 );
 
-
 -- views
 
 create view meeting_results as
 select
   m.meeting_id, m.meeting_number, m.date,
-  d.discipline_id, d.name, d.description, d.attempt_count,
-  r.result_id, r.average,
+  d.discipline_id, d.name, d.description,
+  r.result_id, r.average, r.attempt_count,
   u.user_id, u.first_name, u.last_name, u.city, u.gender, u.wca_id, u.phone_number, u.birth_date, u.approved,
   a.attempt_id, a.time
 from meeting m

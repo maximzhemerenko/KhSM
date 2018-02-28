@@ -44,6 +44,13 @@ GET users/{id}/results
 
 Response: Array<[DisciplineResults](#disciplineresults)>
 
+## Insert user result
+POST users/{id}/results
+
+Request: [Result](#result)
+
+Response: [Result](#result)
+
 ## Get meetings
 GET meetings
 

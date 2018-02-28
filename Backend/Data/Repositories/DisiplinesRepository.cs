@@ -14,22 +14,43 @@ namespace Backend.Data.Repositories
 
         public IEnumerable<Discipline> GetDisciplines()
         {
-            using (var command = new MySqlCommand("select * from discipline", Connection, Transaction))
+            using (var command = new MySqlCommand("select * from discipline", Connection))
             using (var reader = command.ExecuteReader())
             {
                 return ReadDisciplines(reader);
             }
         }
 
-        public static Discipline GetDiscipline(MySqlDataReader reader)
+        public Discipline GetDiscipline(int id, MySqlTransaction transaction = null, bool readCounting = false)
         {
-            return new Discipline
+            const string disciplineIdKey = "discipline_id";
+            
+            using (var command = new MySqlCommand($"select * from discipline where {disciplineIdKey} = @{disciplineIdKey}", Connection, transaction)
+            {
+                Parameters =
+                {
+                    new MySqlParameter(disciplineIdKey, id)
+                }
+            })
+            using (var reader = command.ExecuteReader())
+            {
+                return reader.Read() ? GetDiscipline(reader, readCounting) : null;
+            }
+        }
+
+        public static Discipline GetDiscipline(MySqlDataReader reader, bool readCounting = false)
+        {
+            var discipline = new Discipline
             {
                 Id = reader.GetInt32("discipline_id"),
                 Name = reader.GetString("name"),
-                Description = reader.GetString("description"),
-                AttemptsCount = reader.GetInt32("attempt_count")
+                Description = reader.GetString("description")
             };
+            if (readCounting)
+            {
+                discipline.Counting = reader.GetString("counting");
+            }
+            return discipline;
         }
         
         private static IEnumerable<Discipline> ReadDisciplines(MySqlDataReader reader)
