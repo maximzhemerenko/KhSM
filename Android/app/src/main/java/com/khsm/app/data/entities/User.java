@@ -15,8 +15,9 @@ public class User {
     public final Gender gender;
     public final Date birthDate;
     public final Date approved;
+    public final String email;
 
-    public User(Integer id, String firstName, String lastName, String city, String wcaId, String phoneNumber, Gender gender, Date birthDate, Date approved) {
+    public User(Integer id, String firstName, String lastName, String city, String wcaId, String phoneNumber, Gender gender, Date birthDate, Date approved, String email) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -26,5 +27,10 @@ public class User {
         this.gender = gender;
         this.birthDate = birthDate;
         this.approved = approved;
+        this.email = email;
+    }
+
+    public User(String firstName, String lastName, Gender gender, String email) {
+        this(null, firstName, lastName, null, null, null, gender, null, null, email);
     }
 }

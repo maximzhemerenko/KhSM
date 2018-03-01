@@ -18,4 +18,6 @@
   <string name="Register">Register</string>
   <string name="Password">Password</string>
   <string name="Confirm_Password">Confirm Password</string>
+  <string name="Register.Error.CheckInputData">Сheck the entered data</string>
+  <string name="Register.Error.UserRegisterError">User register error</string>
 </resources>

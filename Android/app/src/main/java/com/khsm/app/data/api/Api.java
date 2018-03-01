@@ -2,6 +2,7 @@ package com.khsm.app.data.api;
 
 import com.khsm.app.data.api.base.ApiBase;
 import com.khsm.app.data.entities.CreateSessionRequest;
+import com.khsm.app.data.entities.CreateUserRequest;
 import com.khsm.app.data.entities.Discipline;
 import com.khsm.app.data.entities.DisciplineResults;
 import com.khsm.app.data.entities.Meeting;
@@ -38,8 +39,14 @@ public class Api extends ApiBase {
                 .compose(this::processResponse);
     }
 
-    public Single<Session> createUser(CreateSessionRequest createSessionRequest) {
-        return restApi.createUser(createSessionRequest)
+    public Single<Session> login(CreateSessionRequest createSessionRequest) {
+        return restApi.login(createSessionRequest)
                 .compose(this::processResponse);
     }
+
+    public Single<Session> register(CreateUserRequest createUserRequest) {
+        return restApi.register(createUserRequest)
+                .compose(this::processResponse);
+    }
+
 }

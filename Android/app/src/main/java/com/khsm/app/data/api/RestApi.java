@@ -3,6 +3,7 @@ package com.khsm.app.data.api;
 import android.media.MediaCas;
 
 import com.khsm.app.data.entities.CreateSessionRequest;
+import com.khsm.app.data.entities.CreateUserRequest;
 import com.khsm.app.data.entities.Discipline;
 import com.khsm.app.data.entities.DisciplineResults;
 import com.khsm.app.data.entities.Meeting;
@@ -29,6 +30,9 @@ interface RestApi {
     @GET("api/meetings/{id}/results")
     Single<List<DisciplineResults>> getMeetingResults(@Path("id") int id);
 
+    @POST("api/sessions")
+    Single<Session> login(@Body CreateSessionRequest createSessionRequest);
+
     @POST("api/users")
-    Single<Session> createUser(@Body CreateSessionRequest createSessionRequest);
+    Single<Session> register(CreateUserRequest createUserRequest);
 }

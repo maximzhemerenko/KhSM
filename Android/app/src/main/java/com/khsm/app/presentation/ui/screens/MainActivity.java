@@ -1,5 +1,7 @@
 package com.khsm.app.presentation.ui.screens;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -18,6 +20,9 @@ import com.khsm.app.presentation.ui.screens.meetings.MeetingResultsFragment;
 import com.khsm.app.presentation.ui.screens.register.RegisterActivity;
 
 public class MainActivity extends AppCompatActivity {
+    public static Intent intent(Context context) {
+        return new Intent(context, MainActivity.class);
+    }
 
     private DrawerLayout drawerLayout;
 
