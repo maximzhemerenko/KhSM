@@ -20,7 +20,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".presentation.ui.screens.register.RegisterActivity" />
+        <activity android:name=".presentation.ui.screens.register.RegisterActivity"
+            android:windowSoftInputMode="adjustPan" />
 
     </application>
 

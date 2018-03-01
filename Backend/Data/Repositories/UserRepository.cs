@@ -123,7 +123,6 @@ namespace Backend.Data.Repositories
         public Login GetLoginByUserId(int? userId, MySqlTransaction transaction)
         {
             const string userIdKey = "user_id";
-            const string passwordHashKey = "password_hash";
             
             using (var command = new MySqlCommand(Connection, transaction)
             {
