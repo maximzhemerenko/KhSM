@@ -48,7 +48,8 @@ namespace Backend
             services.AddScoped<MeetingsRepository>();
             services.AddScoped<DisciplinesRepository>();
             services.AddScoped<ResultsRepository>();
-            services.AddTransient<UserRepository>();
+            services.AddScoped<UserRepository>();
+            services.AddScoped<SessionRepository>();
 
             services.AddScoped<MeetingsManager>();
             services.AddScoped<DisciplinesManager>();

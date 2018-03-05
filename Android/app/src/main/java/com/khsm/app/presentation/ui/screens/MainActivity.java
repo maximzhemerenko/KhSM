@@ -1,5 +1,7 @@
 package com.khsm.app.presentation.ui.screens;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -15,8 +17,12 @@ import com.khsm.app.R;
 import com.khsm.app.presentation.ui.screens.disciplines.DisciplineListFragment;
 import com.khsm.app.presentation.ui.screens.meetings.MeetingListFragment;
 import com.khsm.app.presentation.ui.screens.meetings.MeetingResultsFragment;
+import com.khsm.app.presentation.ui.screens.register.RegisterActivity;
 
 public class MainActivity extends AppCompatActivity {
+    public static Intent intent(Context context) {
+        return new Intent(context, MainActivity.class);
+    }
 
     private DrawerLayout drawerLayout;
 
@@ -62,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
                 replaceFragment(MeetingListFragment.newInstance());
             } else if (menuItem.getItemId() == R.id.disciplines) {
                 replaceFragment(DisciplineListFragment.newInstance());
+            } else if (menuItem.getItemId() == R.id.logout) {
+                startActivity(RegisterActivity.newIntent(MainActivity.this));
             }
 
             drawerLayout.closeDrawers();

@@ -26,6 +26,7 @@ create table User
     gender varchar(8) not null,
     birth_date date null,
     approved date null,
+    email varchar(64) not null unique,
     foreign key (gender) references Gender(gender)
 );
 
@@ -99,8 +100,7 @@ create table User_Role
 create table Login
 (
     user_id int primary key auto_increment not null unique,
-    password_hash binary not null,
-    password_salt int not null,
+    password_hash binary(20) not null,
     disabled date null,
     foreign key (user_id) references User(user_id)
 );
@@ -109,7 +109,7 @@ create table `Session`
 (
     session_id int primary key auto_increment not null,
     user_id int not null,
-    session_key binary not null unique,
+    session_key varchar(64) not null unique,
     created date not null,
     foreign key (user_id) references User(user_id)
 );

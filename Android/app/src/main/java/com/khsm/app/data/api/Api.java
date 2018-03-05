@@ -1,9 +1,12 @@
 package com.khsm.app.data.api;
 
 import com.khsm.app.data.api.base.ApiBase;
+import com.khsm.app.data.entities.CreateSessionRequest;
+import com.khsm.app.data.entities.CreateUserRequest;
 import com.khsm.app.data.entities.Discipline;
 import com.khsm.app.data.entities.DisciplineResults;
 import com.khsm.app.data.entities.Meeting;
+import com.khsm.app.data.entities.Session;
 
 import java.util.List;
 
@@ -35,4 +38,15 @@ public class Api extends ApiBase {
         return restApi.getLastMeeting()
                 .compose(this::processResponse);
     }
+
+    public Single<Session> login(CreateSessionRequest createSessionRequest) {
+        return restApi.login(createSessionRequest)
+                .compose(this::processResponse);
+    }
+
+    public Single<Session> register(CreateUserRequest createUserRequest) {
+        return restApi.register(createUserRequest)
+                .compose(this::processResponse);
+    }
+
 }

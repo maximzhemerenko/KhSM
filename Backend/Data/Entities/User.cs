@@ -5,8 +5,7 @@ namespace Backend.Data.Entities
 {
     public class User
     {
-        [Required]
-        public int Id { get; set; }
+        public int? Id { get; set; }
         [Required]
         public string FirstName { get; set; }
         [Required]
@@ -19,5 +18,7 @@ namespace Backend.Data.Entities
         public Gender Gender { get; set; }
         public DateTimeOffset? BirthDate { get; set; }
         public DateTimeOffset? Approved { get; set; }
+        [Required]
+        public string Email { get; set; }
     }
 }

@@ -145,6 +145,6 @@ namespace TestProject.Managers
             Assert.True(result.Id > 0);
         }
 
-        private static IList<decimal?> Attempts(params decimal?[] attempts) => attempts.ToArray();
+        private static IEnumerable<decimal?> Attempts(params decimal?[] attempts) => attempts.ToArray();
     }
 }

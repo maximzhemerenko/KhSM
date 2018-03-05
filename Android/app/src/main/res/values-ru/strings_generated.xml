@@ -18,4 +18,6 @@
   <string name="Register">Регистрация</string>
   <string name="Password">Пароль</string>
   <string name="Confirm_Password">Повторить пароль</string>
+  <string name="Register.Error.CheckInputData">Проверьте введенные данные</string>
+  <string name="Register.Error.UserRegisterError">Произошла ошибка при регистрации</string>
 </resources>
