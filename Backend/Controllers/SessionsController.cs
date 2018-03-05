@@ -14,7 +14,7 @@ namespace Backend.Controllers
         }
 
         [HttpPost]
-        public Session Login(CreateSessionRequest createSessionRequest)
+        public Session Login([FromBody] CreateSessionRequest createSessionRequest)
         {
             return _usersManager.Login(createSessionRequest);
         }

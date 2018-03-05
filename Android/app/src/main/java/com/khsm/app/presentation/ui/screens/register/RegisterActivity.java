@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -38,17 +37,19 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText confirmPassword;
     private RadioButton male;
     private RadioButton female;
+    private ProgressBar progressBar;
 
     @Nullable
-    private Disposable loadDisposable;
+    private Disposable registerDisposable;
 
     private UsersManager usersManager;
-    private ProgressBar progressBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_activity);
+
+        usersManager = new UsersManager();
 
         registerButton = findViewById(R.id.registerButton);
         firstName = findViewById(R.id.first_name);
@@ -58,6 +59,9 @@ public class RegisterActivity extends AppCompatActivity {
         confirmPassword = findViewById(R.id.confirm_password);
         male = findViewById(R.id.male);
         female = findViewById(R.id.female);
+        progressBar = findViewById(R.id.progressBar);
+
+        progressBar.setVisibility(View.INVISIBLE);
 
         registerButton.setOnClickListener(view -> register());
     }
@@ -90,12 +94,12 @@ public class RegisterActivity extends AppCompatActivity {
 
         progressBar.setVisibility(View.VISIBLE);
 
-        if (loadDisposable != null) {
-            loadDisposable.dispose();
-            loadDisposable = null;
+        if (registerDisposable != null) {
+            registerDisposable.dispose();
+            registerDisposable = null;
         }
 
-        loadDisposable = usersManager.register(createUserRequest)
+        registerDisposable = usersManager.register(createUserRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

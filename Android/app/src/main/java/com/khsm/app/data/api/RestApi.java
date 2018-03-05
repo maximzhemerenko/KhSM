@@ -34,5 +34,5 @@ interface RestApi {
     Single<Session> login(@Body CreateSessionRequest createSessionRequest);
 
     @POST("api/users")
-    Single<Session> register(CreateUserRequest createUserRequest);
+    Single<Session> register(@Body CreateUserRequest createUserRequest);
 }

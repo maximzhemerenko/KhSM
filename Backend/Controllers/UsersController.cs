@@ -14,7 +14,7 @@ namespace Backend.Controllers
         }
         
         [HttpPost]
-        public Session Register(CreateUserRequest createUserRequest)
+        public Session Register([FromBody] CreateUserRequest createUserRequest)
         {
             return _usersManager.Register(createUserRequest);
         }
