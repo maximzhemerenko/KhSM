@@ -2,6 +2,7 @@ package com.khsm.app.domain;
 
 import com.khsm.app.data.api.Api;
 import com.khsm.app.data.api.ApiFactory;
+import com.khsm.app.data.entities.CreateSessionRequest;
 import com.khsm.app.data.entities.CreateUserRequest;
 import com.khsm.app.data.entities.DisciplineResults;
 import com.khsm.app.data.entities.Session;
@@ -19,5 +20,9 @@ public class UsersManager {
 
     public Single<Session> register(CreateUserRequest createUserRequest) {
         return api.register(createUserRequest);
+    }
+
+    public Single<Session> login(CreateSessionRequest createSessionRequest) {
+        return api.login(createSessionRequest);
     }
 }

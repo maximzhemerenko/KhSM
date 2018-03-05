@@ -14,10 +14,11 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.khsm.app.R;
+import com.khsm.app.presentation.ui.screens.auth.LoginActivity;
 import com.khsm.app.presentation.ui.screens.disciplines.DisciplineListFragment;
 import com.khsm.app.presentation.ui.screens.meetings.MeetingListFragment;
 import com.khsm.app.presentation.ui.screens.meetings.MeetingResultsFragment;
-import com.khsm.app.presentation.ui.screens.register.RegisterActivity;
+import com.khsm.app.presentation.ui.screens.auth.RegisterActivity;
 
 public class MainActivity extends AppCompatActivity {
     public static Intent intent(Context context) {
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
             } else if (menuItem.getItemId() == R.id.disciplines) {
                 replaceFragment(DisciplineListFragment.newInstance());
             } else if (menuItem.getItemId() == R.id.logout) {
-                startActivity(RegisterActivity.newIntent(MainActivity.this));
+                startActivity(LoginActivity.newIntent(MainActivity.this));
             }
 
             drawerLayout.closeDrawers();
