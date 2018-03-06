@@ -45,6 +45,8 @@ public class LoginActivity extends AppCompatActivity {
         // метод, который устанавливает соедрижимое из layout-файла
         setContentView(R.layout.login_activity);
 
+        usersManager = new UsersManager();
+
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         login = findViewById(R.id.login);
