@@ -20,4 +20,6 @@
   <string name="Confirm_Password">Confirm Password</string>
   <string name="Register.Error.CheckInputData">Сheck the entered data</string>
   <string name="Register.Error.UserRegisterError">User register error</string>
+  <string name="Login.Error.CheckInputData">Check the entered data</string>
+  <string name="Login.Error.Authentication">User authentication error</string>
 </resources>

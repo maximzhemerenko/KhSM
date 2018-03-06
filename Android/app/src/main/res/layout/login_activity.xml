@@ -13,21 +13,50 @@
         app:titleTextColor="@color/white"
         app:title="Login" />
 
-    <EditText
-        android:id="@+id/email"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/Email"
-        android:ems="10"
-        android:inputType="textEmailAddress"  />
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="match_parent"
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <EditText
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/Email"
+                    android:ems="10"
+                    android:inputType="textEmailAddress"  />
+
+                <EditText
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/Password"
+                    android:ems="10"
+                    android:inputType="textPassword" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/Password"
-        android:ems="10"
-        android:inputType="textPassword" />
+        android:layout_gravity="center" />
+
+    </FrameLayout>
 
     <Button
         android:id="@+id/login"

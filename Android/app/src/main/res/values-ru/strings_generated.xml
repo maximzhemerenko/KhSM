@@ -20,4 +20,6 @@
   <string name="Confirm_Password">Повторить пароль</string>
   <string name="Register.Error.CheckInputData">Проверьте введенные данные</string>
   <string name="Register.Error.UserRegisterError">Произошла ошибка при регистрации</string>
+  <string name="Login.Error.CheckInputData">Проверьте введенные данные</string>
+  <string name="Login.Error.Authentication">Произошла ошибка при аутентификации</string>
 </resources>
