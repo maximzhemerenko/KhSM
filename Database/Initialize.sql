@@ -110,8 +110,8 @@ create table `Session`
     session_id int primary key auto_increment not null,
     user_id int not null,
     session_key varchar(64) not null unique,
-    created date not null,
-    foreign key (user_id) references User(user_id)
+    created datetime not null,
+    foreign key (user_id) references Login(user_id)
 );
 
 -- views
@@ -129,3 +129,12 @@ from meeting m
   inner join user u on r.user_id = u.user_id
   left join attempt a on r.result_id = a.result_id
 order by m.meeting_id, d.discipline_id, r.average;
+
+create view session_user as
+select 
+  s.session_id, s.session_key, s.created,
+  l.password_hash, l.disabled,
+  u.user_id, u.first_name, u.last_name, u.city, u.wca_id, u.phone_number, u.gender, u.birth_date, u.approved, u.email
+from session s
+inner join login l on s.user_id = l.user_id
+inner join user u on l.user_id = u.user_id;
