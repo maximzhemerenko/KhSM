@@ -1,15 +1,14 @@
 package com.khsm.app.presentation.ui.screens.auth;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
 
 import com.khsm.app.R;
@@ -25,10 +24,12 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class RegisterActivity extends AppCompatActivity {
+    @SuppressWarnings("unused")
     public static Intent newIntent(Context context) {
         return new Intent(context, RegisterActivity.class);
     }
 
+    @SuppressWarnings("FieldCanBeLocal")
     private Button registerButton;
     private EditText firstName;
     private EditText lastName;
@@ -37,12 +38,14 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText confirmPassword;
     private RadioButton male;
     private RadioButton female;
-    private ProgressBar progressBar;
 
     @Nullable
     private Disposable registerDisposable;
 
     private UsersManager usersManager;
+
+    @Nullable
+    private ProgressDialog progressDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,11 +62,18 @@ public class RegisterActivity extends AppCompatActivity {
         confirmPassword = findViewById(R.id.confirm_password);
         male = findViewById(R.id.male);
         female = findViewById(R.id.female);
-        progressBar = findViewById(R.id.progressBar);
-
-        progressBar.setVisibility(View.INVISIBLE);
 
         registerButton.setOnClickListener(view -> register());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+            progressDialog = null;
+        }
     }
 
     private void register() {
@@ -92,7 +102,11 @@ public class RegisterActivity extends AppCompatActivity {
                 password.getText().toString()
         );
 
-        progressBar.setVisibility(View.VISIBLE);
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+            progressDialog = null;
+        }
+        progressDialog = ProgressDialog.show(this, null, getString(R.string.Please_WaitD3), true, false);
 
         if (registerDisposable != null) {
             registerDisposable.dispose();
@@ -110,13 +124,19 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void registrationCompleted(Session session) {
-        progressBar.setVisibility(View.INVISIBLE);
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+            progressDialog = null;
+        }
 
         startActivity(MainActivity.intent(this));
     }
 
     private void handleError(Throwable throwable) {
-        progressBar.setVisibility(View.INVISIBLE);
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+            progressDialog = null;
+        }
 
         new AlertDialog.Builder(this)
                 .setTitle(R.string.Error)

@@ -22,4 +22,5 @@
   <string name="Register.Error.UserRegisterError">Произошла ошибка при регистрации</string>
   <string name="Login.Error.CheckInputData">Проверьте введенные данные</string>
   <string name="Login.Error.Authentication">Произошла ошибка при аутентификации</string>
+  <string name="Please_WaitD3">Пожалуйста, подождите...</string>
 </resources>

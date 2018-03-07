@@ -22,4 +22,5 @@
   <string name="Register.Error.UserRegisterError">User register error</string>
   <string name="Login.Error.CheckInputData">Check the entered data</string>
   <string name="Login.Error.Authentication">User authentication error</string>
+  <string name="Please_WaitD3">Please, wait...</string>
 </resources>
