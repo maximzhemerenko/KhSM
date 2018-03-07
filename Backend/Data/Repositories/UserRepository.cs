@@ -30,6 +30,24 @@ namespace Backend.Data.Repositories
             }
         }
 
+        public User GetUser(int id, MySqlTransaction transaction = null)
+        {
+            const string userIdKey = "user_id";
+            
+            using (var command = new MySqlCommand(Connection, transaction)
+            {
+                CommandText = $"select * from user where {userIdKey} = @{userIdKey}",
+                Parameters =
+                {
+                    new MySqlParameter(userIdKey, id)
+                }
+            })
+            using (var reader = command.ExecuteReader())
+            {
+                return reader.Read() ? GetUser(reader) : null;
+            }
+        }
+
         public User GetUserByEmail(string email, MySqlTransaction transaction)
         {
             const string emailKey = "email";
@@ -120,7 +138,7 @@ namespace Backend.Data.Repositories
             }
         }
 
-        public Login GetLoginByUserId(int? userId, MySqlTransaction transaction)
+        public Login GetLogin(int userId, MySqlTransaction transaction)
         {
             const string userIdKey = "user_id";
             

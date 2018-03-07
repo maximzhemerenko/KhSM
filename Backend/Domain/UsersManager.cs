@@ -28,6 +28,11 @@ namespace Backend.Domain
             return _userRepository.GetUsers();
         }
         
+        public User GetUser(int id)
+        {
+            return _userRepository.GetUser(id);
+        }
+        
         public Session Register(CreateUserRequest createUserRequest)
         {
             return _databaseContext.UseTransaction(transaction =>
@@ -51,7 +56,7 @@ namespace Backend.Domain
                 if (user == null)
                     throw new Exception("User does not exist");
 
-                var login = _userRepository.GetLoginByUserId(user.Id, transaction);
+                var login = _userRepository.GetLogin(user.Id.Value, transaction);
                 if (login == null)
                     throw new Exception("Login does not exist");
 
