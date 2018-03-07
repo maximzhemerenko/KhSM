@@ -8,4 +8,5 @@ public class CreateSessionRequest {
         this.email = email;
         this.password = password;
     }
+
 }

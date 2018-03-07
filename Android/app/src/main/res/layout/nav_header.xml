@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="140dp"
@@ -17,10 +18,10 @@
         android:layout_height="88dp" />
 
     <TextView
+        android:id="@+id/userName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Mary Mazel"
+        tools:text="Mary Mazel"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
-
 
 </LinearLayout>

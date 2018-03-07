@@ -17,16 +17,6 @@ values('male');
 insert into gender(gender)
 values('female');
 
--- users
-
-insert into `user`(first_name, last_name, gender)
-values ('Максим', 'Жемеренко', 'male');
-SET @user_id_maxim = last_insert_id();
-
-insert into `user`(first_name, last_name, gender)
-values ('Маша', 'Мазел', 'female');
-SET @user_id_masha = last_insert_id();
-
 -- counting
 
 SET @counting_avg5 = 'avg5';

@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/registerToolbar"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
@@ -40,6 +40,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/First_Name"
                         android:inputType="textPersonName" />
+
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -113,12 +114,6 @@
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
         </ScrollView>
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
 
     </FrameLayout>
 
