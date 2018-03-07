@@ -23,6 +23,7 @@
   <string name="Register">Регистрация</string>
   <string name="Login.Error.Authentication">Произошла ошибка при аутентификации</string>
   <string name="Register.Error.UserRegisterError">Произошла ошибка при регистрации</string>
-  <string name="Register.Error.CheckInputData">Проверьте введенные данные</string>
   <string name="Main.NoAccount">У вас нет учетной записи</string>
+  <string name="Register.Error.CheckInputData">Проверьте введенные данные</string>
+  <string name="Edit_Profile">Изменить профиль</string>
 </resources>

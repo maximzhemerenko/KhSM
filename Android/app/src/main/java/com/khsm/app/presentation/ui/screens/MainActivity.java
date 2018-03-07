@@ -23,6 +23,7 @@ import com.khsm.app.presentation.ui.screens.auth.LoginActivity;
 import com.khsm.app.presentation.ui.screens.disciplines.DisciplineListFragment;
 import com.khsm.app.presentation.ui.screens.meetings.MeetingListFragment;
 import com.khsm.app.presentation.ui.screens.meetings.MeetingResultsFragment;
+import com.khsm.app.presentation.ui.screens.profile.EditProfileFragment;
 
 public class MainActivity extends AppCompatActivity {
     public static Intent newIntent(Context context, boolean clearTask) {
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     @SuppressWarnings("FieldCanBeLocal")
     private ImageView avatar_imageView;
     private TextView userName_textView;
+    private MenuItem myProfileMenuItem;
     @SuppressWarnings("FieldCanBeLocal")
     private MenuItem loginMenuItem;
     @SuppressWarnings("FieldCanBeLocal")
@@ -57,9 +59,9 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
 
-
         Menu navigationViewMenu = navigationView.getMenu();
 
+        myProfileMenuItem = navigationViewMenu.findItem(R.id.my_profile);
         loginMenuItem = navigationViewMenu.findItem(R.id.login);
         logoutMenuItem = navigationViewMenu.findItem(R.id.logout);
 
@@ -72,10 +74,12 @@ public class MainActivity extends AppCompatActivity {
 
         if (session == null) {
             userName_textView.setText(R.string.Main_NoAccount);
+            myProfileMenuItem.setVisible(false);
             loginMenuItem.setVisible(true);
             logoutMenuItem.setVisible(false);
         } else {
             User user = session.user;
+            myProfileMenuItem.setVisible(true);
             userName_textView.setText(user.firstName + " " + user.lastName);
             loginMenuItem.setVisible(false);
             logoutMenuItem.setVisible(true);
@@ -108,6 +112,8 @@ public class MainActivity extends AppCompatActivity {
                 replaceFragment(DisciplineListFragment.newInstance());
             } else if (menuItem.getItemId() == R.id.login) {
                 startActivity(LoginActivity.newIntent(MainActivity.this));
+            } else if (menuItem.getItemId() == R.id.my_profile) {
+                replaceFragment(EditProfileFragment.newInstance());
             } else if (menuItem.getItemId() == R.id.logout) {
                 authManager.logout().subscribe();
                 startActivity(MainActivity.newIntent(MainActivity.this, true));
