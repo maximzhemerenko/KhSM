@@ -47,7 +47,7 @@ namespace TestProject.Managers
         {
             var discipline = _disciplinesManager.GetDisciplinesAsync().Single(d => d.Name == "3x3");
 
-            var maxim = _usersManager.GetUsers().Single(u => u.FirstName == "Максим" && u.LastName == "Жемеренко");
+            var maxim = _usersManager.GetUsers().Single(u => u.FirstName == "Aleksandr" && u.LastName == "Omelchenko");
 
             // check for fail
             var result = new Result

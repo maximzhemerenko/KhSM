@@ -8,6 +8,7 @@ import com.khsm.app.data.entities.DisciplineResults;
 import com.khsm.app.data.entities.Session;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Single;
 
@@ -23,6 +24,6 @@ public class UsersManager {
     }
 
     public Single<Session> login(CreateSessionRequest createSessionRequest) {
-        return api.login(createSessionRequest);
+        return api.login(createSessionRequest).delay(2, TimeUnit.SECONDS);
     }
 }
