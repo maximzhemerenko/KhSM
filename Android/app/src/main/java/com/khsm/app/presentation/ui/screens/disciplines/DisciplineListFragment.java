@@ -17,7 +17,6 @@ import com.khsm.app.R;
 import com.khsm.app.data.entities.Discipline;
 import com.khsm.app.domain.DisciplinesManager;
 import com.khsm.app.presentation.ui.screens.MainActivity;
-import com.khsm.app.presentation.ui.screens.meetings.MeetingResultsFragment;
 
 import java.util.List;
 
@@ -34,7 +33,9 @@ public class DisciplineListFragment extends Fragment {
 
     private DisciplineListAdapter adapter;
 
+    @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private Toolbar toolbar;
+    @SuppressWarnings("FieldCanBeLocal")
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
 
@@ -44,7 +45,7 @@ public class DisciplineListFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        disciplinesManager = new DisciplinesManager();
+        disciplinesManager = new DisciplinesManager(requireContext());
 
         adapter = new DisciplineListAdapter(getContext(), this);
     }
@@ -103,7 +104,7 @@ public class DisciplineListFragment extends Fragment {
     private void handleError(Throwable throwable) {
         progressBar.setVisibility(View.INVISIBLE);
 
-        new AlertDialog.Builder(getContext())
+        new AlertDialog.Builder(requireContext())
                 .setTitle(R.string.Error)
                 .setMessage(throwable.getMessage())
                 .setPositiveButton(R.string.OK, null)
@@ -111,7 +112,7 @@ public class DisciplineListFragment extends Fragment {
     }
 
     public void onItemClicked(@NonNull Discipline discipline) {
-        MainActivity mainActivity = (MainActivity) getActivity();
+        MainActivity mainActivity = (MainActivity) requireActivity();
         mainActivity.replaceFragment(DisciplineDetailsFragment.newInstance(discipline));
     }
 }

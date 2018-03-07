@@ -15,7 +15,8 @@ import io.reactivex.Single;
 public class Api extends ApiBase {
     private final RestApi restApi;
 
-    Api(RestApi restApi) {
+    Api(RestApi restApi, AuthInterceptor authInterceptor) {
+        super(authInterceptor);
         this.restApi = restApi;
     }
 

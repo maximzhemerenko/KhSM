@@ -51,7 +51,7 @@ public class MeetingListFragment extends Fragment implements MenuItem.OnMenuItem
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        meetingsManager = new MeetingsManager();
+        meetingsManager = new MeetingsManager(requireContext());
 
         adapter = new MeetingListAdapter(getContext(), this);
     }
@@ -117,7 +117,7 @@ public class MeetingListFragment extends Fragment implements MenuItem.OnMenuItem
     private void handleError(Throwable throwable) {
         progressBar.setVisibility(View.INVISIBLE);
 
-        new AlertDialog.Builder(getContext())
+        new AlertDialog.Builder(requireContext())
                 .setTitle(R.string.Error)
                 .setMessage(throwable.getMessage())
                 .setPositiveButton(R.string.OK, null)
@@ -125,12 +125,12 @@ public class MeetingListFragment extends Fragment implements MenuItem.OnMenuItem
     }
 
     public void onItemClicked(@NonNull Meeting meeting) {
-        MainActivity mainActivity = (MainActivity) getActivity();
+        MainActivity mainActivity = (MainActivity) requireActivity();
         mainActivity.replaceFragment(MeetingResultsFragment.newInstance(meeting));
     }
 
     private void showDisciplineList() {
-        MainActivity mainActivity = (MainActivity) getActivity();
+        MainActivity mainActivity = (MainActivity) requireActivity();
         mainActivity.replaceFragment(DisciplineListFragment.newInstance());
     }
 

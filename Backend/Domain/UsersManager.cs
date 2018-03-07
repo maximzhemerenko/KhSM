@@ -27,7 +27,7 @@ namespace Backend.Domain
         {
             return _userRepository.GetUsers();
         }
-
+        
         public Session Register(CreateUserRequest createUserRequest)
         {
             return _databaseContext.UseTransaction(transaction =>
@@ -68,12 +68,17 @@ namespace Backend.Domain
             });
         }
         
-        static byte[] Hash(string input)
+        public Session FindSession(string token)
+        {
+            return _sessionRepository.GetSessionByToken(token);
+        }
+
+        private static byte[] Hash(string input)
         {
             return Hash(Encoding.UTF8.GetBytes(input));
         }
 
-        static byte[] Hash(byte[] input)
+        private static byte[] Hash(byte[] input)
         {
             using (var sha1 = new SHA1Managed())
             {
@@ -81,7 +86,7 @@ namespace Backend.Domain
             }
         }
 
-        static string ConvertBytesToString(byte[] input)
+        private static string ConvertBytesToString(IEnumerable<byte> input)
         {
             var sb = new StringBuilder();
             foreach (var b in input)

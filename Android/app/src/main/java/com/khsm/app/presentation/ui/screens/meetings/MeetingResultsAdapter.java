@@ -1,6 +1,7 @@
 package com.khsm.app.presentation.ui.screens.meetings;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +20,7 @@ public class MeetingResultsAdapter extends RecyclerView.Adapter<MeetingResultsAd
     private LayoutInflater inflater;
     private DisciplineResults disciplineResults;
 
-    MeetingResultsAdapter(Context context, MeetingResultsFragment meetingResultsFragment) {
+    MeetingResultsAdapter(@NonNull Context context, MeetingResultsFragment meetingResultsFragment) {
         this.meetingResultsFragment = meetingResultsFragment;
 
         this.inflater = LayoutInflater.from(context);
