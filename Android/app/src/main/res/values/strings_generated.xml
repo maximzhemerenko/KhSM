@@ -1,26 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
   <!-- Dictionary -->
-  <string name="Error">Error</string>
-  <string name="OK">OK</string>
-  <string name="Meetings">Meetings</string>
-  <string name="Disciplines">Disciplines</string>
-  <string name="Last_Meeting">Last Meeting</string>
-  <string name="My_Profile">My profile</string>
-  <string name="Rankings">Rankings</string>
-  <string name="News">News</string>
-  <string name="Logout">Logout</string>
-  <string name="First_Name">First Name</string>
-  <string name="Last_Name">Last Name</string>
-  <string name="Email">Email</string>
-  <string name="Male">Male</string>
-  <string name="Female">Female</string>
-  <string name="Register">Register</string>
-  <string name="Password">Password</string>
-  <string name="Confirm_Password">Confirm Password</string>
-  <string name="Register.Error.CheckInputData">Сheck the entered data</string>
-  <string name="Register.Error.UserRegisterError">User register error</string>
   <string name="Login.Error.CheckInputData">Check the entered data</string>
-  <string name="Login.Error.Authentication">User authentication error</string>
+  <string name="Confirm_Password">Confirm Password</string>
+  <string name="Disciplines">Disciplines</string>
+  <string name="Email">Email</string>
+  <string name="Error">Error</string>
+  <string name="Female">Female</string>
+  <string name="First_Name">First Name</string>
+  <string name="Last_Meeting">Last Meeting</string>
+  <string name="Last_Name">Last Name</string>
+  <string name="Login">Login</string>
+  <string name="Logout">Logout</string>
+  <string name="Male">Male</string>
+  <string name="Meetings">Meetings</string>
+  <string name="My_Profile">My profile</string>
+  <string name="News">News</string>
+  <string name="OK">OK</string>
+  <string name="Password">Password</string>
   <string name="Please_WaitD3">Please, wait...</string>
+  <string name="Rankings">Rankings</string>
+  <string name="Register">Register</string>
+  <string name="Login.Error.Authentication">User authentication error</string>
+  <string name="Register.Error.UserRegisterError">User register error</string>
+  <string name="Register.Error.CheckInputData">Сheck the entered data</string>
+  <string name="Main.NoAccount">You doesn\'t have an account</string>
 </resources>

@@ -59,4 +59,6 @@ project.ext {
     OKHTTP3_VERSION = "3.9.1"
 
     GLIDE_VERSION = "4.6.1"
+
+    RX_PREFERENCES_VERSION = "2.0.0-RC3"
 }

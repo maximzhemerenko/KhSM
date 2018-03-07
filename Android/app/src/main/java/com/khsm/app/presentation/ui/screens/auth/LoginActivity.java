@@ -7,14 +7,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.khsm.app.R;
 import com.khsm.app.data.entities.CreateSessionRequest;
-import com.khsm.app.data.entities.Session;
-import com.khsm.app.domain.UsersManager;
+import com.khsm.app.domain.AuthManager;
 import com.khsm.app.presentation.ui.screens.MainActivity;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -28,12 +26,13 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText email;
     private EditText password;
+    @SuppressWarnings("FieldCanBeLocal")
     private Button login;
 
     @Nullable
     private ProgressDialog progressDialog;
 
-    private UsersManager usersManager;
+    private AuthManager authManager;
 
     private Disposable loginDisposable;
 
@@ -42,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
 
-        usersManager = new UsersManager();
+        authManager = new AuthManager(this);
 
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
@@ -84,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
             loginDisposable = null;
         }
 
-        loginDisposable = usersManager.login(createSessionRequest)
+        loginDisposable = authManager.login(createSessionRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -94,13 +93,13 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void loginCompleted(Session session) {
+    private void loginCompleted() {
         if (progressDialog != null) {
             progressDialog.dismiss();
             progressDialog = null;
         }
 
-        startActivity(MainActivity.intent(this));
+        startActivity(MainActivity.intent(this, true));
     }
 
     private void handleError(Throwable throwable) {

@@ -21,6 +21,9 @@
             android:id="@+id/disciplines"
             android:title="@string/Disciplines" />
         <item
+            android:id="@+id/login"
+            android:title="@string/Login" />
+        <item
             android:id="@+id/logout"
             android:title="@string/Logout" />
     </group>

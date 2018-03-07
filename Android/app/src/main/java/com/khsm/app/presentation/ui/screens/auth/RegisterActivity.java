@@ -14,9 +14,8 @@ import android.widget.RadioButton;
 import com.khsm.app.R;
 import com.khsm.app.data.entities.CreateUserRequest;
 import com.khsm.app.data.entities.Gender;
-import com.khsm.app.data.entities.Session;
 import com.khsm.app.data.entities.User;
-import com.khsm.app.domain.UsersManager;
+import com.khsm.app.domain.AuthManager;
 import com.khsm.app.presentation.ui.screens.MainActivity;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -42,7 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Nullable
     private Disposable registerDisposable;
 
-    private UsersManager usersManager;
+    private AuthManager authManager;
 
     @Nullable
     private ProgressDialog progressDialog;
@@ -52,7 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_activity);
 
-        usersManager = new UsersManager();
+        authManager = new AuthManager(this);
 
         registerButton = findViewById(R.id.registerButton);
         firstName = findViewById(R.id.first_name);
@@ -113,7 +112,7 @@ public class RegisterActivity extends AppCompatActivity {
             registerDisposable = null;
         }
 
-        registerDisposable = usersManager.register(createUserRequest)
+        registerDisposable = authManager.register(createUserRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -123,13 +122,13 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private void registrationCompleted(Session session) {
+    private void registrationCompleted() {
         if (progressDialog != null) {
             progressDialog.dismiss();
             progressDialog = null;
         }
 
-        startActivity(MainActivity.intent(this));
+        startActivity(MainActivity.intent(this, true));
     }
 
     private void handleError(Throwable throwable) {

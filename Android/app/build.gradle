@@ -47,4 +47,7 @@ dependencies {
     // glide
     implementation "com.github.bumptech.glide:glide:$project.GLIDE_VERSION"
     annotationProcessor "com.github.bumptech.glide:compiler:$project.GLIDE_VERSION"
+
+    // com.f2prateek.rx.preferences2
+    implementation "com.f2prateek.rx.preferences2:rx-preferences:$project.RX_PREFERENCES_VERSION"
 }

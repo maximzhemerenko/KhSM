@@ -1,26 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
   <!-- Dictionary -->
-  <string name="Error">Ошибка</string>
-  <string name="OK">OK</string>
-  <string name="Meetings">Встречи</string>
-  <string name="Disciplines">Дисциплины</string>
-  <string name="Last_Meeting">Последняя встреча</string>
-  <string name="My_Profile">Мой профиль</string>
-  <string name="Rankings">Рейтинг</string>
-  <string name="News">Новости</string>
-  <string name="Logout">Выход</string>
-  <string name="First_Name">Имя</string>
-  <string name="Last_Name">Фамилия</string>
-  <string name="Email">Email</string>
-  <string name="Male">Мужской</string>
-  <string name="Female">Женский</string>
-  <string name="Register">Регистрация</string>
-  <string name="Password">Пароль</string>
-  <string name="Confirm_Password">Повторить пароль</string>
-  <string name="Register.Error.CheckInputData">Проверьте введенные данные</string>
-  <string name="Register.Error.UserRegisterError">Произошла ошибка при регистрации</string>
   <string name="Login.Error.CheckInputData">Проверьте введенные данные</string>
-  <string name="Login.Error.Authentication">Произошла ошибка при аутентификации</string>
+  <string name="Confirm_Password">Повторить пароль</string>
+  <string name="Disciplines">Дисциплины</string>
+  <string name="Email">Email</string>
+  <string name="Error">Ошибка</string>
+  <string name="Female">Женский</string>
+  <string name="First_Name">Имя</string>
+  <string name="Last_Meeting">Последняя встреча</string>
+  <string name="Last_Name">Фамилия</string>
+  <string name="Login">Вход</string>
+  <string name="Logout">Выход</string>
+  <string name="Male">Мужской</string>
+  <string name="Meetings">Встречи</string>
+  <string name="My_Profile">Мой профиль</string>
+  <string name="News">Новости</string>
+  <string name="OK">OK</string>
+  <string name="Password">Пароль</string>
   <string name="Please_WaitD3">Пожалуйста, подождите...</string>
+  <string name="Rankings">Рейтинг</string>
+  <string name="Register">Регистрация</string>
+  <string name="Login.Error.Authentication">Произошла ошибка при аутентификации</string>
+  <string name="Register.Error.UserRegisterError">Произошла ошибка при регистрации</string>
+  <string name="Register.Error.CheckInputData">Проверьте введенные данные</string>
+  <string name="Main.NoAccount">У вас нет учетной записи</string>
 </resources>
