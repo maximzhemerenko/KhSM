@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -22,7 +25,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity implements MenuItem.OnMenuItemClickListener {
     @SuppressWarnings("unused")
     public static Intent newIntent(Context context) {
         return new Intent(context, RegisterActivity.class);
@@ -38,8 +41,12 @@ public class RegisterActivity extends AppCompatActivity {
     private RadioButton male;
     private RadioButton female;
 
+    private Toolbar toolbar;
+
     @Nullable
     private Disposable registerDisposable;
+
+    private MenuItem login_menuItem;
 
     private AuthManager authManager;
 
@@ -50,6 +57,14 @@ public class RegisterActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_activity);
+
+        toolbar = findViewById(R.id.toolbar);
+
+        Menu menu = toolbar.getMenu();
+
+        login_menuItem = menu.add(R.string.Login);
+        login_menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        login_menuItem.setOnMenuItemClickListener(this);
 
         authManager = new AuthManager(this);
 
@@ -128,7 +143,7 @@ public class RegisterActivity extends AppCompatActivity {
             progressDialog = null;
         }
 
-        startActivity(MainActivity.intent(this, true));
+        startActivity(MainActivity.newIntent(this, true));
     }
 
     private void handleError(Throwable throwable) {
@@ -150,5 +165,19 @@ public class RegisterActivity extends AppCompatActivity {
                 .setMessage(errorMessage)
                 .setPositiveButton(R.string.OK, null)
                 .show();
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        if (item == login_menuItem) {
+            showLoginActivity();
+            return true;
+        }
+
+        return false;
+    }
+
+    private void showLoginActivity() {
+        startActivity(LoginActivity.newIntent(this));
     }
 }

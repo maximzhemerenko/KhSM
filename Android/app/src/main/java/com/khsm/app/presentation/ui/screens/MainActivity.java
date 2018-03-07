@@ -25,7 +25,7 @@ import com.khsm.app.presentation.ui.screens.meetings.MeetingListFragment;
 import com.khsm.app.presentation.ui.screens.meetings.MeetingResultsFragment;
 
 public class MainActivity extends AppCompatActivity {
-    public static Intent intent(Context context, boolean clearTask) {
+    public static Intent newIntent(Context context, boolean clearTask) {
         Intent intent = new Intent(context, MainActivity.class);
         if (clearTask) {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(LoginActivity.newIntent(MainActivity.this));
             } else if (menuItem.getItemId() == R.id.logout) {
                 authManager.logout().subscribe();
-                startActivity(MainActivity.intent(MainActivity.this, true));
+                startActivity(MainActivity.newIntent(MainActivity.this, true));
             }
 
             drawerLayout.closeDrawers();

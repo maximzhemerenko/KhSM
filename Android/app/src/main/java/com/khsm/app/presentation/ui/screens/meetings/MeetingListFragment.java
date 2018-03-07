@@ -39,7 +39,7 @@ public class MeetingListFragment extends Fragment implements MenuItem.OnMenuItem
 
     private MeetingListAdapter adapter;
 
-    @SuppressWarnings({"FieldCanBeLocal", "unused"})
+    @SuppressWarnings("FieldCanBeLocal")
     private Toolbar toolbar;
     @SuppressWarnings("FieldCanBeLocal")
     private RecyclerView recyclerView;
