@@ -24,12 +24,15 @@ Response: [Session](#session)
 
 ## Get user
 GET users/{id}
+
 GET users/me
 
 Response: [User](#user)
 
 ## Update user
 PATCH users/{id}
+
+PATCH users/me
 
 Request: [User](#user)
 

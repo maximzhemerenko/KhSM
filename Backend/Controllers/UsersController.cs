@@ -1,4 +1,6 @@
-﻿using System.Net;
+﻿using System;
+using System.Diagnostics;
+using System.Net;
 using Backend.Data.Entities;
 using Backend.Domain;
 using Microsoft.AspNetCore.Mvc;
@@ -44,6 +46,46 @@ namespace Backend.Controllers
                 return Unauthorized();
             
             return Json(user);
+        }
+
+        [HttpPatch("{id}")]
+        [ProducesResponseType(typeof(User), (int) HttpStatusCode.OK)]
+        [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
+        public IActionResult UpdateUser(int id, [FromBody] User user)
+        {
+            var me = User;
+            if (me == null)
+                return Unauthorized();
+
+            if (me.Id != id)
+                return Unauthorized();
+            
+            if (user.Id.HasValue && user.Id.Value != id)
+                throw new Exception("Not consistent user id provided");
+
+            user.Id = id;
+            
+            return Json(_usersManager.UpdateUser(user));
+        }
+        
+        [HttpPatch("me")]
+        [ProducesResponseType(typeof(User), (int) HttpStatusCode.OK)]
+        [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
+        public IActionResult UpdateUser([FromBody] User user)
+        {
+            var me = User;
+            if (me == null)
+                return Unauthorized();
+
+            Debug.Assert(me.Id != null, "me.Id != null");
+            var id = me.Id.Value;
+            
+            if (user.Id.HasValue && user.Id.Value != id)
+                throw new Exception("Not consistent user id provided");
+
+            user.Id = id;
+            
+            return Json(_usersManager.UpdateUser(user));
         }
     }
 }

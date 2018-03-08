@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -56,6 +57,7 @@ namespace Backend.Domain
                 if (user == null)
                     throw new Exception("User does not exist");
 
+                Debug.Assert(user.Id != null, "user.Id != null");
                 var login = _userRepository.GetLogin(user.Id.Value, transaction);
                 if (login == null)
                     throw new Exception("Login does not exist");
@@ -78,6 +80,17 @@ namespace Backend.Domain
             return _sessionRepository.GetSessionByToken(token);
         }
 
+        public User UpdateUser(User user)
+        {
+            Debug.Assert(user.Id != null, "user.Id != null");
+            
+            return _databaseContext.UseTransaction(transaction =>
+            {
+                _userRepository.UpdateUser(user, transaction);
+                return _userRepository.GetUser(user.Id.Value, true, transaction);
+            });
+        }
+        
         private static byte[] Hash(string input)
         {
             return Hash(Encoding.UTF8.GetBytes(input));
