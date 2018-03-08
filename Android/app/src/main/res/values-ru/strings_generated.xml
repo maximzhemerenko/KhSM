@@ -1,9 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
   <!-- Dictionary -->
+  <string name="Birth_Date">Дата рождения</string>
   <string name="Login.Error.CheckInputData">Проверьте введенные данные</string>
+  <string name="City">Город</string>
   <string name="Confirm_Password">Повторить пароль</string>
   <string name="Disciplines">Дисциплины</string>
+  <string name="Edit_Profile">Изменить профиль</string>
   <string name="Email">Email</string>
   <string name="Error">Ошибка</string>
   <string name="Female">Женский</string>
@@ -18,17 +21,15 @@
   <string name="News">Новости</string>
   <string name="OK">OK</string>
   <string name="Password">Пароль</string>
-  <string name="Please_WaitD3">Пожалуйста, подождите...</string>
+  <string name="Phone_Number">Номер телефона</string>
+  <string name="Please_WaitD3">Пожалуйста, подождите…</string>
   <string name="Rankings">Рейтинг</string>
   <string name="Register">Регистрация</string>
+  <string name="Save">Сохранить</string>
   <string name="Login.Error.Authentication">Произошла ошибка при аутентификации</string>
+  <string name="UpdateUser.SuccessMessage">Информация обновлена успешно</string>
   <string name="Register.Error.UserRegisterError">Произошла ошибка при регистрации</string>
+  <string name="WCA_ID">WCA ID</string>
   <string name="Main.NoAccount">У вас нет учетной записи</string>
   <string name="Register.Error.CheckInputData">Проверьте введенные данные</string>
-  <string name="Edit_Profile">Изменить профиль</string>
-  <string name="WCA_ID">WCA ID</string>
-  <string name="City">Город</string>
-  <string name="Birth_Date">Дата рождения</string>
-  <string name="Phone_Number">Номер телефона</string>
-  <string name="UpdateUser.SuccessMessage">Информация обновлена успешно</string>
 </resources>

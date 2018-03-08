@@ -113,7 +113,7 @@ public class EditProfileFragment extends Fragment {
         Date birthDate;
 
         try {
-            birthDate = stringToJavaDate(this.birthDate.toString());
+            birthDate = stringToJavaDate(this.birthDate.getText().toString());
         } catch (ParseException e) {
             showErrorMessage(getString(R.string.Register_Error_CheckInputData));
             return;

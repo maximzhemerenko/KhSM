@@ -144,7 +144,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:textColor="@color/white"
-        android:text="Save">
+        android:text="@string/Save">
     </Button>
 
 </LinearLayout>
