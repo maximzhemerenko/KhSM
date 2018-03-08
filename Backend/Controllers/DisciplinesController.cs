@@ -9,7 +9,7 @@ namespace Backend.Controllers
     {
         private readonly DisciplinesManager _disciplinesManager;
 
-        public DisciplinesController(DisciplinesManager disciplinesManager)
+        public DisciplinesController(DisciplinesManager disciplinesManager, UsersManager usersManager) : base(usersManager)
         {
             _disciplinesManager = disciplinesManager;
         }

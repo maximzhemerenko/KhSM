@@ -1,5 +1,8 @@
 package com.khsm.app.domain;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
+
 import com.khsm.app.data.api.Api;
 import com.khsm.app.data.api.ApiFactory;
 import com.khsm.app.data.entities.Meeting;
@@ -11,8 +14,8 @@ import io.reactivex.Single;
 public class MeetingsManager {
     private final Api api;
 
-    public MeetingsManager() {
-        api = ApiFactory.createApi();
+    public MeetingsManager(@NonNull Context context) {
+        api = ApiFactory.createApi(context);
     }
 
     public Single<List<Meeting>> getMeetings() {

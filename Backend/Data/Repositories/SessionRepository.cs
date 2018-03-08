@@ -5,6 +5,7 @@ using MySql.Data.MySqlClient;
 
 namespace Backend.Data.Repositories
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class SessionRepository : BaseRepository
     {
         public SessionRepository(DatabaseContext databaseContext) : base(databaseContext)
@@ -34,6 +35,35 @@ namespace Backend.Data.Repositories
                 command.ExecuteNonQuery();
             }
         }
+
+        public Session GetSessionByToken(string token)
+        {
+            const string tokenKey = "session_key";
+            
+            using (var command =
+                new MySqlCommand($"select * from session_user where {tokenKey} = @{tokenKey}", Connection)
+                {
+                    Parameters = {new MySqlParameter(tokenKey, token)}
+                })
+            using (var reader = command.ExecuteReader())
+            {
+                return ReadSession(reader);
+            }
+        }
         
+        public static Session ReadSession(MySqlDataReader reader)
+        {
+            return reader.Read() ? GetSession(reader) : null;
+        }
+
+        public static Session GetSession(MySqlDataReader reader)
+        {
+            return new Session
+            {
+                Created = reader.GetDateTimeOffset("created"),
+                Token = reader.GetString("session_key"),
+                User = UserRepository.GetUser(reader, true)
+            };
+        }
     }
 }

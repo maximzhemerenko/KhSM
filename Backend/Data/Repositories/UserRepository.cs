@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
 using Backend.Data.Database;
 using Backend.Data.Database.Entities;
 using Backend.Data.Entities;
@@ -10,11 +13,22 @@ namespace Backend.Data.Repositories
     // ReSharper disable once ClassNeverInstantiated.Global
     public class UserRepository : BaseRepository
     {
+        private const string UserIdKey = "user_id";
+        private const string FirstNameKey = "first_name";
+        private const string LastNameKey = "last_name";
+        private const string GenderKey = "gender";
+        private const string EmailKey = "email";
+        private const string PasswordHashKey = "password_hash";
+        private const string CityKey = "city";
+        private const string WcaIdKey = "wca_id";
+        private const string PhoneNumberKey = "phone_number";
+        private const string BirthDateKey = "birth_date";
+        
         public UserRepository(DatabaseContext databaseContext) : base(databaseContext)
         {
         }
         
-        public IEnumerable<User> GetUsers()
+        public IEnumerable<User> GetUsers(bool readPrivateFields)
         {
             using (var command = new MySqlCommand("select * from user", Connection))
             using (var reader = command.ExecuteReader())
@@ -23,48 +37,117 @@ namespace Backend.Data.Repositories
 
                 while (reader.Read())
                 {
-                    users.Add(GetUser(reader));
+                    users.Add(GetUser(reader, readPrivateFields));
                 }
 
                 return users;
             }
         }
 
-        public User GetUserByEmail(string email, MySqlTransaction transaction)
+        public User GetUser(int id, bool readPrivateFields, MySqlTransaction transaction = null)
         {
-            const string emailKey = "email";
-            
             using (var command = new MySqlCommand(Connection, transaction)
             {
-                CommandText = $"select * from user where {emailKey} = @{emailKey}",
+                CommandText = $"select * from user where {UserIdKey} = @{UserIdKey}",
                 Parameters =
                 {
-                    new MySqlParameter(emailKey, email)
+                    new MySqlParameter(UserIdKey, id)
                 }
             })
             using (var reader = command.ExecuteReader())
             {
-                return reader.Read() ? GetUser(reader) : null;
+                return reader.Read() ? GetUser(reader, readPrivateFields) : null;
+            }
+        }
+
+        public User GetUserByEmail(string email, bool readPrivateFields, MySqlTransaction transaction)
+        {
+            using (var command = new MySqlCommand(Connection, transaction)
+            {
+                CommandText = $"select * from user where {EmailKey} = @{EmailKey}",
+                Parameters =
+                {
+                    new MySqlParameter(EmailKey, email)
+                }
+            })
+            using (var reader = command.ExecuteReader())
+            {
+                return reader.Read() ? GetUser(reader, readPrivateFields) : null;
             }
         }
         
-        public static User GetUser(MySqlDataReader reader)
+        public void UpdateUser(User user, MySqlTransaction transaction)
         {
-            return new User
+            Debug.Assert(user.Id != null, "user.Id != null");
+            
+            using (var command = new MySqlCommand(Connection, transaction))
+            {
+                var parameters = new List<(string key, object value)>
+                {
+                    (FirstNameKey, user.FirstName),
+                    (LastNameKey, user.LastName),
+                    (CityKey, user.City),
+                    (WcaIdKey, user.WCAID),
+                    (PhoneNumberKey, user.PhoneNumber),
+                    (GenderKey, GenderToSqlString(user.Gender)),
+                    (BirthDateKey, user.BirthDate)
+                }.Where(parameter => parameter.value != null).ToList();
+                
+                if (parameters.Count < 1)
+                    return;
+
+                var sb = new StringBuilder("update user set").AppendLine();
+                
+                for (var i = 0; i < parameters.Count; i++)
+                {
+                    var pair = parameters[i];
+                    var key = pair.key;
+                    var value = pair.value;
+                    
+                    sb.Append($"  {key} = @{key}");
+                    if (i < parameters.Count - 1)
+                        sb.Append(",");
+                    sb.AppendLine();
+                    
+                    command.Parameters.Add(new MySqlParameter(key, value));
+                }
+
+                sb.AppendLine($"where {UserIdKey} = @{UserIdKey}");
+                command.Parameters.Add(new MySqlParameter(UserIdKey, user.Id.Value));
+
+                command.CommandText = sb.ToString();
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public static User GetUser(MySqlDataReader reader, bool readPrivateFields, bool readAdminFields = false)
+        {
+            var user = new User
             {
                 Id = reader.GetInt32("user_id"),
                 FirstName = reader.GetString("first_name"),
                 LastName = reader.GetString("last_name"),
-                City = !reader.IsDBNull(reader.GetOrdinal("city")) ? reader.GetString("city") : null,
-                WCAID = !reader.IsDBNull(reader.GetOrdinal("wca_id")) ? reader.GetString("wca_id") : null,
-                PhoneNumber = !reader.IsDBNull(reader.GetOrdinal("phone_number")) ? reader.GetString("phone_number") : null,
-                Gender = ParseGenderString(reader.GetString("gender")),
-                BirthDate = !reader.IsDBNull(reader.GetOrdinal("birth_date")) ? (DateTimeOffset?)reader.GetDateTimeOffset("birth_date") : null,
-                Approved =  !reader.IsDBNull(reader.GetOrdinal("approved")) ? (DateTimeOffset?)reader.GetDateTimeOffset("approved") : null
+                Gender = ParseGenderString(reader.GetString("gender"))
             };
+
+            if (readPrivateFields) 
+            {
+                user.City = !reader.IsDBNull(reader.GetOrdinal("city")) ? reader.GetString("city") : null;
+                user.WCAID = !reader.IsDBNull(reader.GetOrdinal("wca_id")) ? reader.GetString("wca_id") : null;
+                user.PhoneNumber = !reader.IsDBNull(reader.GetOrdinal("phone_number")) ? reader.GetString("phone_number") : null;
+                user.BirthDate = !reader.IsDBNull(reader.GetOrdinal("birth_date")) ? (DateTimeOffset?)reader.GetDateTimeOffset("birth_date") : null;
+            }
+
+            if (readAdminFields)
+            {
+                user.Approved =  !reader.IsDBNull(reader.GetOrdinal("approved")) ? (DateTimeOffset?)reader.GetDateTimeOffset("approved") : null;    
+            }
+            
+            return user;
         }
 
-        public static Gender ParseGenderString(string genderString)
+        private static Gender ParseGenderString(string genderString)
         {
             if (!Enum.TryParse(genderString, true, out Gender gender))
                 throw new Exception();
@@ -74,21 +157,18 @@ namespace Backend.Data.Repositories
 
         public void AddUser(User user, MySqlTransaction transaction)
         {
-            const string firstNameKey = "first_name";
-            const string lastNameKey = "last_name";
-            const string genderKey = "gender";
-            const string emailKey = "email";
+            Debug.Assert(user.Gender != null, "user.Gender != null");
             
             using (var command = new MySqlCommand(Connection, transaction)
             {
-                CommandText = $"insert into user({firstNameKey}, {lastNameKey}, {genderKey}, {emailKey}) " +
-                              $"values(@{firstNameKey}, @{lastNameKey}, @{genderKey}, @{emailKey})",
+                CommandText = $"insert into user({FirstNameKey}, {LastNameKey}, {GenderKey}, {EmailKey}) " +
+                              $"values(@{FirstNameKey}, @{LastNameKey}, @{GenderKey}, @{EmailKey})",
                 Parameters =
                 {
-                    new MySqlParameter(firstNameKey, user.FirstName),
-                    new MySqlParameter(lastNameKey, user.LastName),
-                    new MySqlParameter(genderKey, user.Gender == Gender.Male ? "male" : "female"),
-                    new MySqlParameter(emailKey, user.Email)
+                    new MySqlParameter(FirstNameKey, user.FirstName),
+                    new MySqlParameter(LastNameKey, user.LastName),
+                    new MySqlParameter(GenderKey, GenderToSqlString(user.Gender.Value)),
+                    new MySqlParameter(EmailKey, user.Email)
                 }
             })
             {
@@ -100,17 +180,14 @@ namespace Backend.Data.Repositories
 
         public void AddLogin(User user, byte[] passwordHash, MySqlTransaction transaction)
         {
-            const string userIdKey = "user_id";
-            const string passwordHashKey = "password_hash";
-
             using (var command = new MySqlCommand(Connection, transaction)
             {
-                CommandText = $"insert into login({userIdKey}, {passwordHashKey}) " +
-                              $"values(@{userIdKey}, @{passwordHashKey})",
+                CommandText = $"insert into login({UserIdKey}, {PasswordHashKey}) " +
+                              $"values(@{UserIdKey}, @{PasswordHashKey})",
                 Parameters =
                 {
-                    new MySqlParameter(userIdKey, user.Id),
-                    new MySqlParameter(passwordHashKey, passwordHash)
+                    new MySqlParameter(UserIdKey, user.Id),
+                    new MySqlParameter(PasswordHashKey, passwordHash)
                 }
             })
             {
@@ -120,16 +197,14 @@ namespace Backend.Data.Repositories
             }
         }
 
-        public Login GetLoginByUserId(int? userId, MySqlTransaction transaction)
+        public Login GetLogin(int userId, MySqlTransaction transaction)
         {
-            const string userIdKey = "user_id";
-            
             using (var command = new MySqlCommand(Connection, transaction)
             {
-                CommandText = $"select * from login where {userIdKey} = @{userIdKey}",
+                CommandText = $"select * from login where {UserIdKey} = @{UserIdKey}",
                 Parameters =
                 {
-                    new MySqlParameter(userIdKey, userId)
+                    new MySqlParameter(UserIdKey, userId)
                 }
             })
             using (var reader = command.ExecuteReader())
@@ -138,7 +213,7 @@ namespace Backend.Data.Repositories
             }
         }
 
-        private Login GetLogin(MySqlDataReader reader)
+        private static Login GetLogin(MySqlDataReader reader)
         {
             var login = new Login
             {
@@ -157,6 +232,13 @@ namespace Backend.Data.Repositories
             }
             
             return login;
+        }
+
+        private static string GenderToSqlString(Gender? gender)
+        {
+            if (gender == null) return null;
+            
+            return gender == Gender.Male ? "male" : "female";
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.khsm.app.presentation.ui.screens.meetings;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -76,9 +77,11 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        meetingsManager = new MeetingsManager();
-        resultsManager = new ResultsManager();
-        adapter = new MeetingResultsAdapter(getContext(), this);
+        Context context = requireContext();
+
+        meetingsManager = new MeetingsManager(context);
+        resultsManager = new ResultsManager(context);
+        adapter = new MeetingResultsAdapter(context, this);
     }
 
     @Override

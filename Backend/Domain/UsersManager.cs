@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -23,11 +24,16 @@ namespace Backend.Domain
             _sessionRepository = sessionRepository;
         }
 
-        public IEnumerable<User> GetUsers()
+        public IEnumerable<User> GetUsers(bool readPrivateFields)
         {
-            return _userRepository.GetUsers();
+            return _userRepository.GetUsers(readPrivateFields);
         }
-
+        
+        public User GetUser(int id, bool readPrivateFields)
+        {
+            return _userRepository.GetUser(id, readPrivateFields);
+        }
+        
         public Session Register(CreateUserRequest createUserRequest)
         {
             return _databaseContext.UseTransaction(transaction =>
@@ -47,11 +53,12 @@ namespace Backend.Domain
         {
             return _databaseContext.UseTransaction(transaction =>
             {
-                var user = _userRepository.GetUserByEmail(createSessionRequest.Email, transaction);
+                var user = _userRepository.GetUserByEmail(createSessionRequest.Email, true, transaction);
                 if (user == null)
                     throw new Exception("User does not exist");
 
-                var login = _userRepository.GetLoginByUserId(user.Id, transaction);
+                Debug.Assert(user.Id != null, "user.Id != null");
+                var login = _userRepository.GetLogin(user.Id.Value, transaction);
                 if (login == null)
                     throw new Exception("Login does not exist");
 
@@ -68,12 +75,28 @@ namespace Backend.Domain
             });
         }
         
-        static byte[] Hash(string input)
+        public Session FindSession(string token)
+        {
+            return _sessionRepository.GetSessionByToken(token);
+        }
+
+        public User UpdateUser(User user)
+        {
+            Debug.Assert(user.Id != null, "user.Id != null");
+            
+            return _databaseContext.UseTransaction(transaction =>
+            {
+                _userRepository.UpdateUser(user, transaction);
+                return _userRepository.GetUser(user.Id.Value, true, transaction);
+            });
+        }
+        
+        private static byte[] Hash(string input)
         {
             return Hash(Encoding.UTF8.GetBytes(input));
         }
 
-        static byte[] Hash(byte[] input)
+        private static byte[] Hash(byte[] input)
         {
             using (var sha1 = new SHA1Managed())
             {
@@ -81,7 +104,7 @@ namespace Backend.Domain
             }
         }
 
-        static string ConvertBytesToString(byte[] input)
+        private static string ConvertBytesToString(IEnumerable<byte> input)
         {
             var sb = new StringBuilder();
             foreach (var b in input)

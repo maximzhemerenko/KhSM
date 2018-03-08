@@ -8,7 +8,7 @@ namespace Backend.Controllers
     {
         private readonly UsersManager _usersManager;
 
-        public SessionsController(UsersManager usersManager)
+        public SessionsController(UsersManager usersManager) : base(usersManager)
         {
             _usersManager = usersManager;
         }

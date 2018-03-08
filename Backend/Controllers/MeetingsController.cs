@@ -10,8 +10,8 @@ namespace Backend.Controllers
     {
         private readonly MeetingsManager _meetingsManager;
         private readonly ResultsManager _resultsManager;
-
-        public MeetingsController(MeetingsManager meetingsManager, ResultsManager resultsManager)
+        
+        public MeetingsController(MeetingsManager meetingsManager, ResultsManager resultsManager, UsersManager usersManager) : base(usersManager)
         {
             _meetingsManager = meetingsManager;
             _resultsManager = resultsManager;

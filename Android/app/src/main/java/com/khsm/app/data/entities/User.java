@@ -33,4 +33,8 @@ public class User {
     public User(String firstName, String lastName, Gender gender, String email) {
         this(null, firstName, lastName, null, null, null, gender, null, null, email);
     }
+
+    public User(String firstName, String lastName, Gender gender, String city, String wcaId, String phoneNumber, Date birthDate) {
+        this(null, firstName, lastName, city, wcaId, phoneNumber, gender, birthDate, null, null);
+    }
 }
