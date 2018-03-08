@@ -184,7 +184,7 @@ public class EditProfileFragment extends Fragment {
 
         new AlertDialog.Builder(requireContext())
                 .setTitle(R.string.Error)
-                .setMessage(R.string.Register_Error_UserRegisterError)
+                .setMessage(throwable.getMessage())
                 .setPositiveButton(R.string.OK, null)
                 .show();
     }

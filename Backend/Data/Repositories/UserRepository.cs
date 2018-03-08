@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using Backend.Data.Database;
 using Backend.Data.Database.Entities;
@@ -81,42 +82,16 @@ namespace Backend.Data.Repositories
             
             using (var command = new MySqlCommand(Connection, transaction))
             {
-                var parameters = new List<(string key, MySqlParameter parameter)>();
-                
-                if (user.FirstName != null)
+                var parameters = new List<(string key, object value)>
                 {
-                    parameters.Add((FirstNameKey, new MySqlParameter(FirstNameKey, user.FirstName)));
-                }
-                
-                if (user.LastName != null)
-                {
-                    parameters.Add((LastNameKey, new MySqlParameter(LastNameKey, user.LastName)));
-                }
-                
-                if (user.City != null)
-                {
-                    parameters.Add((CityKey, new MySqlParameter(CityKey, user.City)));
-                }
-                
-                if (user.WCAID != null)
-                {
-                    parameters.Add((WcaIdKey, new MySqlParameter(WcaIdKey, user.WCAID)));
-                }
-                
-                if (user.PhoneNumber != null)
-                {
-                    parameters.Add((PhoneNumberKey, new MySqlParameter(PhoneNumberKey, user.PhoneNumber)));
-                }
-                
-                if (user.Gender != null)
-                {
-                    parameters.Add((GenderKey, new MySqlParameter(GenderKey, GenderToSqlString(user.Gender.Value))));
-                }
-
-                if (user.BirthDate != null)
-                {
-                    parameters.Add((BirthDateKey, new MySqlParameter(BirthDateKey, user.BirthDate)));
-                }
+                    (FirstNameKey, user.FirstName),
+                    (LastNameKey, user.LastName),
+                    (CityKey, user.City),
+                    (WcaIdKey, user.WCAID),
+                    (PhoneNumberKey, user.PhoneNumber),
+                    (GenderKey, GenderToSqlString(user.Gender)),
+                    (BirthDateKey, user.BirthDate)
+                }.Where(parameter => parameter.value != null).ToList();
                 
                 if (parameters.Count < 1)
                     return;
@@ -126,14 +101,15 @@ namespace Backend.Data.Repositories
                 for (var i = 0; i < parameters.Count; i++)
                 {
                     var pair = parameters[i];
-                    var parameter = pair.parameter;
+                    var key = pair.key;
+                    var value = pair.value;
                     
-                    sb.Append($"  {pair.key} = @{parameter.ParameterName}");
+                    sb.Append($"  {key} = @{key}");
                     if (i < parameters.Count - 1)
                         sb.Append(",");
                     sb.AppendLine();
                     
-                    command.Parameters.Add(parameter);
+                    command.Parameters.Add(new MySqlParameter(key, value));
                 }
 
                 sb.AppendLine($"where {UserIdKey} = @{UserIdKey}");
@@ -237,7 +213,7 @@ namespace Backend.Data.Repositories
             }
         }
 
-        private Login GetLogin(MySqlDataReader reader)
+        private static Login GetLogin(MySqlDataReader reader)
         {
             var login = new Login
             {
@@ -258,8 +234,10 @@ namespace Backend.Data.Repositories
             return login;
         }
 
-        private static string GenderToSqlString(Gender gender)
+        private static string GenderToSqlString(Gender? gender)
         {
+            if (gender == null) return null;
+            
             return gender == Gender.Male ? "male" : "female";
         }
     }
