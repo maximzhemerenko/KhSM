@@ -30,4 +30,5 @@
   <string name="City">City</string>
   <string name="Birth_Date">Birth Date</string>
   <string name="Phone_Number">Phone Number</string>
+  <string name="UpdateUser.SuccessMessage">User information was updated successfully</string>
 </resources>

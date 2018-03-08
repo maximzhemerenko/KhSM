@@ -53,7 +53,7 @@ namespace Backend.Domain
         {
             return _databaseContext.UseTransaction(transaction =>
             {
-                var user = _userRepository.GetUserByEmail(createSessionRequest.Email, false, transaction);
+                var user = _userRepository.GetUserByEmail(createSessionRequest.Email, true, transaction);
                 if (user == null)
                     throw new Exception("User does not exist");
 

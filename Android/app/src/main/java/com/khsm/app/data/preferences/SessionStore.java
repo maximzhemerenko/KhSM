@@ -39,6 +39,10 @@ public class SessionStore {
         setUser(session.user);
     }
 
+    public void updateUser(@NonNull User user) {
+        setUser(user);
+    }
+
     public void clearSession() {
         setSessionInfo(null);
         setUser(null);

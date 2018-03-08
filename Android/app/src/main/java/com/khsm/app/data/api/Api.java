@@ -7,6 +7,7 @@ import com.khsm.app.data.entities.Discipline;
 import com.khsm.app.data.entities.DisciplineResults;
 import com.khsm.app.data.entities.Meeting;
 import com.khsm.app.data.entities.Session;
+import com.khsm.app.data.entities.User;
 
 import java.util.List;
 
@@ -50,4 +51,8 @@ public class Api extends ApiBase {
                 .compose(this::processResponse);
     }
 
+    public Single<User> updateUser(User user){
+        return restApi.updateUser(user)
+                .compose(this::processResponse);
+    }
 }

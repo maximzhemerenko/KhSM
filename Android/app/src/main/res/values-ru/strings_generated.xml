@@ -30,4 +30,5 @@
   <string name="City">Город</string>
   <string name="Birth_Date">Дата рождения</string>
   <string name="Phone_Number">Номер телефона</string>
+  <string name="UpdateUser.SuccessMessage">Информация обновлена успешно</string>
 </resources>

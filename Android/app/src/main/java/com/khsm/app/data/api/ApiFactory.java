@@ -23,7 +23,7 @@ public abstract class ApiFactory {
             apiBuilderHelper.addLoggingInterceptor(HttpLoggingInterceptor.Level.BODY);
         }
 
-        String serviceUrl = "http://10.0.2.2:5000/";
+        String serviceUrl = "http://10.0.2.2:5000/api/";
 
         RestApi restApi = apiBuilderHelper.createRetrofitApi(serviceUrl, RestApi.class);
 
