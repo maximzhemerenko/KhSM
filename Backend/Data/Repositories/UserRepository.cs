@@ -14,7 +14,7 @@ namespace Backend.Data.Repositories
         {
         }
         
-        public IEnumerable<User> GetUsers()
+        public IEnumerable<User> GetUsers(bool readPrivateFields)
         {
             using (var command = new MySqlCommand("select * from user", Connection))
             using (var reader = command.ExecuteReader())
@@ -23,14 +23,14 @@ namespace Backend.Data.Repositories
 
                 while (reader.Read())
                 {
-                    users.Add(GetUser(reader));
+                    users.Add(GetUser(reader, readPrivateFields));
                 }
 
                 return users;
             }
         }
 
-        public User GetUser(int id, MySqlTransaction transaction = null)
+        public User GetUser(int id, bool readPrivateFields, MySqlTransaction transaction = null)
         {
             const string userIdKey = "user_id";
             
@@ -44,11 +44,11 @@ namespace Backend.Data.Repositories
             })
             using (var reader = command.ExecuteReader())
             {
-                return reader.Read() ? GetUser(reader) : null;
+                return reader.Read() ? GetUser(reader, readPrivateFields) : null;
             }
         }
 
-        public User GetUserByEmail(string email, MySqlTransaction transaction)
+        public User GetUserByEmail(string email, bool readPrivateFields, MySqlTransaction transaction)
         {
             const string emailKey = "email";
             
@@ -62,24 +62,34 @@ namespace Backend.Data.Repositories
             })
             using (var reader = command.ExecuteReader())
             {
-                return reader.Read() ? GetUser(reader) : null;
+                return reader.Read() ? GetUser(reader, readPrivateFields) : null;
             }
         }
         
-        public static User GetUser(MySqlDataReader reader)
+        public static User GetUser(MySqlDataReader reader, bool readPrivateFields, bool readAdminFields = false)
         {
-            return new User
+            var user = new User
             {
                 Id = reader.GetInt32("user_id"),
                 FirstName = reader.GetString("first_name"),
                 LastName = reader.GetString("last_name"),
-                City = !reader.IsDBNull(reader.GetOrdinal("city")) ? reader.GetString("city") : null,
-                WCAID = !reader.IsDBNull(reader.GetOrdinal("wca_id")) ? reader.GetString("wca_id") : null,
-                PhoneNumber = !reader.IsDBNull(reader.GetOrdinal("phone_number")) ? reader.GetString("phone_number") : null,
-                Gender = ParseGenderString(reader.GetString("gender")),
-                BirthDate = !reader.IsDBNull(reader.GetOrdinal("birth_date")) ? (DateTimeOffset?)reader.GetDateTimeOffset("birth_date") : null,
-                Approved =  !reader.IsDBNull(reader.GetOrdinal("approved")) ? (DateTimeOffset?)reader.GetDateTimeOffset("approved") : null
+                Gender = ParseGenderString(reader.GetString("gender"))
             };
+
+            if (readPrivateFields) 
+            {
+                user.City = !reader.IsDBNull(reader.GetOrdinal("city")) ? reader.GetString("city") : null;
+                user.WCAID = !reader.IsDBNull(reader.GetOrdinal("wca_id")) ? reader.GetString("wca_id") : null;
+                user.PhoneNumber = !reader.IsDBNull(reader.GetOrdinal("phone_number")) ? reader.GetString("phone_number") : null;
+                user.BirthDate = !reader.IsDBNull(reader.GetOrdinal("birth_date")) ? (DateTimeOffset?)reader.GetDateTimeOffset("birth_date") : null;
+            }
+
+            if (readAdminFields)
+            {
+                user.Approved =  !reader.IsDBNull(reader.GetOrdinal("approved")) ? (DateTimeOffset?)reader.GetDateTimeOffset("approved") : null;    
+            }
+            
+            return user;
         }
 
         public static Gender ParseGenderString(string genderString)

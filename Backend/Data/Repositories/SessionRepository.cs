@@ -62,7 +62,7 @@ namespace Backend.Data.Repositories
             {
                 Created = reader.GetDateTimeOffset("created"),
                 Token = reader.GetString("session_key"),
-                User = UserRepository.GetUser(reader)
+                User = UserRepository.GetUser(reader, true)
             };
         }
     }

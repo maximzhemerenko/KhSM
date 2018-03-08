@@ -29,7 +29,7 @@ GET users/me
 Response: [User](#user)
 
 ## Update user
-PUT users/{id}
+PATCH users/{id}
 
 Request: [User](#user)
 

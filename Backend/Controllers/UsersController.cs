@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Net;
+﻿using System.Net;
 using Backend.Data.Entities;
 using Backend.Domain;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +25,9 @@ namespace Backend.Controllers
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public IActionResult GetUser(int id)
         {
-            var user = _usersManager.GetUser(id);
+            var readPrivateFields = id == User?.Id;
+            
+            var user = _usersManager.GetUser(id, readPrivateFields);
             if (user == null)
                 return NotFound();
             

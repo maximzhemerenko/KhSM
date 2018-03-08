@@ -23,14 +23,14 @@ namespace Backend.Domain
             _sessionRepository = sessionRepository;
         }
 
-        public IEnumerable<User> GetUsers()
+        public IEnumerable<User> GetUsers(bool readPrivateFields)
         {
-            return _userRepository.GetUsers();
+            return _userRepository.GetUsers(readPrivateFields);
         }
         
-        public User GetUser(int id)
+        public User GetUser(int id, bool readPrivateFields)
         {
-            return _userRepository.GetUser(id);
+            return _userRepository.GetUser(id, readPrivateFields);
         }
         
         public Session Register(CreateUserRequest createUserRequest)
@@ -52,7 +52,7 @@ namespace Backend.Domain
         {
             return _databaseContext.UseTransaction(transaction =>
             {
-                var user = _userRepository.GetUserByEmail(createSessionRequest.Email, transaction);
+                var user = _userRepository.GetUserByEmail(createSessionRequest.Email, false, transaction);
                 if (user == null)
                     throw new Exception("User does not exist");
 

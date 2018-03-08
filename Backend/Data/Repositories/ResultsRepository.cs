@@ -51,7 +51,7 @@ namespace Backend.Data.Repositories
                             if (readDiscipline)
                                 result.Discipline = DisciplinesRepository.GetDiscipline(reader);
                             if (readUser)
-                                result.User = UserRepository.GetUser(reader);
+                                result.User = UserRepository.GetUser(reader, false);
                             
                             attempts = new List<Attempt>();
                             
