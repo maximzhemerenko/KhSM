@@ -26,4 +26,8 @@
   <string name="Main.NoAccount">You doesn\'t have an account</string>
   <string name="Register.Error.CheckInputData">Сheck the entered data</string>
   <string name="Edit_Profile">Edit Profile</string>
+  <string name="WCA_ID">WCA ID</string>
+  <string name="City">City</string>
+  <string name="Birth_Date">Birth Date</string>
+  <string name="Phone_Number">Phone Number</string>
 </resources>

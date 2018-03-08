@@ -26,4 +26,8 @@
   <string name="Main.NoAccount">У вас нет учетной записи</string>
   <string name="Register.Error.CheckInputData">Проверьте введенные данные</string>
   <string name="Edit_Profile">Изменить профиль</string>
+  <string name="WCA_ID">WCA ID</string>
+  <string name="City">Город</string>
+  <string name="Birth_Date">Дата рождения</string>
+  <string name="Phone_Number">Номер телефона</string>
 </resources>
