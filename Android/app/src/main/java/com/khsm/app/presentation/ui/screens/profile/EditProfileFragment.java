@@ -23,6 +23,7 @@ import com.khsm.app.data.entities.Gender;
 import com.khsm.app.data.entities.Session;
 import com.khsm.app.data.entities.User;
 import com.khsm.app.domain.AuthManager;
+import com.khsm.app.presentation.ui.utils.maskedittext.Mask;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -82,6 +83,7 @@ public class EditProfileFragment extends Fragment {
         wcaId = view.findViewById(R.id.wca_id);
         city = view.findViewById(R.id.city);
         birthDate = view.findViewById(R.id.birth_date);
+        Mask.setup(birthDate, "##-##-####");
         phoneNumber = view.findViewById(R.id.phone_number);
 
         male = view.findViewById(R.id.male);

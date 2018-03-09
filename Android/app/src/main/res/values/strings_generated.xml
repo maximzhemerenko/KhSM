@@ -32,4 +32,5 @@
   <string name="WCA_ID">WCA ID</string>
   <string name="Main.NoAccount">You doesn\'t have an account</string>
   <string name="Register.Error.CheckInputData">Сheck the entered data</string>
+  <string name="Birth_Date_Hint">Birth Date (DD-MM-YYYY)</string>
 </resources>

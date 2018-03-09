@@ -32,4 +32,5 @@
   <string name="WCA_ID">WCA ID</string>
   <string name="Main.NoAccount">У вас нет учетной записи</string>
   <string name="Register.Error.CheckInputData">Проверьте введенные данные</string>
+  <string name="Birth_Date_Hint">Дата рождения (ДД-ММ-ГГГГ)</string>
 </resources>
