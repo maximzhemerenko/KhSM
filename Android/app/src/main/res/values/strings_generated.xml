@@ -1,8 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
   <!-- Dictionary -->
-  <string name="Birth_Date">Birth Date</string>
-  <string name="Login.Error.CheckInputData">Check the entered data</string>
   <string name="City">City</string>
   <string name="Confirm_Password">Confirm Password</string>
   <string name="Disciplines">Disciplines</string>
@@ -21,15 +19,19 @@
   <string name="News">News</string>
   <string name="OK">OK</string>
   <string name="Password">Password</string>
-  <string name="Phone_Number">Phone Number</string>
   <string name="Please_WaitD3">Please, wait…</string>
   <string name="Rankings">Rankings</string>
   <string name="Register">Register</string>
   <string name="Save">Save</string>
-  <string name="Login.Error.Authentication">User authentication error</string>
-  <string name="UpdateUser.SuccessMessage">User information was updated successfully</string>
-  <string name="Register.Error.UserRegisterError">User register error</string>
   <string name="WCA_ID">WCA ID</string>
+  <!-- Auth -->
+  <string name="Login.Error.CheckInputData">Check the entered data</string>
+  <string name="Login.Error.Authentication">User authentication error</string>
+  <string name="Register.Error.UserRegisterError">User register error</string>
   <string name="Main.NoAccount">You doesn\'t have an account</string>
   <string name="Register.Error.CheckInputData">Сheck the entered data</string>
+  <!-- Edit Profile -->
+  <string name="EditProfile.Birth_Date_Hint">Birth Date (DD-MM-YYYY)</string>
+  <string name="EditProfile.Phone_Number_Hint">Phone Number (+380 XX XXX-XX-XX)</string>
+  <string name="EditProfile.SuccessMessageE">User information was updated successfully! 😀</string>
 </resources>

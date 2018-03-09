@@ -68,6 +68,7 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
 
     private MeetingResultsAdapter adapter;
 
+    @SuppressWarnings("FieldCanBeLocal")
     private boolean lastMeetingMode;
 
     @Nullable
@@ -89,6 +90,8 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
                              Bundle savedInstanceState) {
         // load arguments
         Bundle arguments = getArguments();
+        if (arguments == null)
+            throw new RuntimeException("Arguments should be provided");
 
         Meeting meeting = (Meeting) arguments.getSerializable(KEY_MEETING);
 
@@ -119,6 +122,7 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
 
         // load data
         if (!lastMeetingMode) {
+            //noinspection ConstantConditions
             setMeeting(meeting);
         } else {
             loadLastMeeting();
@@ -212,7 +216,7 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
     private void handleError(Throwable throwable) {
         progressBar.setVisibility(View.INVISIBLE);
 
-        new AlertDialog.Builder(getContext())
+        new AlertDialog.Builder(requireContext())
                 .setTitle(R.string.Error)
                 .setMessage(throwable.getMessage())
                 .setPositiveButton(R.string.OK, null)
@@ -224,7 +228,7 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
     }
 
     private void showMeetingList() {
-        MainActivity mainActivity = (MainActivity) getActivity();
+        MainActivity mainActivity = (MainActivity) requireActivity();
         mainActivity.replaceFragment(MeetingListFragment.newInstance());
     }
 

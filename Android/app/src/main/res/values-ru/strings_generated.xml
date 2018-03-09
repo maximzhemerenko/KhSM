@@ -1,8 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
   <!-- Dictionary -->
-  <string name="Birth_Date">Дата рождения</string>
-  <string name="Login.Error.CheckInputData">Проверьте введенные данные</string>
   <string name="City">Город</string>
   <string name="Confirm_Password">Повторить пароль</string>
   <string name="Disciplines">Дисциплины</string>
@@ -21,15 +19,19 @@
   <string name="News">Новости</string>
   <string name="OK">OK</string>
   <string name="Password">Пароль</string>
-  <string name="Phone_Number">Номер телефона</string>
   <string name="Please_WaitD3">Пожалуйста, подождите…</string>
   <string name="Rankings">Рейтинг</string>
   <string name="Register">Регистрация</string>
   <string name="Save">Сохранить</string>
-  <string name="Login.Error.Authentication">Произошла ошибка при аутентификации</string>
-  <string name="UpdateUser.SuccessMessage">Информация обновлена успешно</string>
-  <string name="Register.Error.UserRegisterError">Произошла ошибка при регистрации</string>
   <string name="WCA_ID">WCA ID</string>
+  <!-- Auth -->
+  <string name="Login.Error.CheckInputData">Проверьте введенные данные</string>
+  <string name="Login.Error.Authentication">Произошла ошибка при аутентификации</string>
+  <string name="Register.Error.UserRegisterError">Произошла ошибка при регистрации</string>
   <string name="Main.NoAccount">У вас нет учетной записи</string>
   <string name="Register.Error.CheckInputData">Проверьте введенные данные</string>
+  <!-- Edit Profile -->
+  <string name="EditProfile.Birth_Date_Hint">Дата рождения (ДД-ММ-ГГГГ)</string>
+  <string name="EditProfile.Phone_Number_Hint">Номер телефона (+380 XX XXX-XX-XX)</string>
+  <string name="EditProfile.SuccessMessageE">Информация обновлена успешно! 😀</string>
 </resources>

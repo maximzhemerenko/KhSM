@@ -116,7 +116,7 @@
                         android:id="@+id/birth_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/Birth_Date"
+                        android:hint="@string/EditProfile.Birth_Date_Hint"
                         android:inputType="date" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -129,7 +129,7 @@
                         android:id="@+id/phone_number"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/Phone_Number"
+                        android:hint="@string/EditProfile.Phone_Number_Hint"
                         android:inputType="phone" />
                 </android.support.design.widget.TextInputLayout>
 

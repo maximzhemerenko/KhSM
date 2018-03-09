@@ -30,9 +30,9 @@ GET users/me
 Response: [User](#user)
 
 ## Update user
-PATCH users/{id}
+PUT users/{id}
 
-PATCH users/me
+PUT users/me
 
 Request: [User](#user)
 

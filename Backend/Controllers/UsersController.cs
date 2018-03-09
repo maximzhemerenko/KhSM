@@ -48,7 +48,7 @@ namespace Backend.Controllers
             return Json(user);
         }
 
-        [HttpPatch("{id}")]
+        [HttpPut("{id}")]
         [ProducesResponseType(typeof(User), (int) HttpStatusCode.OK)]
         [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
         public IActionResult UpdateUser(int id, [FromBody] User user)
@@ -68,7 +68,7 @@ namespace Backend.Controllers
             return Json(_usersManager.UpdateUser(user));
         }
         
-        [HttpPatch("me")]
+        [HttpPut("me")]
         [ProducesResponseType(typeof(User), (int) HttpStatusCode.OK)]
         [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
         public IActionResult UpdateUser([FromBody] User user)

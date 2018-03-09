@@ -14,7 +14,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -23,6 +22,7 @@ import com.khsm.app.data.entities.Gender;
 import com.khsm.app.data.entities.Session;
 import com.khsm.app.data.entities.User;
 import com.khsm.app.domain.AuthManager;
+import com.khsm.app.presentation.ui.utils.maskedittext.EditTextMask;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -58,7 +58,7 @@ public class EditProfileFragment extends Fragment {
     private Toolbar toolbar;
 
     @Nullable
-    private Disposable registerDisposable;
+    private Disposable updateUserDisposable;
 
     @Nullable
     private ProgressDialog progressDialog;
@@ -82,7 +82,9 @@ public class EditProfileFragment extends Fragment {
         wcaId = view.findViewById(R.id.wca_id);
         city = view.findViewById(R.id.city);
         birthDate = view.findViewById(R.id.birth_date);
+        EditTextMask.setup(birthDate, "##-##-####");
         phoneNumber = view.findViewById(R.id.phone_number);
+        EditTextMask.setup(phoneNumber, "#### (##) ###-##-##");
 
         male = view.findViewById(R.id.male);
         female = view.findViewById(R.id.female);
@@ -110,8 +112,13 @@ public class EditProfileFragment extends Fragment {
             return;
         }
 
-        Date birthDate;
+        // init entities
+        Gender gender =
+                male.isChecked() ? Gender.MALE :
+                        female.isChecked() ? Gender.FEMALE :
+                                null;
 
+        Date birthDate;
         try {
             birthDate = stringToJavaDate(this.birthDate.getText().toString());
         } catch (ParseException e) {
@@ -119,11 +126,7 @@ public class EditProfileFragment extends Fragment {
             return;
         }
 
-        // init entities
-        Gender gender =
-                male.isChecked() ? Gender.MALE :
-                        female.isChecked() ? Gender.FEMALE :
-                                null;
+        String phoneNumber = unmaskPhoneNumber(this.phoneNumber.getText().toString());
 
         User user = new User(
                 firstName.getText().toString(),
@@ -131,7 +134,7 @@ public class EditProfileFragment extends Fragment {
                 gender,
                 city.getText().toString(),
                 wcaId.getText().toString(),
-                phoneNumber.getText().toString(),
+                phoneNumber,
                 birthDate
         );
 
@@ -142,12 +145,12 @@ public class EditProfileFragment extends Fragment {
 
         progressDialog = ProgressDialog.show(requireContext(), null, getString(R.string.Please_WaitD3), true, false);
 
-        if (registerDisposable != null) {
-            registerDisposable.dispose();
-            registerDisposable = null;
+        if (updateUserDisposable != null) {
+            updateUserDisposable.dispose();
+            updateUserDisposable = null;
         }
 
-        registerDisposable = authManager.updateUser(user)
+        updateUserDisposable = authManager.updateUser(user)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -164,7 +167,10 @@ public class EditProfileFragment extends Fragment {
 
         setUser(user);
 
-        Toast.makeText(requireContext(), R.string.UpdateUser_SuccessMessage, Toast.LENGTH_LONG).show();
+        new AlertDialog.Builder(requireContext())
+                .setMessage(R.string.EditProfile_SuccessMessageE)
+                .setPositiveButton(R.string.OK, null)
+                .show();
     }
 
     private Date stringToJavaDate(@NonNull String dateString) throws ParseException {
@@ -174,6 +180,14 @@ public class EditProfileFragment extends Fragment {
             return null;
 
         return dateFormat.parse(dateString);
+    }
+
+    private String unmaskPhoneNumber(String maskedPhoneNumber) {
+        return maskedPhoneNumber.trim()
+                .replace(" ", "")
+                .replace("(", "")
+                .replace(")", "")
+                .replace("-", "");
     }
 
     private void handleError(Throwable throwable) {
