@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Text;
 using Backend.Data.Database;
 using Backend.Data.Database.Entities;
@@ -91,11 +90,8 @@ namespace Backend.Data.Repositories
                     (PhoneNumberKey, user.PhoneNumber),
                     (GenderKey, GenderToSqlString(user.Gender)),
                     (BirthDateKey, user.BirthDate)
-                }.Where(parameter => parameter.value != null).ToList();
+                };
                 
-                if (parameters.Count < 1)
-                    return;
-
                 var sb = new StringBuilder("update user set").AppendLine();
                 
                 for (var i = 0; i < parameters.Count; i++)

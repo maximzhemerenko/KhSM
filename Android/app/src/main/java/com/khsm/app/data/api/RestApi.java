@@ -1,7 +1,5 @@
 package com.khsm.app.data.api;
 
-import android.media.MediaCas;
-
 import com.khsm.app.data.entities.CreateSessionRequest;
 import com.khsm.app.data.entities.CreateUserRequest;
 import com.khsm.app.data.entities.Discipline;
@@ -15,8 +13,8 @@ import java.util.List;
 import io.reactivex.Single;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
-import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 interface RestApi {
@@ -38,6 +36,6 @@ interface RestApi {
     @POST("users")
     Single<Session> register(@Body CreateUserRequest createUserRequest);
 
-    @PATCH("users/me")
+    @PUT("users/me")
     Single<User> updateUser(@Body User user);
 }

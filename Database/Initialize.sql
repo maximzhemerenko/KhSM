@@ -22,7 +22,7 @@ create table User
     last_name varchar(32) not null,
     city varchar(32) null,
     wca_id varchar(16) null,
-    phone_number varchar(16) null,
+    phone_number varchar(32) null,
     gender varchar(8) not null,
     birth_date date null,
     approved date null,
