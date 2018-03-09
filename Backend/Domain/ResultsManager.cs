@@ -24,7 +24,19 @@ namespace Backend.Domain
         
         public IEnumerable<DisciplineResults> GetMeetingResults(int meetingId)
         {
-            return _resultsRepository.GetMeetingResults(meetingId, readDiscipline: true, readUser: true)?
+            var results = _resultsRepository.GetResults(filter: (meetingId, null), readDiscipline: true, readUser: true);
+            return GrpupResultsByDiscipline(results);
+        }
+
+        public IEnumerable<DisciplineResults> GetUserResults(int userId)
+        {
+            var results = _resultsRepository.GetResults(filter: (null, userId), readDiscipline: true, readMeeting: true);
+            return GrpupResultsByDiscipline(results);
+        }
+
+        private static IEnumerable<DisciplineResults> GrpupResultsByDiscipline(IEnumerable<Result> results)
+        {
+            return results?
                 .GroupBy(pair => pair.Discipline)
                 .Select(pairs =>
                 {

@@ -57,16 +57,6 @@ public class MeetingListFragment extends Fragment implements MenuItem.OnMenuItem
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-        if (loadDisposable != null) {
-            loadDisposable.dispose();
-            loadDisposable = null;
-        }
-    }
-
-    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.meetings_list_fragment, container, false);
@@ -86,19 +76,35 @@ public class MeetingListFragment extends Fragment implements MenuItem.OnMenuItem
         progressBar = view.findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
 
-        loadMeetings();
-
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        loadMeetings();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        cancelLoadOperation();
+    }
+
+    private void cancelLoadOperation() {
+        if (loadDisposable == null)
+            return;
+
+        loadDisposable.dispose();
+        loadDisposable = null;
     }
 
     private void loadMeetings() {
         progressBar.setVisibility(View.VISIBLE);
 
-        if (loadDisposable != null) {
-            loadDisposable.dispose();
-            loadDisposable = null;
-        }
-
+        cancelLoadOperation();
         loadDisposable = meetingsManager.getMeetings()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -53,11 +53,11 @@ namespace Backend.Controllers
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public IActionResult GetResults(int id)
         {
-            var disciplineResultses = _resultsManager.GetMeetingResults(id);
-            if (disciplineResultses == null)
+            var results = _resultsManager.GetMeetingResults(id);
+            if (results == null)
                 return NotFound();
             
-            return Json(disciplineResultses);
+            return Json(results);
         }
     }
 }

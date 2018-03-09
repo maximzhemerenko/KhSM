@@ -38,4 +38,7 @@ interface RestApi {
 
     @PUT("users/me")
     Single<User> updateUser(@Body User user);
+
+    @GET("users/me/results")
+    Single<List<DisciplineResults>> getMyResults();
 }

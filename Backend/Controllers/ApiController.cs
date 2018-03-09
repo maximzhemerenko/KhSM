@@ -32,12 +32,16 @@ namespace Backend.Controllers
             Authenticate(authorization);
         }
 
+        public bool IsMe(int userId)
+        {
+            return User?.Id == userId;
+        }
+
         private void Authenticate(string sessionToken)
         {
             if (sessionToken == null) return;
             
             Session = _usersManager.FindSession(sessionToken) ?? throw new Exception("Authorization failed");
         }
-
     }
 }

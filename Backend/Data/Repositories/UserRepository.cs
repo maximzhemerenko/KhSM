@@ -12,17 +12,6 @@ namespace Backend.Data.Repositories
     // ReSharper disable once ClassNeverInstantiated.Global
     public class UserRepository : BaseRepository
     {
-        private const string UserIdKey = "user_id";
-        private const string FirstNameKey = "first_name";
-        private const string LastNameKey = "last_name";
-        private const string GenderKey = "gender";
-        private const string EmailKey = "email";
-        private const string PasswordHashKey = "password_hash";
-        private const string CityKey = "city";
-        private const string WcaIdKey = "wca_id";
-        private const string PhoneNumberKey = "phone_number";
-        private const string BirthDateKey = "birth_date";
-        
         public UserRepository(DatabaseContext databaseContext) : base(databaseContext)
         {
         }
@@ -47,10 +36,10 @@ namespace Backend.Data.Repositories
         {
             using (var command = new MySqlCommand(Connection, transaction)
             {
-                CommandText = $"select * from user where {UserIdKey} = @{UserIdKey}",
+                CommandText = $"select * from user where {Db.User.UserIdKey} = @{Db.User.UserIdKey}",
                 Parameters =
                 {
-                    new MySqlParameter(UserIdKey, id)
+                    new MySqlParameter(Db.User.UserIdKey, id)
                 }
             })
             using (var reader = command.ExecuteReader())
@@ -63,10 +52,10 @@ namespace Backend.Data.Repositories
         {
             using (var command = new MySqlCommand(Connection, transaction)
             {
-                CommandText = $"select * from user where {EmailKey} = @{EmailKey}",
+                CommandText = $"select * from user where {Db.User.EmailKey} = @{Db.User.EmailKey}",
                 Parameters =
                 {
-                    new MySqlParameter(EmailKey, email)
+                    new MySqlParameter(Db.User.EmailKey, email)
                 }
             })
             using (var reader = command.ExecuteReader())
@@ -83,13 +72,13 @@ namespace Backend.Data.Repositories
             {
                 var parameters = new List<(string key, object value)>
                 {
-                    (FirstNameKey, user.FirstName),
-                    (LastNameKey, user.LastName),
-                    (CityKey, user.City),
-                    (WcaIdKey, user.WCAID),
-                    (PhoneNumberKey, user.PhoneNumber),
-                    (GenderKey, GenderToSqlString(user.Gender)),
-                    (BirthDateKey, user.BirthDate)
+                    (Db.User.FirstNameKey, user.FirstName),
+                    (Db.User.LastNameKey, user.LastName),
+                    (Db.User.CityKey, user.City),
+                    (Db.User.WcaIdKey, user.WCAID),
+                    (Db.User.PhoneNumberKey, user.PhoneNumber),
+                    (Db.User.GenderKey, GenderToSqlString(user.Gender)),
+                    (Db.User.BirthDateKey, user.BirthDate)
                 };
                 
                 var sb = new StringBuilder("update user set").AppendLine();
@@ -108,8 +97,8 @@ namespace Backend.Data.Repositories
                     command.Parameters.Add(new MySqlParameter(key, value));
                 }
 
-                sb.AppendLine($"where {UserIdKey} = @{UserIdKey}");
-                command.Parameters.Add(new MySqlParameter(UserIdKey, user.Id.Value));
+                sb.AppendLine($"where {Db.User.UserIdKey} = @{Db.User.UserIdKey}");
+                command.Parameters.Add(new MySqlParameter(Db.User.UserIdKey, user.Id.Value));
 
                 command.CommandText = sb.ToString();
 
@@ -157,14 +146,14 @@ namespace Backend.Data.Repositories
             
             using (var command = new MySqlCommand(Connection, transaction)
             {
-                CommandText = $"insert into user({FirstNameKey}, {LastNameKey}, {GenderKey}, {EmailKey}) " +
-                              $"values(@{FirstNameKey}, @{LastNameKey}, @{GenderKey}, @{EmailKey})",
+                CommandText = $"insert into user({Db.User.FirstNameKey}, {Db.User.LastNameKey}, {Db.User.GenderKey}, {Db.User.EmailKey}) " +
+                              $"values(@{Db.User.FirstNameKey}, @{Db.User.LastNameKey}, @{Db.User.GenderKey}, @{Db.User.EmailKey})",
                 Parameters =
                 {
-                    new MySqlParameter(FirstNameKey, user.FirstName),
-                    new MySqlParameter(LastNameKey, user.LastName),
-                    new MySqlParameter(GenderKey, GenderToSqlString(user.Gender.Value)),
-                    new MySqlParameter(EmailKey, user.Email)
+                    new MySqlParameter(Db.User.FirstNameKey, user.FirstName),
+                    new MySqlParameter(Db.User.LastNameKey, user.LastName),
+                    new MySqlParameter(Db.User.GenderKey, GenderToSqlString(user.Gender.Value)),
+                    new MySqlParameter(Db.User.EmailKey, user.Email)
                 }
             })
             {
@@ -178,12 +167,12 @@ namespace Backend.Data.Repositories
         {
             using (var command = new MySqlCommand(Connection, transaction)
             {
-                CommandText = $"insert into login({UserIdKey}, {PasswordHashKey}) " +
-                              $"values(@{UserIdKey}, @{PasswordHashKey})",
+                CommandText = $"insert into login({Db.User.UserIdKey}, {Db.User.PasswordHashKey}) " +
+                              $"values(@{Db.User.UserIdKey}, @{Db.User.PasswordHashKey})",
                 Parameters =
                 {
-                    new MySqlParameter(UserIdKey, user.Id),
-                    new MySqlParameter(PasswordHashKey, passwordHash)
+                    new MySqlParameter(Db.User.UserIdKey, user.Id),
+                    new MySqlParameter(Db.User.PasswordHashKey, passwordHash)
                 }
             })
             {
@@ -197,10 +186,10 @@ namespace Backend.Data.Repositories
         {
             using (var command = new MySqlCommand(Connection, transaction)
             {
-                CommandText = $"select * from login where {UserIdKey} = @{UserIdKey}",
+                CommandText = $"select * from login where {Db.User.UserIdKey} = @{Db.User.UserIdKey}",
                 Parameters =
                 {
-                    new MySqlParameter(UserIdKey, userId)
+                    new MySqlParameter(Db.User.UserIdKey, userId)
                 }
             })
             using (var reader = command.ExecuteReader())

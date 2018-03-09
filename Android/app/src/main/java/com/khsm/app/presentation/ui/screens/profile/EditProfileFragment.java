@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -22,6 +23,7 @@ import com.khsm.app.data.entities.Gender;
 import com.khsm.app.data.entities.Session;
 import com.khsm.app.data.entities.User;
 import com.khsm.app.domain.AuthManager;
+import com.khsm.app.presentation.ui.screens.MainActivity;
 import com.khsm.app.presentation.ui.utils.maskedittext.EditTextMask;
 
 import java.text.ParseException;
@@ -33,7 +35,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class EditProfileFragment extends Fragment {
+public class EditProfileFragment extends Fragment implements Toolbar.OnMenuItemClickListener {
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
 
     public static EditProfileFragment newInstance() {return new EditProfileFragment();}
@@ -41,7 +43,7 @@ public class EditProfileFragment extends Fragment {
     private AuthManager authManager;
 
     @SuppressWarnings("FieldCanBeLocal")
-    private Button save;
+    private Toolbar toolbar;
 
     private ImageView avatar_imageView;
     private EditText firstName;
@@ -54,8 +56,8 @@ public class EditProfileFragment extends Fragment {
     private RadioButton male;
     private RadioButton female;
 
-    @SuppressWarnings("unused")
-    private Toolbar toolbar;
+    @SuppressWarnings("FieldCanBeLocal")
+    private Button save;
 
     @Nullable
     private Disposable updateUserDisposable;
@@ -74,6 +76,10 @@ public class EditProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.edit_profile_layout, container, false);
+
+        toolbar = view.findViewById(R.id.toolbar);
+        toolbar.inflateMenu(R.menu.edit_profile);
+        toolbar.setOnMenuItemClickListener(this);
 
         avatar_imageView = view.findViewById(R.id.avatar_imageView);
 
@@ -230,5 +236,18 @@ public class EditProfileFragment extends Fragment {
                 .load("http://animals.yakohl.com/pic/schneeeule-2592013.jpg")
                 .apply(RequestOptions.circleCropTransform())
                 .into(avatar_imageView);
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        MainActivity activity = (MainActivity) requireActivity();
+
+        switch (item.getItemId()) {
+            case R.id.results:
+                activity.replaceFragment(MyResultsFragment.newFragment());
+                return true;
+        }
+
+        return false;
     }
 }

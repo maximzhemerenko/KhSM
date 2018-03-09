@@ -1,4 +1,4 @@
-package com.khsm.app.presentation.ui.screens.meetings;
+package com.khsm.app.presentation.ui.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -12,18 +12,21 @@ import com.khsm.app.R;
 import com.khsm.app.data.entities.DisciplineResults;
 import com.khsm.app.data.entities.Result;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
-public class MeetingResultsAdapter extends RecyclerView.Adapter<MeetingResultsAdapter.ViewHolder> {
-    private MeetingResultsFragment meetingResultsFragment;
+public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ViewHolder> {
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
 
-    private LayoutInflater inflater;
+    private final LayoutInflater inflater;
+    private final DisplayMode displayMode;
+
     private DisciplineResults disciplineResults;
 
-    MeetingResultsAdapter(@NonNull Context context, MeetingResultsFragment meetingResultsFragment) {
-        this.meetingResultsFragment = meetingResultsFragment;
-
+    public ResultsAdapter(@NonNull Context context, DisplayMode displayMode) {
         this.inflater = LayoutInflater.from(context);
+        this.displayMode = displayMode;
     }
 
     public void setResults(DisciplineResults disciplineResults) {
@@ -31,18 +34,27 @@ public class MeetingResultsAdapter extends RecyclerView.Adapter<MeetingResultsAd
         notifyDataSetChanged();
     }
 
+    @NonNull
     @Override
-    public MeetingResultsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.meeting_results_item, parent, false);
+    public ResultsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = inflater.inflate(R.layout.results_item, parent, false);
 
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(MeetingResultsAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ResultsAdapter.ViewHolder holder, int position) {
         Result result = disciplineResults.results.get(position);
 
-        holder.userName.setText((position + 1) + " " + result.user.firstName + " " + result.user.lastName);
+        String title;
+        if (displayMode.equals(DisplayMode.UserName)) {
+            title = (position + 1) + " " + result.user.firstName + " " + result.user.lastName;
+        } else if (displayMode.equals(DisplayMode.Date)) {
+            title = dateFormat.format(result.meeting.date);
+        } else {
+            throw new RuntimeException("Not supported display mode");
+        }
+        holder.title.setText(title);
 
         String results = formatTime(result.average);
 
@@ -72,8 +84,7 @@ public class MeetingResultsAdapter extends RecyclerView.Adapter<MeetingResultsAd
         holder.results.setText(results);
     }
 
-    private String formatTime(Float time)
-    {
+    private String formatTime(Float time) {
         return time != null ? String.format("%.2f", time) : "DNF";
     }
 
@@ -83,12 +94,17 @@ public class MeetingResultsAdapter extends RecyclerView.Adapter<MeetingResultsAd
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        final TextView userName;
+        final TextView title;
         final TextView results;
-        ViewHolder(View view){
+
+        ViewHolder(View view) {
             super(view);
-            userName = view.findViewById(R.id.userName);
+            title = view.findViewById(R.id.title);
             results = view.findViewById(R.id.results);
         }
+    }
+
+    public enum DisplayMode {
+        UserName, Date
     }
 }

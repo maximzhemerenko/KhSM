@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Backend.Data.Database;
 using Backend.Data.Database.Entities;
 using Backend.Data.Entities;
@@ -14,26 +15,64 @@ namespace Backend.Data.Repositories
         {
         }
 
-        public IEnumerable<Result> GetMeetingResults(int meetingId, bool readMeeting = false, bool readDiscipline = false, bool readUser = false)
+        public IEnumerable<Result> GetResults((int? meetingId, int? userId) filter, bool readMeeting = false, bool readDiscipline = false, bool readUser = false)
         {
-            const string meetingIdKey = "meeting_id";
-            
-            using (var command = new MySqlCommand(Connection, null)
+            using (var command = new MySqlCommand(Connection, null))
             {
-                Parameters = {new MySqlParameter(meetingIdKey, meetingId)}
-            })
-            {
-                // check is meeting exists in the db
-                command.CommandText = $"select {meetingIdKey} from meeting where {meetingIdKey} = @{meetingIdKey}";
+                var whereClauseValues = new List<(string key, object value)>();
                 
-                var exists = (int?) command.ExecuteScalar();
-                if (!exists.HasValue)
+                // check is meeting exists in the db
+                if (filter.meetingId != null)
                 {
-                    return null;
-                }
+                    whereClauseValues.Add((Db.Meeting.MeetingIdKey, filter.meetingId.Value));
+                    
+                    command.Parameters.Clear();
+                    command.Parameters.Add(new MySqlParameter(Db.Meeting.MeetingIdKey, filter.meetingId.Value));
+                    
+                    command.CommandText = $"select {Db.Meeting.MeetingIdKey} from {Db.MeetingKey} where {Db.Meeting.MeetingIdKey} = @{Db.Meeting.MeetingIdKey}";
 
-                // read results from meeting
-                command.CommandText = $"select * from meeting_results where {meetingIdKey} = @{meetingIdKey}";
+                    var exists = (int?) command.ExecuteScalar();
+                    if (!exists.HasValue)
+                        return null;
+                }
+                
+                // check is user exists in the db
+                if (filter.userId != null)
+                {
+                    whereClauseValues.Add((Db.User.UserIdKey, filter.userId.Value));
+                    
+                    command.Parameters.Clear();
+                    command.Parameters.Add(new MySqlParameter(Db.User.UserIdKey, filter.userId.Value));
+                    
+                    command.CommandText = $"select {Db.User.UserIdKey} from {Db.UserKey} where {Db.User.UserIdKey} = @{Db.User.UserIdKey}";
+
+                    var exists = (int?) command.ExecuteScalar();
+                    if (!exists.HasValue)
+                        return null;
+                }
+                
+                // read results
+                command.Parameters.Clear();
+                
+                var whereClause = new StringBuilder();
+                if (whereClauseValues.Count > 0)
+                {
+                    whereClause.Append("where");
+
+                    for (var i = 0; i < whereClauseValues.Count; i++)
+                    {
+                        var pair = whereClauseValues[i];
+                        
+                        if (i > 0)
+                            whereClause.Append(" and");
+
+                        command.Parameters.Add(new MySqlParameter(pair.key, pair.value));
+                        
+                        whereClause.Append($" {pair.key} = @{pair.key}");
+                    }
+                }
+                
+                command.CommandText = $"select * from meeting_results {whereClause}";
 
                 using (var reader = command.ExecuteReader())
                 {
@@ -80,7 +119,7 @@ namespace Backend.Data.Repositories
                 }
             }
         }
-
+        
         private static Result GetResult(MySqlDataReader reader)
         {
             return new Result

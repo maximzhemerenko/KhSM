@@ -55,4 +55,8 @@ public class Api extends ApiBase {
         return restApi.updateUser(user)
                 .compose(this::processResponse);
     }
+
+    public Single<List<DisciplineResults>> getMyResults() {
+        return restApi.getMyResults();
+    }
 }

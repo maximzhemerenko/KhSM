@@ -4,15 +4,15 @@ import java.util.List;
 
 public class Result {
     public final Integer id;
-    public final Meeting meetings;
+    public final Meeting meeting;
     public final User user;
     public final Float average;
     public final List<Float> attempts;
     public final Integer attemptCount;
 
-    public Result(Integer id, Meeting meetings, User user, Float average, List<Float> attempts, Integer attemptCount) {
+    public Result(Integer id, Meeting meeting, User user, Float average, List<Float> attempts, Integer attemptCount) {
         this.id = id;
-        this.meetings = meetings;
+        this.meeting = meeting;
         this.user = user;
         this.average = average;
         this.attempts = attempts;
