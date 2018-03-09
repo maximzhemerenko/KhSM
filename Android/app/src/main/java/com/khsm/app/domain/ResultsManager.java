@@ -21,4 +21,8 @@ public class ResultsManager {
     public Single<List<DisciplineResults>> getMeetingResults(int id) {
         return api.getMeetingResults(id);
     }
+
+    public Single<List<DisciplineResults>> getMyResults() {
+        return api.getMyResults();
+    }
 }

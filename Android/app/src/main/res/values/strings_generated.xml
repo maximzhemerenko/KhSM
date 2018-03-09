@@ -16,12 +16,15 @@
   <string name="Male">Male</string>
   <string name="Meetings">Meetings</string>
   <string name="My_Profile">My Profile</string>
+  <string name="My_Results">My Results</string>
   <string name="News">News</string>
   <string name="OK">OK</string>
   <string name="Password">Password</string>
   <string name="Please_WaitD3">Please, wait…</string>
   <string name="Rankings">Rankings</string>
+  <string name="Records">Records</string>
   <string name="Register">Register</string>
+  <string name="Results">Results</string>
   <string name="Save">Save</string>
   <string name="WCA_ID">WCA ID</string>
   <!-- Auth -->

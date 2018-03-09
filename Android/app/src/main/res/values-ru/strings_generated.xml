@@ -16,12 +16,15 @@
   <string name="Male">Мужской</string>
   <string name="Meetings">Встречи</string>
   <string name="My_Profile">Мой профиль</string>
+  <string name="My_Results">Мои результаты</string>
   <string name="News">Новости</string>
   <string name="OK">OK</string>
   <string name="Password">Пароль</string>
   <string name="Please_WaitD3">Пожалуйста, подождите…</string>
   <string name="Rankings">Рейтинг</string>
+  <string name="Records">Рекорды</string>
   <string name="Register">Регистрация</string>
+  <string name="Results">Результаты</string>
   <string name="Save">Сохранить</string>
   <string name="WCA_ID">WCA ID</string>
   <!-- Auth -->
