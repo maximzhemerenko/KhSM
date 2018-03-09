@@ -46,6 +46,8 @@ Response: Array<[DisciplineRecord](#disciplinerecord)>
 ## Get user results
 GET users/{id}/results
 
+GET users/me/results
+
 Response: Array<[DisciplineResults](#disciplineresults)>
 
 ## Insert user result

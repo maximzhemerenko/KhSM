@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using Backend.Data.Entities;
@@ -10,10 +11,12 @@ namespace Backend.Controllers
     public class UsersController : ApiController
     {
         private readonly UsersManager _usersManager;
+        private readonly ResultsManager _resultsManager;
 
-        public UsersController(UsersManager usersManager) : base(usersManager)
+        public UsersController(UsersManager usersManager, ResultsManager resultsManager) : base(usersManager)
         {
             _usersManager = usersManager;
+            _resultsManager = resultsManager;
         }
         
         [HttpPost]
@@ -53,13 +56,9 @@ namespace Backend.Controllers
         [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
         public IActionResult UpdateUser(int id, [FromBody] User user)
         {
-            var me = User;
-            if (me == null)
+            if (!IsMe(id))
                 return Unauthorized();
 
-            if (me.Id != id)
-                return Unauthorized();
-            
             if (user.Id.HasValue && user.Id.Value != id)
                 throw new Exception("Not consistent user id provided");
 
@@ -86,6 +85,40 @@ namespace Backend.Controllers
             user.Id = id;
             
             return Json(_usersManager.UpdateUser(user));
+        }
+
+        [HttpGet("{id}/results")]
+        [ProducesResponseType(typeof(IEnumerable<DisciplineResults>), (int) HttpStatusCode.OK)]
+        [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
+        public IActionResult GetUserResults(int id)
+        {
+            if (!IsMe(id))
+                return Unauthorized();
+
+            var results = _resultsManager.GetUserResults(id);
+            if (results == null)
+                return NotFound();
+
+            return Json(results);
+        }
+        
+        [HttpGet("me/results")]
+        [ProducesResponseType(typeof(IEnumerable<DisciplineResults>), (int) HttpStatusCode.OK)]
+        [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
+        public IActionResult GetUserResults()
+        {
+            var me = User;
+            if (me == null)
+                return Unauthorized();
+
+            Debug.Assert(me.Id != null, "me.Id != null");
+            var id = me.Id.Value;
+            
+            var results = _resultsManager.GetUserResults(id);
+            if (results == null)
+                return NotFound();
+
+            return Json(results);
         }
     }
 }
