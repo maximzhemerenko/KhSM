@@ -138,3 +138,31 @@ select
 from session s
 inner join login l on s.user_id = l.user_id
 inner join user u on l.user_id = u.user_id;
+
+/*
+select *
+from result;
+
+select
+  r.user_id,
+  r.discipline_id,
+  r.result_id,
+  r.average,
+  m.meeting_id,
+  max(m.date)
+from (
+       select
+         user_id,
+         discipline_id,
+         min(average) as min_average
+       from result
+       group by user_id, discipline_id
+     ) min_avg
+  inner join result r
+    on min_avg.user_id = r.user_id and min_avg.discipline_id = r.discipline_id and min_avg.min_average = r.average
+  inner join meeting m on r.meeting_id = m.meeting_id
+group by r.user_id, r.discipline_id, r.average;
+
+select *
+from meeting_results;
+ */

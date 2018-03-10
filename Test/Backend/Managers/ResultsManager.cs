@@ -130,6 +130,17 @@ namespace TestProject.Managers
             TestAddResult(result);
 
             Assert.Equal(result.Average, null);
+            
+            // 2x2
+            discipline = _disciplinesManager.GetDisciplinesAsync().Single(d => d.Name == "2x2");
+            
+            // add valid
+            result = new Result
+            {
+                Attempts = Attempts(2, 3, 4, 5, 6),
+                Discipline = discipline,
+                User = maxim
+            };
         }
 
         private void TestAddResult(Result result)

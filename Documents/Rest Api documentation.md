@@ -53,6 +53,8 @@ Response: Array<[DisciplineResults](#disciplineresults)>
 ## Insert user result
 POST users/{id}/results
 
+POST users/me/results
+
 Request: [Result](#result)
 
 Response: [Result](#result)

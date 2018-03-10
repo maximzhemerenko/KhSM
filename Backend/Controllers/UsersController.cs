@@ -120,5 +120,39 @@ namespace Backend.Controllers
 
             return Json(results);
         }
+
+        [HttpGet("{id}/records")]
+        [ProducesResponseType(typeof(IEnumerable<DisciplineRecord>), (int) HttpStatusCode.OK)]
+        [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
+        public IActionResult GetUserRecords(int id)
+        {            
+            if (!IsMe(id))
+                return Unauthorized();
+
+            var records = _resultsManager.GetUserRecords(id);
+            if (records == null)
+                return NotFound();
+
+            return Json(records);
+        }
+        
+        [HttpGet("me/records")]
+        [ProducesResponseType(typeof(IEnumerable<DisciplineRecord>), (int) HttpStatusCode.OK)]
+        [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
+        public IActionResult GetUserRecords()
+        {
+            var me = User;
+            if (me == null)
+                return Unauthorized();
+
+            Debug.Assert(me.Id != null, "me.Id != null");
+            var id = me.Id.Value;
+            
+            var records = _resultsManager.GetUserRecords(id);
+            if (records == null)
+                return NotFound();
+
+            return Json(records);
+        }
     }
 }

@@ -34,6 +34,11 @@ namespace Backend.Domain
             return GrpupResultsByDiscipline(results);
         }
 
+        public IEnumerable<DisciplineRecord> GetUserRecords(int id)
+        {
+            return null;
+        }
+        
         private static IEnumerable<DisciplineResults> GrpupResultsByDiscipline(IEnumerable<Result> results)
         {
             return results?
