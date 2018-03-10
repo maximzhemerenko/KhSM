@@ -21,7 +21,7 @@ import com.khsm.app.R;
 import com.khsm.app.data.entities.DisciplineResults;
 import com.khsm.app.data.entities.Meeting;
 import com.khsm.app.domain.MeetingsManager;
-import com.khsm.app.domain.ResultsManager;
+import com.khsm.app.domain.UserManager;
 import com.khsm.app.presentation.ui.adapters.ResultsAdapter;
 import com.khsm.app.presentation.ui.screens.MainActivity;
 
@@ -58,7 +58,7 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
     private Disposable loadDisposable;
 
     private MeetingsManager meetingsManager;
-    private ResultsManager resultsManager;
+    private UserManager userManager;
 
     private Meeting meeting;
 
@@ -82,7 +82,7 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
         Context context = requireContext();
 
         meetingsManager = new MeetingsManager(context);
-        resultsManager = new ResultsManager(context);
+        userManager = new UserManager(context);
         adapter = new ResultsAdapter(context, ResultsAdapter.DisplayMode.UserName);
     }
 
@@ -151,7 +151,9 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
         @Override
         public void onTabSelected(TabLayout.Tab tab) {
             DisciplineResults disciplineResults = (DisciplineResults) tab.getTag();
-            setDisciplineResults(disciplineResults);
+            if (disciplineResults != null) {
+                setDisciplineResults(disciplineResults);
+            }
         }
 
         @Override
@@ -201,7 +203,7 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
         tabLayout.setVisibility(View.INVISIBLE);
 
         cancelLoadOperation();
-        loadDisposable = resultsManager.getMeetingResults(meeting.id)
+        loadDisposable = userManager.getMeetingResults(meeting.id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -239,8 +241,8 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
                 .show();
     }
 
-    private void setDisciplineResults(DisciplineResults disciplineResults) {
-        adapter.setResults(disciplineResults);
+    private void setDisciplineResults(@NonNull DisciplineResults disciplineResults) {
+        adapter.setResults(disciplineResults.results);
     }
 
     private void showMeetingList() {

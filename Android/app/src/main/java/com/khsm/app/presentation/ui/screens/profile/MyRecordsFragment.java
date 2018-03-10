@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,9 +15,9 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.khsm.app.R;
-import com.khsm.app.data.entities.DisciplineResults;
+import com.khsm.app.data.entities.DisciplineRecord;
 import com.khsm.app.domain.UserManager;
-import com.khsm.app.presentation.ui.adapters.ResultsAdapter;
+import com.khsm.app.presentation.ui.adapters.RecordsAdapter;
 
 import java.util.List;
 
@@ -26,9 +25,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class MyResultsFragment extends Fragment {
-    public static MyResultsFragment newFragment() {
-        return new MyResultsFragment();
+public class MyRecordsFragment extends Fragment {
+    public static MyRecordsFragment newFragment() {
+        return new MyRecordsFragment();
     }
 
     @SuppressWarnings("FieldCanBeLocal")
@@ -44,9 +43,7 @@ public class MyResultsFragment extends Fragment {
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private Toolbar toolbar;
 
-    private TabLayout tabLayout;
-
-    private ResultsAdapter adapter;
+    private RecordsAdapter adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,20 +52,16 @@ public class MyResultsFragment extends Fragment {
         Context context = requireContext();
 
         userManager = new UserManager(context);
-        adapter = new ResultsAdapter(context, ResultsAdapter.DisplayMode.Date);
+        adapter = new RecordsAdapter(context);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              Bundle savedInstanceState) {
         // init view
-        View view = inflater.inflate(R.layout.my_results_fragment, container, false);
+        View view = inflater.inflate(R.layout.my_records_fragment, container, false);
 
         toolbar = view.findViewById(R.id.toolbar);
-
-        tabLayout = view.findViewById(R.id.tabLayout);
-        tabLayout.setVisibility(View.INVISIBLE);
-        tabLayout.addOnTabSelectedListener(onTabSelectedListener);
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -78,7 +71,7 @@ public class MyResultsFragment extends Fragment {
         progressBar.setVisibility(View.INVISIBLE);
 
         // load data
-        loadResults();
+        loadRecords();
 
         return view;
     }
@@ -90,24 +83,6 @@ public class MyResultsFragment extends Fragment {
         cancelLoadOperation();
     }
 
-    private final TabLayout.OnTabSelectedListener onTabSelectedListener = new TabLayout.OnTabSelectedListener() {
-        @Override
-        public void onTabSelected(TabLayout.Tab tab) {
-            DisciplineResults disciplineResults = (DisciplineResults) tab.getTag();
-            if (disciplineResults != null) {
-                setDisciplineResults(disciplineResults);
-            }
-        }
-
-        @Override
-        public void onTabUnselected(TabLayout.Tab tab) {
-        }
-
-        @Override
-        public void onTabReselected(TabLayout.Tab tab) {
-        }
-    };
-
     private void cancelLoadOperation() {
         if (loadDisposable == null)
             return;
@@ -116,30 +91,23 @@ public class MyResultsFragment extends Fragment {
         loadDisposable = null;
     }
 
-    private void loadResults() {
+    private void loadRecords() {
         progressBar.setVisibility(View.VISIBLE);
-        tabLayout.setVisibility(View.INVISIBLE);
 
         cancelLoadOperation();
-        loadDisposable = userManager.getMyResults()
+        loadDisposable = userManager.getMyRecords()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        this::setDisciplineResults,
+                        this::setDisciplineRecords,
                         this::handleError
                 );
     }
 
-    private void setDisciplineResults(List<DisciplineResults> disciplineResults) {
+    private void setDisciplineRecords(List<DisciplineRecord> disciplineRecords) {
         progressBar.setVisibility(View.INVISIBLE);
 
-        tabLayout.removeAllTabs();
-
-        for (DisciplineResults disciplineResult : disciplineResults) {
-            tabLayout.addTab(tabLayout.newTab().setText(disciplineResult.discipline.name).setTag(disciplineResult));
-        }
-
-        tabLayout.setVisibility(!disciplineResults.isEmpty() ? View.VISIBLE : View.INVISIBLE);
+        adapter.setResults(disciplineRecords);
     }
 
     private void handleError(Throwable throwable) {
@@ -150,9 +118,5 @@ public class MyResultsFragment extends Fragment {
                 .setMessage(throwable.getMessage())
                 .setPositiveButton(R.string.OK, null)
                 .show();
-    }
-
-    private void setDisciplineResults(@NonNull DisciplineResults disciplineResults) {
-        adapter.setResults(disciplineResults.results);
     }
 }

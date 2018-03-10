@@ -41,6 +41,8 @@ Response: [User](#user)
 ## Get user records
 GET users/{id}/records
 
+GET users/me/records
+
 Response: Array<[DisciplineRecord](#disciplinerecord)>
 
 ## Get user results

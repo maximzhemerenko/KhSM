@@ -20,9 +20,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.khsm.app.R;
 import com.khsm.app.data.entities.Gender;
-import com.khsm.app.data.entities.Session;
 import com.khsm.app.data.entities.User;
-import com.khsm.app.domain.AuthManager;
+import com.khsm.app.domain.UserManager;
 import com.khsm.app.presentation.ui.screens.MainActivity;
 import com.khsm.app.presentation.ui.utils.maskedittext.EditTextMask;
 
@@ -40,7 +39,7 @@ public class EditProfileFragment extends Fragment implements Toolbar.OnMenuItemC
 
     public static EditProfileFragment newInstance() {return new EditProfileFragment();}
 
-    private AuthManager authManager;
+    private UserManager userManager;
 
     @SuppressWarnings("FieldCanBeLocal")
     private Toolbar toolbar;
@@ -69,7 +68,7 @@ public class EditProfileFragment extends Fragment implements Toolbar.OnMenuItemC
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        authManager = new AuthManager(requireContext());
+        userManager = new UserManager(requireContext());
     }
 
     @Override
@@ -105,8 +104,10 @@ public class EditProfileFragment extends Fragment implements Toolbar.OnMenuItemC
     public void onStart() {
         super.onStart();
 
-        Session session = authManager.getSession();
-        setUser(session.user);
+        User user = userManager.getUser();
+        if (user != null) {
+            setUser(user);
+        }
     }
 
     private void updateUser() {
@@ -156,7 +157,7 @@ public class EditProfileFragment extends Fragment implements Toolbar.OnMenuItemC
             updateUserDisposable = null;
         }
 
-        updateUserDisposable = authManager.updateUser(user)
+        updateUserDisposable = userManager.updateUser(user)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -245,6 +246,9 @@ public class EditProfileFragment extends Fragment implements Toolbar.OnMenuItemC
         switch (item.getItemId()) {
             case R.id.results:
                 activity.replaceFragment(MyResultsFragment.newFragment());
+                return true;
+            case R.id.records:
+                activity.replaceFragment(MyRecordsFragment.newFragment());
                 return true;
         }
 
