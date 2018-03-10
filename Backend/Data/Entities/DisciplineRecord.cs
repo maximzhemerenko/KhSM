@@ -7,8 +7,8 @@ namespace Backend.Data.Entities
         [Required]
         public Discipline Discipline { get; set; }
         [Required]
-        public Result BestTime { get; set; }
+        public Result BestSingleResult { get; set; }
         [Required]
-        public Result BestOverageTime { get; set; }
+        public Result BestAverageResult { get; set; }
     }
 }

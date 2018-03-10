@@ -146,8 +146,8 @@ Response: Array\<[DisciplineResults](#disciplineresults)\>
 
 ## DisciplineRecord
 - discipline: [Discipline](#discipline)
-- bestTime: [Result](#result)
-- bestOverageTime: [Result](#result)
+- bestSingleResult: [Result](#result)
+- bestAverageResult: [Result](#result)
 
 ## Result
 - id: Integer

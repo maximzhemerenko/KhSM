@@ -89,26 +89,17 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              Bundle savedInstanceState) {
-        // load arguments
-        Bundle arguments = getArguments();
-        if (arguments == null)
-            throw new RuntimeException("Arguments should be provided");
-
-        Meeting meeting = (Meeting) arguments.getSerializable(KEY_MEETING);
-
-        lastMeetingMode = meeting == null;
-
         // init view
         View view = inflater.inflate(R.layout.meeting_results_fragment, container, false);
 
         toolbar = view.findViewById(R.id.toolbar);
 
         Menu menu = toolbar.getMenu();
-        if (lastMeetingMode) {
-            meetings_menuItem = menu.add(R.string.Meetings);
-            meetings_menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-            meetings_menuItem.setOnMenuItemClickListener(this);
-        }
+
+        meetings_menuItem = menu.add(R.string.Meetings);
+        meetings_menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        meetings_menuItem.setOnMenuItemClickListener(this);
+        meetings_menuItem.setVisible(false);
 
         tabLayout = view.findViewById(R.id.tabLayout);
         tabLayout.setVisibility(View.INVISIBLE);
@@ -127,6 +118,19 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
     @Override
     public void onStart() {
         super.onStart();
+
+        Bundle arguments = getArguments();
+        if (arguments == null)
+            throw new RuntimeException("Arguments should be provided");
+
+        Meeting meeting = (Meeting) arguments.getSerializable(KEY_MEETING);
+
+        lastMeetingMode = meeting == null;
+
+        if (lastMeetingMode) {
+            //noinspection ConstantConditions
+            meetings_menuItem.setVisible(true);
+        }
 
         if (!lastMeetingMode) {
             //noinspection ConstantConditions

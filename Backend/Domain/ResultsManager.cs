@@ -34,9 +34,19 @@ namespace Backend.Domain
             return GrpupResultsByDiscipline(results);
         }
 
-        public IEnumerable<DisciplineRecord> GetUserRecords(int id)
+        public IEnumerable<DisciplineRecord> GetUserRecords(int userId)
         {
-            return null;
+            var averageResultComparer = new Result.Comparer(Result.Comparer.Mode.Average);
+            var singleResultComparer = new Result.Comparer(Result.Comparer.Mode.Single);
+
+            var results = _resultsRepository.GetResults(filter: (null, userId), readDiscipline: true, readMeeting: true);
+            return GrpupResultsByDiscipline(results)
+                .Select(dr => new DisciplineRecord
+                {
+                    Discipline = dr.Discipline,
+                    BestSingleResult = dr.Results.OrderBy(r => r, singleResultComparer).FirstOrDefault(),
+                    BestAverageResult = dr.Results.OrderBy(r => r, averageResultComparer).FirstOrDefault()
+                });
         }
         
         private static IEnumerable<DisciplineResults> GrpupResultsByDiscipline(IEnumerable<Result> results)
