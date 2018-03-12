@@ -4,6 +4,8 @@
   <string name="City">Город</string>
   <string name="Confirm_Password">Повторить пароль</string>
   <string name="Disciplines">Дисциплины</string>
+  <string name="DNF">DNF</string>
+  <string name="DNS">DNS</string>
   <string name="Edit_Profile">Изменить профиль</string>
   <string name="Email">Email</string>
   <string name="Error">Ошибка</string>
@@ -16,6 +18,7 @@
   <string name="Male">Мужской</string>
   <string name="Meetings">Встречи</string>
   <string name="My_Profile">Мой профиль</string>
+  <string name="My_Records">Мои рекорды</string>
   <string name="My_Results">Мои результаты</string>
   <string name="News">Новости</string>
   <string name="OK">OK</string>

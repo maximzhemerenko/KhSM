@@ -41,6 +41,8 @@ Response: [User](#user)
 ## Get user records
 GET users/{id}/records
 
+GET users/me/records
+
 Response: Array<[DisciplineRecord](#disciplinerecord)>
 
 ## Get user results
@@ -52,6 +54,8 @@ Response: Array<[DisciplineResults](#disciplineresults)>
 
 ## Insert user result
 POST users/{id}/results
+
+POST users/me/results
 
 Request: [Result](#result)
 
@@ -144,8 +148,8 @@ Response: Array\<[DisciplineResults](#disciplineresults)\>
 
 ## DisciplineRecord
 - discipline: [Discipline](#discipline)
-- bestTime: [Result](#result)
-- bestOverageTime: [Result](#result)
+- bestSingleResult: [Result](#result)
+- bestAverageResult: [Result](#result)
 
 ## Result
 - id: Integer

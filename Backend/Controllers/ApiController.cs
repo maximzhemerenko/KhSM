@@ -32,7 +32,7 @@ namespace Backend.Controllers
             Authenticate(authorization);
         }
 
-        public bool IsMe(int userId)
+        protected bool IsMe(int userId)
         {
             return User?.Id == userId;
         }

@@ -2,6 +2,7 @@ package com.khsm.app.presentation.ui.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.khsm.app.R;
-import com.khsm.app.data.entities.DisciplineResults;
 import com.khsm.app.data.entities.Result;
 
 import java.text.SimpleDateFormat;
@@ -19,18 +19,22 @@ import java.util.Locale;
 public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ViewHolder> {
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
 
+    private final Context context;
+
     private final LayoutInflater inflater;
     private final DisplayMode displayMode;
 
-    private DisciplineResults disciplineResults;
+    @Nullable
+    private List<Result> results;
 
     public ResultsAdapter(@NonNull Context context, DisplayMode displayMode) {
+        this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.displayMode = displayMode;
     }
 
-    public void setResults(DisciplineResults disciplineResults) {
-        this.disciplineResults = disciplineResults;
+    public void setResults(List<Result> results) {
+        this.results = results;
         notifyDataSetChanged();
     }
 
@@ -44,7 +48,10 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ResultsAdapter.ViewHolder holder, int position) {
-        Result result = disciplineResults.results.get(position);
+        if (results == null)
+            throw new RuntimeException("results should not be null");
+
+        Result result = results.get(position);
 
         String title;
         if (displayMode.equals(DisplayMode.UserName)) {
@@ -75,7 +82,7 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ViewHold
                 if (attempts.size() > 0 || i > 0) {
                     results += " ";
                 }
-                results += "DNS";
+                results += context.getString(R.string.DNS);
             }
 
             results += ")";
@@ -85,12 +92,15 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ViewHold
     }
 
     private String formatTime(Float time) {
-        return time != null ? String.format("%.2f", time) : "DNF";
+        return time != null ? String.format(Locale.ENGLISH, "%.2f", time) : context.getString(R.string.DNF);
     }
 
     @Override
     public int getItemCount() {
-        return disciplineResults != null ? disciplineResults.results.size() : 0;
+        if (results == null)
+            return 0;
+
+        return results.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

@@ -8,11 +8,9 @@ import com.khsm.app.data.api.ApiFactory;
 import com.khsm.app.data.entities.CreateSessionRequest;
 import com.khsm.app.data.entities.CreateUserRequest;
 import com.khsm.app.data.entities.Session;
-import com.khsm.app.data.entities.User;
 import com.khsm.app.data.preferences.SessionStore;
 
 import io.reactivex.Completable;
-import io.reactivex.Single;
 
 public class AuthManager {
     private final Api api;
@@ -41,11 +39,6 @@ public class AuthManager {
 
     public Session getSession() {
         return sessionStore.getSession();
-    }
-
-    public Single<User> updateUser(User user) {
-        return api.updateUser(user)
-                .doOnSuccess(sessionStore::updateUser);
     }
 
     private void authenticate(@NonNull Session session) {

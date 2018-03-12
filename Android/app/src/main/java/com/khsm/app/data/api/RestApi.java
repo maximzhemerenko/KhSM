@@ -3,6 +3,7 @@ package com.khsm.app.data.api;
 import com.khsm.app.data.entities.CreateSessionRequest;
 import com.khsm.app.data.entities.CreateUserRequest;
 import com.khsm.app.data.entities.Discipline;
+import com.khsm.app.data.entities.DisciplineRecord;
 import com.khsm.app.data.entities.DisciplineResults;
 import com.khsm.app.data.entities.Meeting;
 import com.khsm.app.data.entities.Session;
@@ -41,4 +42,7 @@ interface RestApi {
 
     @GET("users/me/results")
     Single<List<DisciplineResults>> getMyResults();
+
+    @GET("users/me/records")
+    Single<List<DisciplineRecord>> getMyRecords();
 }

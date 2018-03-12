@@ -51,7 +51,7 @@ namespace Backend.Domain.Formula
                 orderedAttempts.RemoveAt(orderedAttempts.Count - 1);
                 orderedAttempts.RemoveAt(0);
                 
-                return orderedAttempts.Average(arg => arg);
+                return orderedAttempts.Average();
             }
         }
 
@@ -63,7 +63,8 @@ namespace Backend.Domain.Formula
             
             public override decimal? ComputeAverage(IEnumerable<decimal?> attempts)
             {
-                throw new NotSupportedException();
+                // todo fix it 
+                return attempts.Average();
             }
         }
 
@@ -75,6 +76,7 @@ namespace Backend.Domain.Formula
             
             public override decimal? ComputeAverage(IEnumerable<decimal?> attempts)
             {
+                // todo fix it
                 throw new NotSupportedException();
             }
         }

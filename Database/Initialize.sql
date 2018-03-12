@@ -34,7 +34,7 @@ create table Meeting
 (
     meeting_id int primary key auto_increment not null,
     meeting_number int not null,
-    `date` date not null
+    `date` datetime not null unique
 );
 
 create table News

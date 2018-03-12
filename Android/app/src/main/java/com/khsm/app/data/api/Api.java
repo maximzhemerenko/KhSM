@@ -4,6 +4,7 @@ import com.khsm.app.data.api.base.ApiBase;
 import com.khsm.app.data.entities.CreateSessionRequest;
 import com.khsm.app.data.entities.CreateUserRequest;
 import com.khsm.app.data.entities.Discipline;
+import com.khsm.app.data.entities.DisciplineRecord;
 import com.khsm.app.data.entities.DisciplineResults;
 import com.khsm.app.data.entities.Meeting;
 import com.khsm.app.data.entities.Session;
@@ -57,6 +58,12 @@ public class Api extends ApiBase {
     }
 
     public Single<List<DisciplineResults>> getMyResults() {
-        return restApi.getMyResults();
+        return restApi.getMyResults()
+                .compose(this::processResponse);
+    }
+
+    public Single<List<DisciplineRecord>> getMyRecords() {
+        return restApi.getMyRecords()
+                .compose(this::processResponse);
     }
 }
