@@ -25,7 +25,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class RegisterActivity extends AppCompatActivity implements MenuItem.OnMenuItemClickListener {
+public class RegisterActivity extends AppCompatActivity {
     @SuppressWarnings("unused")
     public static Intent newIntent(Context context) {
         return new Intent(context, RegisterActivity.class);
@@ -46,8 +46,6 @@ public class RegisterActivity extends AppCompatActivity implements MenuItem.OnMe
     @Nullable
     private Disposable registerDisposable;
 
-    private MenuItem login_menuItem;
-
     private AuthManager authManager;
 
     @Nullable
@@ -61,10 +59,6 @@ public class RegisterActivity extends AppCompatActivity implements MenuItem.OnMe
         toolbar = findViewById(R.id.toolbar);
 
         Menu menu = toolbar.getMenu();
-
-        login_menuItem = menu.add(R.string.Login);
-        login_menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        login_menuItem.setOnMenuItemClickListener(this);
 
         authManager = new AuthManager(this);
 
@@ -165,16 +159,6 @@ public class RegisterActivity extends AppCompatActivity implements MenuItem.OnMe
                 .setMessage(errorMessage)
                 .setPositiveButton(R.string.OK, null)
                 .show();
-    }
-
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        if (item == login_menuItem) {
-            showLoginActivity();
-            return true;
-        }
-
-        return false;
     }
 
     private void showLoginActivity() {

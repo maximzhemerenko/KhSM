@@ -112,6 +112,7 @@
                         android:hint="@string/Confirm_Password"
                         android:inputType="textPassword" />
                 </android.support.design.widget.TextInputLayout>
+
             </LinearLayout>
         </ScrollView>
 
