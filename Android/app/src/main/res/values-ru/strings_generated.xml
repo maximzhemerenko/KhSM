@@ -3,6 +3,7 @@
   <!-- Dictionary -->
   <string name="City">Город</string>
   <string name="Confirm_Password">Повторить пароль</string>
+  <string name="details">детали</string>
   <string name="Disciplines">Дисциплины</string>
   <string name="DNF">DNF</string>
   <string name="DNS">DNS</string>
@@ -23,13 +24,15 @@
   <string name="News">Новости</string>
   <string name="OK">OK</string>
   <string name="Password">Пароль</string>
-  <string name="Please_WaitD3">Пожалуйста, подождите…</string>
+  <string name="Please_WaitD3">Пожалуйста, подождите...</string>
   <string name="Rankings">Рейтинг</string>
   <string name="Records">Рекорды</string>
   <string name="Register">Регистрация</string>
   <string name="Results">Результаты</string>
   <string name="Save">Сохранить</string>
   <string name="WCA_ID">WCA ID</string>
+  <string name="Best">Лучший</string>
+  <string name="Average">Среднее</string>
   <!-- Auth -->
   <string name="Login.Error.CheckInputData">Проверьте введенные данные</string>
   <string name="Login.Error.Authentication">Произошла ошибка при аутентификации</string>

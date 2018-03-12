@@ -3,6 +3,7 @@
   <!-- Dictionary -->
   <string name="City">City</string>
   <string name="Confirm_Password">Confirm Password</string>
+  <string name="details">details</string>
   <string name="Disciplines">Disciplines</string>
   <string name="DNF">DNF</string>
   <string name="DNS">DNS</string>
@@ -23,13 +24,15 @@
   <string name="News">News</string>
   <string name="OK">OK</string>
   <string name="Password">Password</string>
-  <string name="Please_WaitD3">Please, wait…</string>
+  <string name="Please_WaitD3">Please, wait...</string>
   <string name="Rankings">Rankings</string>
   <string name="Records">Records</string>
   <string name="Register">Register</string>
   <string name="Results">Results</string>
   <string name="Save">Save</string>
   <string name="WCA_ID">WCA ID</string>
+  <string name="Best">Best</string>
+  <string name="Average">Average</string>
   <!-- Auth -->
   <string name="Login.Error.CheckInputData">Check the entered data</string>
   <string name="Login.Error.Authentication">User authentication error</string>
