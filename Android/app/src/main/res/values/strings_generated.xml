@@ -1,8 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
   <!-- Dictionary -->
+  <string name="Ascending">Ascending</string>
+  <string name="Average">Average</string>
+  <string name="Best">Best</string>
   <string name="City">City</string>
   <string name="Confirm_Password">Confirm Password</string>
+  <string name="Descending">Descending</string>
   <string name="details">details</string>
   <string name="Disciplines">Disciplines</string>
   <string name="DNF">DNF</string>
@@ -30,9 +34,11 @@
   <string name="Register">Register</string>
   <string name="Results">Results</string>
   <string name="Save">Save</string>
+  <string name="Single">Single</string>
   <string name="WCA_ID">WCA ID</string>
-  <string name="Best">Best</string>
-  <string name="Average">Average</string>
+  <string name="Both">Both</string>
+  <!-- Common -->
+  <string name="Rankings.Filter">SORT &amp; FILTER</string>
   <!-- Auth -->
   <string name="Login.Error.CheckInputData">Check the entered data</string>
   <string name="Login.Error.Authentication">User authentication error</string>

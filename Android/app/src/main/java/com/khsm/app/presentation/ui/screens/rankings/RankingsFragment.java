@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -21,6 +22,8 @@ import com.khsm.app.domain.RankingsManager;
 import com.khsm.app.domain.UserManager;
 import com.khsm.app.presentation.ui.adapters.ResultsAdapter;
 import com.khsm.app.presentation.ui.screens.MainActivity;
+import com.khsm.app.presentation.ui.screens.profile.MyRecordsFragment;
+import com.khsm.app.presentation.ui.screens.profile.MyResultsFragment;
 
 import java.util.List;
 
@@ -28,7 +31,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class RankingsFragment extends Fragment {
+public class RankingsFragment extends Fragment implements Toolbar.OnMenuItemClickListener {
     public static RankingsFragment newInstance() { return new RankingsFragment(); }
 
     @SuppressWarnings("FieldCanBeLocal")
@@ -65,6 +68,9 @@ public class RankingsFragment extends Fragment {
         View view = inflater.inflate(R.layout.rankings_fragment, container, false);
 
         toolbar = view.findViewById(R.id.toolbar);
+        toolbar.inflateMenu(R.menu.rankings);
+        toolbar.setOnMenuItemClickListener(this);
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,5 +167,10 @@ public class RankingsFragment extends Fragment {
 
     private void setDisciplineResults(@NonNull DisciplineResults disciplineResults) {
         adapter.setResults(disciplineResults.results);
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        return false;
     }
 }
