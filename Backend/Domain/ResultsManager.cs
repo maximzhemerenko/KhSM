@@ -49,6 +49,22 @@ namespace Backend.Domain
                 });
         }
         
+        public IEnumerable<DisciplineResults> GetRankings()
+        {
+            var results = _resultsRepository.GetResults(filter: (null, null), readDiscipline: true, readMeeting: true, readUser: true);
+            return GrpupResultsByDiscipline(results)
+                .Select(disciplineResults =>
+                {
+                    return new DisciplineResults
+                    {
+                        Discipline = disciplineResults.Discipline,
+                        Results = disciplineResults.Results
+                            .GroupBy(result => result.User)
+                            .Select(group => group.First())
+                    };
+                });
+        }
+        
         private static IEnumerable<DisciplineResults> GrpupResultsByDiscipline(IEnumerable<Result> results)
         {
             return results?
