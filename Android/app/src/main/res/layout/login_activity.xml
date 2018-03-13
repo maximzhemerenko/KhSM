@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         app:titleTextColor="@color/white"
-        app:title="Login" />
+        app:title="@string/Login"
+        app:navigationIcon="@drawable/ic_arrow_back_white_24dp"/>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -78,6 +79,6 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:textColor="@color/white"
-        android:text="Login">
+        android:text="@string/Login">
     </Button>
 </LinearLayout>

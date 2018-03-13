@@ -66,6 +66,14 @@ public class DisciplineListFragment extends Fragment {
         View view = inflater.inflate(R.layout.disciplines_list_fragment, container, false);
 
         toolbar = view.findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity = (MainActivity) requireActivity();
+                mainActivity.showMenu();
+            }
+        });
+
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);

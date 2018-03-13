@@ -93,6 +93,13 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
         View view = inflater.inflate(R.layout.meeting_results_fragment, container, false);
 
         toolbar = view.findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity = (MainActivity) requireActivity();
+                mainActivity.showMenu();
+            }
+        });
 
         Menu menu = toolbar.getMenu();
 

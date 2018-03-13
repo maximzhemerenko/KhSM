@@ -19,6 +19,7 @@ import com.khsm.app.R;
 import com.khsm.app.data.entities.DisciplineResults;
 import com.khsm.app.domain.UserManager;
 import com.khsm.app.presentation.ui.adapters.ResultsAdapter;
+import com.khsm.app.presentation.ui.screens.MainActivity;
 
 import java.util.List;
 
@@ -65,6 +66,13 @@ public class MyResultsFragment extends Fragment {
         View view = inflater.inflate(R.layout.my_results_fragment, container, false);
 
         toolbar = view.findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity = (MainActivity) requireActivity();
+                mainActivity.showMenu();
+            }
+        });
 
         tabLayout = view.findViewById(R.id.tabLayout);
         tabLayout.setVisibility(View.INVISIBLE);
