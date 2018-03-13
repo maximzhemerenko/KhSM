@@ -66,4 +66,9 @@ public class Api extends ApiBase {
         return restApi.getMyRecords()
                 .compose(this::processResponse);
     }
+
+    public Single<List<DisciplineResults>> getRankings() {
+        return restApi.getRankings()
+                .compose(this::processResponse);
+    }
 }

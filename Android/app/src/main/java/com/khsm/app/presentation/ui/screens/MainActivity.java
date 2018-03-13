@@ -25,6 +25,7 @@ import com.khsm.app.presentation.ui.screens.disciplines.DisciplineListFragment;
 import com.khsm.app.presentation.ui.screens.meetings.MeetingListFragment;
 import com.khsm.app.presentation.ui.screens.meetings.MeetingResultsFragment;
 import com.khsm.app.presentation.ui.screens.profile.EditProfileFragment;
+import com.khsm.app.presentation.ui.screens.rankings.RankingsFragment;
 
 public class MainActivity extends AppCompatActivity {
     public static Intent newIntent(Context context, boolean clearTask) {
@@ -115,6 +116,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(LoginActivity.newIntent(MainActivity.this));
             } else if (menuItem.getItemId() == R.id.my_profile) {
                 replaceFragment(EditProfileFragment.newInstance());
+            } else if (menuItem.getItemId() == R.id.Rankings) {
+                replaceFragment(RankingsFragment.newInstance());
             } else if (menuItem.getItemId() == R.id.logout) {
                 authManager.logout().subscribe();
                 startActivity(MainActivity.newIntent(MainActivity.this, true));
