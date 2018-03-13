@@ -31,12 +31,18 @@
             app:tint="#66000000" />
 
         <TextView
-            android:id="@+id/bestResult_textView"
+            android:id="@+id/bestSingleResult_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
-            android:text="TextView"
             tools:text="7.09 (12-02-2018)" />
+
+        <TextView
+            android:id="@+id/bestSingleResultDetails_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            tools:text="details"/>
 
     </LinearLayout>
 
@@ -53,12 +59,18 @@
             app:tint="#66000000" />
 
         <TextView
-            android:id="@+id/averageResult_textView"
+            android:id="@+id/bestAverageResult_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
-            android:text="TextView"
             tools:text="10.3 (7-11-2015)" />
+
+        <TextView
+            android:id="@+id/bestAverageResultDetails_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            tools:text="details"/>
 
     </LinearLayout>
 

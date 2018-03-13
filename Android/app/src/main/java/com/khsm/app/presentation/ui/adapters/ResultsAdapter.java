@@ -63,16 +63,16 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ViewHold
         }
         holder.title.setText(title);
 
-        String results = formatTime(result.average);
+        StringBuilder results = new StringBuilder(formatResultTime(result.average));
 
         List<Float> attempts = result.attempts;
         if (attempts.size() > 0) {
-            results += " (";
+            results.append(" (");
             for (int i = 0; i < attempts.size(); i++) {
                 if (i > 0)
-                    results += " ";
+                    results.append(" ");
 
-                results += formatTime(attempts.get(i));
+                results.append(formatResultTime(attempts.get(i)));
             }
 
             int dnsCount = result.attemptCount - attempts.size();
@@ -80,18 +80,18 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ViewHold
 
             for (int i = 0; i < dnsCount; i++) {
                 if (attempts.size() > 0 || i > 0) {
-                    results += " ";
+                    results.append(" ");
                 }
-                results += context.getString(R.string.DNS);
+                results.append(context.getString(R.string.DNS));
             }
 
-            results += ")";
+            results.append(")");
         }
 
         holder.results.setText(results);
     }
 
-    private String formatTime(Float time) {
+    private String formatResultTime(Float time) {
         return time != null ? String.format(Locale.ENGLISH, "%.2f", time) : context.getString(R.string.DNF);
     }
 
