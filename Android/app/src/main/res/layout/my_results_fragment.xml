@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         app:titleTextColor="@color/white"
-        app:title="@string/My_Results" />
+        app:title="@string/My_Results"
+        app:navigationIcon="@drawable/ic_menu_white_24dp" />
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tabLayout"

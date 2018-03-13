@@ -79,6 +79,13 @@ public class EditProfileFragment extends Fragment implements Toolbar.OnMenuItemC
         toolbar = view.findViewById(R.id.toolbar);
         toolbar.inflateMenu(R.menu.edit_profile);
         toolbar.setOnMenuItemClickListener(this);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity = (MainActivity) requireActivity();
+                mainActivity.showMenu();
+            }
+        });
 
         avatar_imageView = view.findViewById(R.id.avatar_imageView);
 

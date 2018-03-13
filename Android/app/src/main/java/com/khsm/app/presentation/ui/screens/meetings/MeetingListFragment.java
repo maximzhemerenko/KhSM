@@ -62,6 +62,13 @@ public class MeetingListFragment extends Fragment implements MenuItem.OnMenuItem
         View view = inflater.inflate(R.layout.meetings_list_fragment, container, false);
 
         toolbar = view.findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity = (MainActivity) requireActivity();
+                mainActivity.showMenu();
+            }
+        });
 
         Menu menu = toolbar.getMenu();
 

@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         app:titleTextColor="@color/white"
-        app:title="@string/My_Records" />
+        app:title="@string/My_Records"
+        app:navigationIcon="@drawable/ic_menu_white_24dp" />
 
     <FrameLayout
         android:layout_width="match_parent"

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.khsm.app.R;
 import com.khsm.app.data.entities.Discipline;
+import com.khsm.app.presentation.ui.screens.MainActivity;
 
 public class DisciplineDetailsFragment extends Fragment {
     private static final String KEY_DISCIPLINE = "KEY_DISCIPLINE";
@@ -51,6 +52,14 @@ public class DisciplineDetailsFragment extends Fragment {
 
         toolbar = view.findViewById(R.id.toolbar);
         toolbar.setTitle(discipline.name);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity = (MainActivity) requireActivity();
+                mainActivity.showMenu();
+            }
+        });
 
         disciplineDetails = view.findViewById(R.id.disciplineDetails);
         disciplineDetails.setText(discipline.description);

@@ -54,8 +54,12 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.login_activity);
 
         toolbar = findViewById(R.id.toolbar);
-
-        Menu menu = toolbar.getMenu();
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         authManager = new AuthManager(this);
 

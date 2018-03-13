@@ -18,6 +18,7 @@ import com.khsm.app.R;
 import com.khsm.app.data.entities.DisciplineRecord;
 import com.khsm.app.domain.UserManager;
 import com.khsm.app.presentation.ui.adapters.RecordsAdapter;
+import com.khsm.app.presentation.ui.screens.MainActivity;
 
 import java.util.List;
 
@@ -62,6 +63,13 @@ public class MyRecordsFragment extends Fragment {
         View view = inflater.inflate(R.layout.my_records_fragment, container, false);
 
         toolbar = view.findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity = (MainActivity) requireActivity();
+                mainActivity.showMenu();
+            }
+        });
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
