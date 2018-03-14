@@ -1,8 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
   <!-- Dictionary -->
+  <string name="Apply">Применить</string>
+  <string name="Ascending">По-возрастанию</string>
+  <string name="Average">Среднее</string>
+  <string name="Best">Лучший</string>
+  <string name="Both">Оба</string>
+  <string name="Cancel">Отмена</string>
   <string name="City">Город</string>
   <string name="Confirm_Password">Повторить пароль</string>
+  <string name="Descending">По-убыванию</string>
   <string name="details">детали</string>
   <string name="Disciplines">Дисциплины</string>
   <string name="DNF">DNF</string>
@@ -30,9 +37,11 @@
   <string name="Register">Регистрация</string>
   <string name="Results">Результаты</string>
   <string name="Save">Сохранить</string>
+  <string name="Single">Единичный</string>
   <string name="WCA_ID">WCA ID</string>
-  <string name="Best">Лучший</string>
-  <string name="Average">Среднее</string>
+  <!-- Common -->
+  <string name="Rankings.Filter">ФИЛЬТР</string>
+  <string name="Rankings.Filter.DialogFragment">Фильтр</string>
   <!-- Auth -->
   <string name="Login.Error.CheckInputData">Проверьте введенные данные</string>
   <string name="Login.Error.Authentication">Произошла ошибка при аутентификации</string>
