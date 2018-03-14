@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/average_single_radios"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <RadioButton android:id="@+id/average"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Average"
+            android:onClick="onRadioButtonClicked"/>
+
+        <RadioButton android:id="@+id/single"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Single"
+            android:onClick="onRadioButtonClicked"/>
+
+    </RadioGroup>
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ascending_descending_radios"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <RadioButton android:id="@+id/ascending"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Ascending"
+            android:onClick="onRadioButtonClicked"/>
+
+        <RadioButton android:id="@+id/descending"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Descending"
+            android:onClick="onRadioButtonClicked"/>
+
+    </RadioGroup>
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/Both_Male_Female_radios"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <RadioButton android:id="@+id/both"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Both"
+            android:onClick="onRadioButtonClicked"/>
+
+        <RadioButton android:id="@+id/male"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Male"
+            android:onClick="onRadioButtonClicked"/>
+
+        <RadioButton android:id="@+id/female"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Female"
+            android:onClick="onRadioButtonClicked"/>
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/white"
+        android:text="@string/Login">
+    </Button>
+
+    <Button
+        android:id="@+id/apply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/white"
+        android:text="@string/Login">
+    </Button>
+
+</LinearLayout>

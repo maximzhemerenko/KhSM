@@ -45,4 +45,7 @@ interface RestApi {
 
     @GET("users/me/records")
     Single<List<DisciplineRecord>> getMyRecords();
+
+    @GET("rankings")
+    Single<List<DisciplineResults>> getRankings();
 }

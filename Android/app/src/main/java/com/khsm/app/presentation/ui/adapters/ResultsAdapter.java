@@ -54,10 +54,12 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ViewHold
         Result result = results.get(position);
 
         String title;
-        if (displayMode.equals(DisplayMode.UserName)) {
+        if (displayMode.equals(DisplayMode.User)) {
             title = (position + 1) + " " + result.user.firstName + " " + result.user.lastName;
         } else if (displayMode.equals(DisplayMode.Date)) {
             title = dateFormat.format(result.meeting.date);
+        } else if (displayMode.equals(DisplayMode.UserAndDate)) {
+            title = (position + 1) + " " + result.user.firstName + " " + result.user.lastName + " (" + dateFormat.format(result.meeting.date) + ")";
         } else {
             throw new RuntimeException("Not supported display mode");
         }
@@ -115,6 +117,6 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ViewHold
     }
 
     public enum DisplayMode {
-        UserName, Date
+        User, Date, UserAndDate
     }
 }
