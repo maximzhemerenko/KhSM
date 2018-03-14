@@ -59,5 +59,17 @@ namespace Backend.Controllers
             
             return Json(results);
         }
+
+        /*[HttpPost]
+        public void CreateMeeting([FromBody] Meeting meeting)
+        {
+            _meetingsManager.AddMeeting(meeting);
+        }
+
+        [HttpPost("results")]
+        public void CreateResult([FromBody] Result result)
+        {
+            _resultsManager.AddResult(result);
+        }*/
     }
 }

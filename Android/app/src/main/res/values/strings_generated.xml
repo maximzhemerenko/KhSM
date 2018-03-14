@@ -1,9 +1,12 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
   <!-- Dictionary -->
+  <string name="Apply">Apply</string>
   <string name="Ascending">Ascending</string>
   <string name="Average">Average</string>
   <string name="Best">Best</string>
+  <string name="Both">Both</string>
+  <string name="Cancel">Cancel</string>
   <string name="City">City</string>
   <string name="Confirm_Password">Confirm Password</string>
   <string name="Descending">Descending</string>
@@ -36,9 +39,9 @@
   <string name="Save">Save</string>
   <string name="Single">Single</string>
   <string name="WCA_ID">WCA ID</string>
-  <string name="Both">Both</string>
   <!-- Common -->
   <string name="Rankings.Filter">SORT &amp; FILTER</string>
+  <string name="Rankings.Filter.DialogFragment">Sort &amp; Filter</string>
   <!-- Auth -->
   <string name="Login.Error.CheckInputData">Check the entered data</string>
   <string name="Login.Error.Authentication">User authentication error</string>
