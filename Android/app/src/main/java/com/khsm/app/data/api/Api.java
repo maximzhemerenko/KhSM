@@ -7,6 +7,7 @@ import com.khsm.app.data.entities.Discipline;
 import com.khsm.app.data.entities.DisciplineRecord;
 import com.khsm.app.data.entities.DisciplineResults;
 import com.khsm.app.data.entities.Meeting;
+import com.khsm.app.data.entities.News;
 import com.khsm.app.data.entities.Session;
 import com.khsm.app.data.entities.User;
 
@@ -69,6 +70,11 @@ public class Api extends ApiBase {
 
     public Single<List<DisciplineResults>> getRankings() {
         return restApi.getRankings()
+                .compose(this::processResponse);
+    }
+
+    public Single<List<News>> getNews() {
+        return restApi.getNews()
                 .compose(this::processResponse);
     }
 }

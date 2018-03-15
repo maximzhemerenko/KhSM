@@ -252,10 +252,10 @@ public class EditProfileFragment extends Fragment implements Toolbar.OnMenuItemC
 
         switch (item.getItemId()) {
             case R.id.results:
-                activity.replaceFragment(MyResultsFragment.newFragment());
+                activity.replaceFragment(MyResultsFragment.newInstance());
                 return true;
             case R.id.records:
-                activity.replaceFragment(MyRecordsFragment.newFragment());
+                activity.replaceFragment(MyRecordsFragment.newInstance());
                 return true;
         }
 

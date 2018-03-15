@@ -28,7 +28,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class MyResultsFragment extends Fragment {
-    public static MyResultsFragment newFragment() {
+    public static MyResultsFragment newInstance() {
         return new MyResultsFragment();
     }
 
