@@ -56,7 +56,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         News news = this.news.get(position);
         holder.newsDate.setText(dateFormat.format(news.dateAndTime));
         holder.newsText.setText(prepareNewsText(news.text));
-        holder.newsAuthor.setText(news.user.firstName + news.user.lastName);
+        holder.newsAuthor.setText(news.user.firstName + " " + news.user.lastName);
         holder.news = news;
     }
 
