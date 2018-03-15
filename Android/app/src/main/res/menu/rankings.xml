@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/rankings"
+        android:id="@+id/filter"
         android:title="@string/Rankings.Filter"
         app:showAsAction="always"
         android:icon="@drawable/ic_filter_list_white_24dp"/>
