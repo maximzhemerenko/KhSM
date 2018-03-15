@@ -6,6 +6,7 @@ import com.khsm.app.data.entities.Discipline;
 import com.khsm.app.data.entities.DisciplineRecord;
 import com.khsm.app.data.entities.DisciplineResults;
 import com.khsm.app.data.entities.Meeting;
+import com.khsm.app.data.entities.News;
 import com.khsm.app.data.entities.Session;
 import com.khsm.app.data.entities.User;
 
@@ -48,4 +49,7 @@ interface RestApi {
 
     @GET("rankings")
     Single<List<DisciplineResults>> getRankings();
+
+    @GET("news")
+    Single<List<News>> getNews();
 }

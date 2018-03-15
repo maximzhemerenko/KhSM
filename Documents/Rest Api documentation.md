@@ -96,6 +96,11 @@ Query:
 
 Response: Array\<[DisciplineResults](#disciplineresults)\>
 
+## Get news
+GET news
+
+Responce: Array\<[News](#news)\>
+
 # Entities
 
 ## CreateSessionRequest 
@@ -126,6 +131,12 @@ Response: Array\<[DisciplineResults](#disciplineresults)\>
 - city: String
 - birth_date: Date
 - phoneNumber: String
+
+## News
+- id: Integer
+- user: [User](#user)
+- text: String
+- date: Date
 
 ## String\<Gender\>
 - "female"
