@@ -50,11 +50,13 @@ namespace Backend
             services.AddScoped<ResultsRepository>();
             services.AddScoped<UserRepository>();
             services.AddScoped<SessionRepository>();
+            services.AddScoped<NewsRepository>();
 
             services.AddScoped<MeetingsManager>();
             services.AddScoped<DisciplinesManager>();
             services.AddScoped<ResultsManager>();
             services.AddScoped<UsersManager>();
+            services.AddScoped<NewsManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
