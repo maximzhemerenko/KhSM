@@ -1,5 +1,6 @@
 package com.khsm.app.presentation.ui.screens.news;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -39,9 +40,10 @@ public class NewsFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        newsManager = new NewsManager(requireContext());
+        Context context = requireContext();
 
-        adapter = new NewsAdapter(getContext(), this);
+        newsManager = new NewsManager(context);
+        adapter = new NewsAdapter(context);
     }
 
     @Override
