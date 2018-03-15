@@ -181,4 +181,8 @@ public class RankingsFragment extends Fragment implements Toolbar.OnMenuItemClic
 
         return false;
     }
+
+    public void applyFilter(FilterDialogFragment.FilterInfo filterInfo) {
+
+    }
 }
