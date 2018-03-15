@@ -171,6 +171,14 @@ public class RankingsFragment extends Fragment implements Toolbar.OnMenuItemClic
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.filter:
+                FilterDialogFragment filterDialogFragment = FilterDialogFragment.newInstance();
+                filterDialogFragment.show(getChildFragmentManager(), null);
+                return true;
+        }
+
+
         return false;
     }
 }

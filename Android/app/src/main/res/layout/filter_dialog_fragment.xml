@@ -2,7 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="20dp"
     android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/sort_filter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="26sp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/Rankings.Filter.DialogFragment"/>
 
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/average_single_radios"
@@ -13,14 +22,12 @@
         <RadioButton android:id="@+id/average"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/Average"
-            android:onClick="onRadioButtonClicked"/>
+            android:text="@string/Average"/>
 
         <RadioButton android:id="@+id/single"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/Single"
-            android:onClick="onRadioButtonClicked"/>
+            android:text="@string/Single"/>
 
     </RadioGroup>
 
@@ -33,14 +40,12 @@
         <RadioButton android:id="@+id/ascending"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/Ascending"
-            android:onClick="onRadioButtonClicked"/>
+            android:text="@string/Ascending"/>
 
         <RadioButton android:id="@+id/descending"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/Descending"
-            android:onClick="onRadioButtonClicked"/>
+            android:text="@string/Descending"/>
 
     </RadioGroup>
 
@@ -53,39 +58,43 @@
         <RadioButton android:id="@+id/both"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/Both"
-            android:onClick="onRadioButtonClicked"/>
+            android:text="@string/Both"/>
 
         <RadioButton android:id="@+id/male"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/Male"
-            android:onClick="onRadioButtonClicked"/>
+            android:text="@string/Male"/>
 
         <RadioButton android:id="@+id/female"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/Female"
-            android:onClick="onRadioButtonClicked"/>
+            android:text="@string/Female"/>
 
     </RadioGroup>
 
-    <Button
-        android:id="@+id/cancel"
-        android:layout_width="wrap_content"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/white"
-        android:text="@string/Login">
-    </Button>
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:gravity="right">
 
-    <Button
-        android:id="@+id/apply"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/white"
-        android:text="@string/Login">
-    </Button>
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:text="@string/Cancel">
+        </Button>
+
+        <Button
+            android:id="@+id/apply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:text="@string/Apply">
+        </Button>
+
+    </LinearLayout>
 
 </LinearLayout>
