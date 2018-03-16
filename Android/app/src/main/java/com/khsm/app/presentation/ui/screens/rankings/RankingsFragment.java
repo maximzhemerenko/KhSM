@@ -17,13 +17,11 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.khsm.app.R;
+import com.khsm.app.data.api.entities.RankingsFilterInfo;
 import com.khsm.app.data.entities.DisciplineResults;
 import com.khsm.app.domain.RankingsManager;
-import com.khsm.app.domain.UserManager;
 import com.khsm.app.presentation.ui.adapters.ResultsAdapter;
 import com.khsm.app.presentation.ui.screens.MainActivity;
-import com.khsm.app.presentation.ui.screens.profile.MyRecordsFragment;
-import com.khsm.app.presentation.ui.screens.profile.MyResultsFragment;
 
 import java.util.List;
 
@@ -91,7 +89,7 @@ public class RankingsFragment extends Fragment implements Toolbar.OnMenuItemClic
         progressBar.setVisibility(View.INVISIBLE);
 
         // load data
-        loadRankings();
+        loadRankings(null);
 
         return view;
     }
@@ -121,12 +119,15 @@ public class RankingsFragment extends Fragment implements Toolbar.OnMenuItemClic
         }
     };
 
-    private void loadRankings() {
+    private void loadRankings(@Nullable RankingsFilterInfo rankingsFilterInfo) {
+        if (rankingsFilterInfo == null)
+            rankingsFilterInfo = new RankingsFilterInfo(RankingsFilterInfo.FilterType.Average, RankingsFilterInfo.SortType.Ascending, null);
+
         progressBar.setVisibility(View.VISIBLE);
         tabLayout.setVisibility(View.INVISIBLE);
 
         cancelLoadOperation();
-        loadDisposable = rankingsManager.getRankings()
+        loadDisposable = rankingsManager.getRankings(rankingsFilterInfo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -182,7 +183,7 @@ public class RankingsFragment extends Fragment implements Toolbar.OnMenuItemClic
         return false;
     }
 
-    public void applyFilter(FilterDialogFragment.FilterInfo filterInfo) {
-
+    public void applyFilter(RankingsFilterInfo rankingsFilterInfo) {
+        loadRankings(rankingsFilterInfo);
     }
 }

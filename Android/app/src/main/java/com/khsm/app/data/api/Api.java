@@ -1,6 +1,9 @@
 package com.khsm.app.data.api;
 
+import android.support.annotation.NonNull;
+
 import com.khsm.app.data.api.base.ApiBase;
+import com.khsm.app.data.api.entities.RankingsFilterInfo;
 import com.khsm.app.data.entities.CreateSessionRequest;
 import com.khsm.app.data.entities.CreateUserRequest;
 import com.khsm.app.data.entities.Discipline;
@@ -68,8 +71,8 @@ public class Api extends ApiBase {
                 .compose(this::processResponse);
     }
 
-    public Single<List<DisciplineResults>> getRankings() {
-        return restApi.getRankings()
+    public Single<List<DisciplineResults>> getRankings(@NonNull RankingsFilterInfo rankingsFilterInfo) {
+        return restApi.getRankings(rankingsFilterInfo.filterType, rankingsFilterInfo.sortType, rankingsFilterInfo.gender)
                 .compose(this::processResponse);
     }
 

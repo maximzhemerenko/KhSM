@@ -2,15 +2,14 @@ package com.khsm.app.presentation.ui.screens.rankings;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Filter;
 import android.widget.RadioButton;
 
 import com.khsm.app.R;
+import com.khsm.app.data.api.entities.RankingsFilterInfo;
 import com.khsm.app.data.entities.Gender;
 
 public class FilterDialogFragment extends DialogFragment {
@@ -59,15 +58,15 @@ public class FilterDialogFragment extends DialogFragment {
 
                 Gender gender = male.isChecked() ? Gender.MALE :
                         female.isChecked() ? Gender.FEMALE : null;
-                FilterInfo.FilterType filterType = average.isChecked() ? FilterInfo.FilterType.Average :
-                        single.isChecked() ? FilterInfo.FilterType.Single : null;
-                FilterInfo.SortType sortType = ascending.isChecked() ? FilterInfo.SortType.Ascending :
-                        descending.isChecked() ? FilterInfo.SortType.Descending : null;
+                RankingsFilterInfo.FilterType filterType = average.isChecked() ? RankingsFilterInfo.FilterType.Average :
+                        single.isChecked() ? RankingsFilterInfo.FilterType.Single : null;
+                RankingsFilterInfo.SortType sortType = ascending.isChecked() ? RankingsFilterInfo.SortType.Ascending :
+                        descending.isChecked() ? RankingsFilterInfo.SortType.Descending : null;
 
-                FilterInfo filterInfo = new FilterInfo(filterType, sortType, gender);
+                RankingsFilterInfo rankingsFilterInfo = new RankingsFilterInfo(filterType, sortType, gender);
 
                 RankingsFragment parentFragment = (RankingsFragment) getParentFragment();
-                parentFragment.applyFilter(filterInfo);
+                parentFragment.applyFilter(rankingsFilterInfo);
             }
         };
 
@@ -76,28 +75,5 @@ public class FilterDialogFragment extends DialogFragment {
 
         return view;
     }
-
-    public static class FilterInfo {
-        public FilterInfo(FilterType filterType, SortType sortType, Gender gender) {
-            this.filterType = filterType;
-            this.sortType = sortType;
-            this.gender = gender;
-        }
-
-        public enum FilterType {
-            Average, Single
-        }
-
-        public enum SortType {
-            Ascending, Descending
-        }
-
-        private final FilterType filterType;
-        private final SortType sortType;
-        private final Gender gender;
-
-    }
-
-
 }
 

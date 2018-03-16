@@ -1,4 +1,5 @@
-﻿using Backend.Domain;
+﻿using System;
+using Backend.Domain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers
@@ -13,7 +14,7 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetRankings()
+        public IActionResult GetRankings([FromQuery] string type, [FromQuery] string sort, [FromQuery] string gender)
         {
             var results = _resultsManager.GetRankings();
             if (results == null)
