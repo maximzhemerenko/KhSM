@@ -1,4 +1,4 @@
-package com.khsm.app.presentation.ui.screens.profile;
+package com.khsm.app.presentation.ui.screens.news;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -14,10 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+
 import com.khsm.app.R;
-import com.khsm.app.data.entities.DisciplineRecord;
-import com.khsm.app.domain.UserManager;
-import com.khsm.app.presentation.ui.adapters.RecordsAdapter;
+import com.khsm.app.data.entities.News;
+import com.khsm.app.domain.NewsManager;
 import com.khsm.app.presentation.ui.screens.MainActivity;
 
 import java.util.List;
@@ -26,41 +26,30 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class MyRecordsFragment extends Fragment {
-    public static MyRecordsFragment newInstance() {
-        return new MyRecordsFragment();
-    }
+public class NewsFragment extends Fragment {
 
-    @SuppressWarnings("FieldCanBeLocal")
+    private NewsAdapter adapter;
+    private NewsManager newsManager;
+    private Toolbar toolbar;
     private RecyclerView recyclerView;
-
     private ProgressBar progressBar;
 
     @Nullable
     private Disposable loadDisposable;
 
-    private UserManager userManager;
-
-    @SuppressWarnings({"FieldCanBeLocal", "unused"})
-    private Toolbar toolbar;
-
-    private RecordsAdapter adapter;
-
-    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Context context = requireContext();
 
-        userManager = new UserManager(context);
-        adapter = new RecordsAdapter(context);
+        newsManager = new NewsManager(context);
+        adapter = new NewsAdapter(context);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              Bundle savedInstanceState) {
-        // init view
-        View view = inflater.inflate(R.layout.my_records_fragment, container, false);
+        View view = inflater.inflate(R.layout.news_fragment, container, false);
 
         toolbar = view.findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -78,44 +67,32 @@ public class MyRecordsFragment extends Fragment {
         progressBar = view.findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
 
-        // load data
-        loadRecords();
+        loadDisciplines();
 
         return view;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-        cancelLoadOperation();
-    }
-
-    private void cancelLoadOperation() {
-        if (loadDisposable == null)
-            return;
-
-        loadDisposable.dispose();
-        loadDisposable = null;
-    }
-
-    private void loadRecords() {
+    private void loadDisciplines() {
         progressBar.setVisibility(View.VISIBLE);
 
-        cancelLoadOperation();
-        loadDisposable = userManager.getMyRecords()
+        if (loadDisposable != null) {
+            loadDisposable.dispose();
+            loadDisposable = null;
+        }
+
+        loadDisposable = newsManager.getNews()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        this::setDisciplineRecords,
+                        this::setNews,
                         this::handleError
                 );
     }
 
-    private void setDisciplineRecords(List<DisciplineRecord> disciplineRecords) {
+    private void setNews(List<News> news) {
         progressBar.setVisibility(View.INVISIBLE);
 
-        adapter.setResults(disciplineRecords);
+        adapter.setNews(news);
     }
 
     private void handleError(Throwable throwable) {
@@ -126,5 +103,9 @@ public class MyRecordsFragment extends Fragment {
                 .setMessage(throwable.getMessage())
                 .setPositiveButton(R.string.OK, null)
                 .show();
+    }
+
+    public static Fragment newInstance() {
+        return new NewsFragment();
     }
 }

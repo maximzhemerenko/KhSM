@@ -77,7 +77,7 @@ namespace Backend.Domain.Formula
             public override decimal? ComputeAverage(IEnumerable<decimal?> attempts)
             {
                 // todo fix it
-                throw new NotSupportedException();
+                return attempts.Min();
             }
         }
     }
