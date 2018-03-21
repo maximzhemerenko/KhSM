@@ -1,8 +1,6 @@
-﻿using System;
-using Backend.Data.Entities;
+﻿using Backend.Data.Entities;
 using Backend.Domain;
 using Microsoft.AspNetCore.Mvc;
-using StackExchange.Redis;
 
 namespace Backend.Controllers
 {
