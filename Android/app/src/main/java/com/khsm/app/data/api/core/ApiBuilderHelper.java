@@ -1,6 +1,7 @@
 package com.khsm.app.data.api.core;
 
 import com.google.gson.GsonBuilder;
+import com.khsm.app.data.api.converters.EnumRetrofitConverterFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,6 +44,7 @@ public class ApiBuilderHelper {
                     .baseUrl(url)
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(provideGsonConverterFactory())
+                    .addConverterFactory(new EnumRetrofitConverterFactory())
                     .client(createOkHttpClient())
                     .build();
         }
