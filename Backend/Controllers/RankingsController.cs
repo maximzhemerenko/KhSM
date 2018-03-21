@@ -1,6 +1,8 @@
 ﻿using System;
+using Backend.Data.Entities;
 using Backend.Domain;
 using Microsoft.AspNetCore.Mvc;
+using StackExchange.Redis;
 
 namespace Backend.Controllers
 {
@@ -14,9 +16,9 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetRankings([FromQuery] string type, [FromQuery] string sort, [FromQuery] string gender)
+        public IActionResult GetRankings([FromQuery] ResultsManager.FilterType type, [FromQuery] ResultsManager.SortType sort, [FromQuery] Gender? gender)
         {
-            var results = _resultsManager.GetRankings();
+            var results = _resultsManager.GetRankings(type, sort, gender);
             if (results == null)
                 return NotFound();
             

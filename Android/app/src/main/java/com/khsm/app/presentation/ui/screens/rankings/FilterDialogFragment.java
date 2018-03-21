@@ -51,8 +51,8 @@ public class FilterDialogFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 if ((!male.isChecked() && !female.isChecked() && !both.isChecked())
-                    || (!average.isChecked() && !single.isChecked())
-                    || (!ascending.isChecked() && !descending.isChecked())) {
+                        || (!average.isChecked() && !single.isChecked())
+                        || (!ascending.isChecked() && !descending.isChecked())) {
                     return;
                 }
 
@@ -67,6 +67,8 @@ public class FilterDialogFragment extends DialogFragment {
 
                 RankingsFragment parentFragment = (RankingsFragment) getParentFragment();
                 parentFragment.applyFilter(rankingsFilterInfo);
+
+                dismiss();
             }
         };
 
