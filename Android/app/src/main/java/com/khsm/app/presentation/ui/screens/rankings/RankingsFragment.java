@@ -30,7 +30,11 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class RankingsFragment extends Fragment implements Toolbar.OnMenuItemClickListener {
-    public static RankingsFragment newInstance() { return new RankingsFragment(); }
+    private static final String KEY_FILTER_INFO = "KEY_FILTER_INFO";
+
+    public static RankingsFragment newInstance() {
+        return new RankingsFragment();
+    }
 
     @SuppressWarnings("FieldCanBeLocal")
     private RecyclerView recyclerView;
@@ -49,6 +53,8 @@ public class RankingsFragment extends Fragment implements Toolbar.OnMenuItemClic
 
     private ResultsAdapter adapter;
 
+    private RankingsFilterInfo filterInfo;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +63,12 @@ public class RankingsFragment extends Fragment implements Toolbar.OnMenuItemClic
 
         rankingsManager = new RankingsManager(context);
         adapter = new ResultsAdapter(context, ResultsAdapter.DisplayMode.UserAndDate);
+
+        if (savedInstanceState != null) {
+            filterInfo = (RankingsFilterInfo) savedInstanceState.getSerializable(KEY_FILTER_INFO);
+        } else {
+            filterInfo = new RankingsFilterInfo(RankingsFilterInfo.FilterType.Average, RankingsFilterInfo.SortType.Ascending, null);
+        }
     }
 
     @Override
@@ -89,9 +101,16 @@ public class RankingsFragment extends Fragment implements Toolbar.OnMenuItemClic
         progressBar.setVisibility(View.INVISIBLE);
 
         // load data
-        loadRankings(null);
+        loadRankings();
 
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putSerializable(KEY_FILTER_INFO, filterInfo);
     }
 
     @Override
@@ -119,15 +138,12 @@ public class RankingsFragment extends Fragment implements Toolbar.OnMenuItemClic
         }
     };
 
-    private void loadRankings(@Nullable RankingsFilterInfo rankingsFilterInfo) {
-        if (rankingsFilterInfo == null)
-            rankingsFilterInfo = new RankingsFilterInfo(RankingsFilterInfo.FilterType.Average, RankingsFilterInfo.SortType.Ascending, null);
-
+    private void loadRankings() {
         progressBar.setVisibility(View.VISIBLE);
         tabLayout.setVisibility(View.INVISIBLE);
 
         cancelLoadOperation();
-        loadDisposable = rankingsManager.getRankings(rankingsFilterInfo)
+        loadDisposable = rankingsManager.getRankings(filterInfo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -174,8 +190,7 @@ public class RankingsFragment extends Fragment implements Toolbar.OnMenuItemClic
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.filter:
-                FilterDialogFragment filterDialogFragment = FilterDialogFragment.newInstance();
-                filterDialogFragment.show(getChildFragmentManager(), null);
+                showFilterDialog(filterInfo);
                 return true;
         }
 
@@ -183,7 +198,13 @@ public class RankingsFragment extends Fragment implements Toolbar.OnMenuItemClic
         return false;
     }
 
-    public void applyFilter(RankingsFilterInfo rankingsFilterInfo) {
-        loadRankings(rankingsFilterInfo);
+    private void showFilterDialog(RankingsFilterInfo filterInfo) {
+        FilterDialogFragment filterDialogFragment = FilterDialogFragment.newInstance(filterInfo);
+        filterDialogFragment.show(getChildFragmentManager(), null);
+    }
+
+    public void applyFilter(RankingsFilterInfo filterInfo) {
+        this.filterInfo = filterInfo;
+        loadRankings();
     }
 }

@@ -1,6 +1,7 @@
 package com.khsm.app.presentation.ui.screens.rankings;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,19 @@ import com.khsm.app.data.api.entities.RankingsFilterInfo;
 import com.khsm.app.data.entities.Gender;
 
 public class FilterDialogFragment extends DialogFragment {
-    public static FilterDialogFragment newInstance() {return new FilterDialogFragment();}
+    private static final String KEY_FILTER_INFO = "KEY_FILTER_INFO";
+
+    public static FilterDialogFragment newInstance(@NonNull RankingsFilterInfo filterInfo) {
+        FilterDialogFragment fragment = new FilterDialogFragment();
+
+        Bundle bundle = new Bundle();
+
+        bundle.putSerializable(KEY_FILTER_INFO, filterInfo);
+
+        fragment.setArguments(bundle);
+
+        return fragment;
+    }
 
     private RadioButton average;
     private RadioButton single;
@@ -25,8 +38,11 @@ public class FilterDialogFragment extends DialogFragment {
     private Button cancel;
     private Button apply;
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Bundle arguments = getArguments();
+        if (arguments == null)
+            throw new RuntimeException("Arguments should not be null");
 
         View view = inflater.inflate(R.layout.filter_dialog_fragment, null);
 
@@ -39,6 +55,11 @@ public class FilterDialogFragment extends DialogFragment {
         both = view.findViewById(R.id.both);
         cancel = view.findViewById(R.id.cancel);
         apply = view.findViewById(R.id.apply);
+
+        if (savedInstanceState == null) {
+            RankingsFilterInfo filterInfo = (RankingsFilterInfo) arguments.getSerializable(KEY_FILTER_INFO);
+            setFilterInfo(filterInfo);
+        }
 
         View.OnClickListener cancelClicked = new View.OnClickListener() {
             @Override
@@ -76,6 +97,39 @@ public class FilterDialogFragment extends DialogFragment {
         apply.setOnClickListener(applyClicked);
 
         return view;
+    }
+
+    private void setFilterInfo(@NonNull RankingsFilterInfo filterInfo) {
+        switch (filterInfo.filterType) {
+            case Single:
+                single.setChecked(true);
+                break;
+            case Average:
+                average.setChecked(true);
+                break;
+        }
+
+        if (filterInfo.gender != null) {
+            switch (filterInfo.gender) {
+                case MALE:
+                    male.setChecked(true);
+                    break;
+                case FEMALE:
+                    female.setChecked(true);
+                    break;
+            }
+        } else {
+            both.setChecked(true);
+        }
+
+        switch (filterInfo.sortType) {
+            case Ascending:
+                ascending.setChecked(true);
+                break;
+            case Descending:
+                descending.setChecked(true);
+                break;
+        }
     }
 }
 

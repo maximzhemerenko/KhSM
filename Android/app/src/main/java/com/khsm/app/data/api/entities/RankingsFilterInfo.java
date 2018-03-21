@@ -3,7 +3,9 @@ package com.khsm.app.data.api.entities;
 import com.google.gson.annotations.SerializedName;
 import com.khsm.app.data.entities.Gender;
 
-public class RankingsFilterInfo {
+import java.io.Serializable;
+
+public class RankingsFilterInfo implements Serializable {
     public final FilterType filterType;
     public final SortType sortType;
     public final Gender gender;
