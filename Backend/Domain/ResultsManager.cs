@@ -25,13 +25,13 @@ namespace Backend.Domain
         public IEnumerable<DisciplineResults> GetMeetingResults(int meetingId)
         {
             var results = _resultsRepository.GetResults(filter: (meetingId, null), readDiscipline: true, readUser: true);
-            return GrpupResultsByDiscipline(results);
+            return GroupResultsByDiscipline(results);
         }
 
         public IEnumerable<DisciplineResults> GetUserResults(int userId)
         {
             var results = _resultsRepository.GetResults(filter: (null, userId), readDiscipline: true, readMeeting: true);
-            return GrpupResultsByDiscipline(results);
+            return GroupResultsByDiscipline(results);
         }
 
         public IEnumerable<DisciplineRecord> GetUserRecords(int userId)
@@ -40,7 +40,7 @@ namespace Backend.Domain
             var singleResultComparer = new Result.Comparer(Result.Comparer.Mode.Single);
 
             var results = _resultsRepository.GetResults(filter: (null, userId), readDiscipline: true, readMeeting: true);
-            return GrpupResultsByDiscipline(results)
+            return GroupResultsByDiscipline(results)
                 .Select(dr => new DisciplineRecord
                 {
                     Discipline = dr.Discipline,
@@ -49,7 +49,31 @@ namespace Backend.Domain
                 });
         }
         
-        private static IEnumerable<DisciplineResults> GrpupResultsByDiscipline(IEnumerable<Result> results)
+        public IEnumerable<DisciplineResults> GetRankings(FilterType type, SortType sort, Gender? gender)
+        {
+            var averageResultComparer = new Result.Comparer(Result.Comparer.Mode.Average);
+            var singleResultComparer = new Result.Comparer(Result.Comparer.Mode.Single);
+            
+            var results = _resultsRepository.GetResults(filter: (null, null), readDiscipline: true, readMeeting: true, readUser: true);
+            if (gender != null)
+                results = results.Where(r => r.User.Gender == gender);
+            var disciplineResults = GroupResultsByDiscipline(results)
+                .Select(dr =>
+                {
+                    return new DisciplineResults
+                    {
+                        Discipline = dr.Discipline,
+                        Results = dr.Results
+                            .OrderBy(r => r, type == FilterType.Average ? averageResultComparer : singleResultComparer)
+                            .Distinct(new ResultUserEqualityComparer())
+                    };
+                });
+            if (sort == SortType.Descending)
+                disciplineResults = disciplineResults.Reverse();
+            return disciplineResults;
+        }
+
+        private static IEnumerable<DisciplineResults> GroupResultsByDiscipline(IEnumerable<Result> results)
         {
             return results?
                 .GroupBy(pair => pair.Discipline)
@@ -91,6 +115,29 @@ namespace Backend.Domain
 
                 _resultsRepository.AddResult(result, transaction);
             });
+        }
+
+        public enum FilterType
+        {
+            Average, Single
+        }
+
+        public enum SortType
+        {
+            Ascending, Descending
+        }
+    }
+
+    public class ResultUserEqualityComparer : IEqualityComparer<Result>
+    {
+        public bool Equals(Result x, Result y)
+        {
+            return x.User.Equals(y.User);
+        }
+
+        public int GetHashCode(Result obj)
+        {
+            return obj.User.GetHashCode();
         }
     }
 }
