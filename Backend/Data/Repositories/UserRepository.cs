@@ -34,6 +34,7 @@ namespace Backend.Data.Repositories
 
         public User GetUser(int id, bool readPrivateFields, MySqlTransaction transaction = null)
         {
+            User user;
             using (var command = new MySqlCommand(Connection, transaction)
             {
                 CommandText = $"select * from user where {Db.User.UserIdKey} = @{Db.User.UserIdKey}",
@@ -44,12 +45,21 @@ namespace Backend.Data.Repositories
             })
             using (var reader = command.ExecuteReader())
             {
-                return reader.Read() ? GetUser(reader, readPrivateFields) : null;
+                user = reader.Read() ? GetUser(reader, readPrivateFields) : null;
             }
+
+            if (user == null)
+                return null;
+
+            Debug.Assert(user.Id != null, "user.Id != null");
+            user.Roles = ReadRoles(user.Id.Value, transaction);
+            
+            return user;
         }
 
         public User GetUserByEmail(string email, bool readPrivateFields, MySqlTransaction transaction)
         {
+            User user;
             using (var command = new MySqlCommand(Connection, transaction)
             {
                 CommandText = $"select * from user where {Db.User.EmailKey} = @{Db.User.EmailKey}",
@@ -60,8 +70,15 @@ namespace Backend.Data.Repositories
             })
             using (var reader = command.ExecuteReader())
             {
-                return reader.Read() ? GetUser(reader, readPrivateFields) : null;
+                user = reader.Read() ? GetUser(reader, readPrivateFields) : null;
             }
+
+            if (user == null) return null;
+
+            Debug.Assert(user.Id != null, "user.Id != null");
+            user.Roles = ReadRoles(user.Id.Value, transaction);
+
+            return user;
         }
         
         public void UpdateUser(User user, MySqlTransaction transaction)
@@ -224,6 +241,29 @@ namespace Backend.Data.Repositories
             if (gender == null) return null;
             
             return gender == Gender.Male ? "male" : "female";
+        }
+
+        private IEnumerable<string> ReadRoles(int userId, MySqlTransaction transaction)
+        {
+            using (var command = new MySqlCommand(Connection, transaction)
+            {
+                CommandText =
+                    $"select r.name from user_role ur join role r on ur.role_id = r.role_id where {Db.User.UserIdKey} = @{Db.User.UserIdKey}",
+                Parameters =
+                {
+                    new MySqlParameter(Db.User.UserIdKey, userId)
+                }
+            })
+            using (var reader = command.ExecuteReader())
+            {
+                var roles = new List<string>();
+                while (reader.Read())
+                {
+                    roles.Add(reader["name"].ToString());
+                }
+
+                return roles;
+            }
         }
     }
 }

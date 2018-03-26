@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Backend.Data.Entities
@@ -20,6 +21,7 @@ namespace Backend.Data.Entities
         public DateTimeOffset? Approved { get; set; }
         [Required]
         public string Email { get; set; }
+        public IEnumerable<string> Roles { get; set; }
 
         protected bool Equals(User other)
         {
