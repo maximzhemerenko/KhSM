@@ -3,6 +3,7 @@ package com.khsm.app.presentation.ui.screens.meetings;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,11 +18,14 @@ import android.widget.ProgressBar;
 
 import com.khsm.app.R;
 import com.khsm.app.data.entities.Meeting;
+import com.khsm.app.data.entities.Session;
+import com.khsm.app.domain.AuthManager;
 import com.khsm.app.domain.MeetingsManager;
 import com.khsm.app.presentation.ui.screens.MainActivity;
 import com.khsm.app.presentation.ui.screens.disciplines.DisciplineListFragment;
 
 import java.util.List;
+import java.util.ListIterator;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -32,8 +36,9 @@ public class MeetingListFragment extends Fragment implements MenuItem.OnMenuItem
         return new MeetingListFragment();
     }
 
+    public static final String ROLE_ADMIN = "Admin";
     private MeetingsManager meetingsManager;
-
+    private AuthManager authManager;
     @Nullable
     private Disposable loadDisposable;
 
@@ -44,7 +49,7 @@ public class MeetingListFragment extends Fragment implements MenuItem.OnMenuItem
     @SuppressWarnings("FieldCanBeLocal")
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
-
+    private FloatingActionButton faButton;
     private MenuItem disciplines_menuItem;
 
     @Override
@@ -54,6 +59,8 @@ public class MeetingListFragment extends Fragment implements MenuItem.OnMenuItem
         meetingsManager = new MeetingsManager(requireContext());
 
         adapter = new MeetingListAdapter(getContext(), this);
+
+        authManager = new AuthManager(getContext());
     }
 
     @Override
@@ -83,7 +90,21 @@ public class MeetingListFragment extends Fragment implements MenuItem.OnMenuItem
         progressBar = view.findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
 
+        faButton = view.findViewById(R.id.fabutton);
+        Session session = authManager.getSession();
+        if (isAdmin(session.user.roles)) {
+            faButton.setVisibility(View.VISIBLE);
+        } else {
+            faButton.setVisibility(View.INVISIBLE);
+        }
         return view;
+    }
+
+    public boolean isAdmin(List<String> roles) {
+        if (roles.contains(ROLE_ADMIN)) {
+            return true;
+        }
+        return false;
     }
 
     @Override
