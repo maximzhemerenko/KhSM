@@ -39,6 +39,10 @@
   <string name="Save">Save</string>
   <string name="Single">Single</string>
   <string name="WCA_ID">WCA ID</string>
+  <string name="Add_Meeting">Add Meeting</string>
+  <string name="Meeting_Number">Meeting Number</string>
+  <string name="Meeting_Date">Meeting Date</string>
+  <string name="Done">Done</string>
   <!-- Common -->
   <string name="Rankings.Filter">SORT &amp; FILTER</string>
   <string name="Rankings.Filter.DialogFragment">Sort &amp; Filter</string>

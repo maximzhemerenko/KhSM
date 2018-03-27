@@ -39,6 +39,10 @@
   <string name="Save">Сохранить</string>
   <string name="Single">Единичный</string>
   <string name="WCA_ID">WCA ID</string>
+  <string name="Add_Meeting">Добавить встречу</string>
+  <string name="Meeting_Number">Номер встречи</string>
+  <string name="Meeting_Date">Дата встречи</string>
+  <string name="Done">Готово</string>
   <!-- Common -->
   <string name="Rankings.Filter">ФИЛЬТР</string>
   <string name="Rankings.Filter.DialogFragment">Фильтр</string>
