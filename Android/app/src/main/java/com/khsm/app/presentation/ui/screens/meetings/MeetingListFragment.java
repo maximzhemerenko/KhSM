@@ -22,6 +22,7 @@ import com.khsm.app.data.entities.Session;
 import com.khsm.app.domain.AuthManager;
 import com.khsm.app.domain.MeetingsManager;
 import com.khsm.app.presentation.ui.screens.MainActivity;
+import com.khsm.app.presentation.ui.screens.disciplines.DisciplineDetailsFragment;
 import com.khsm.app.presentation.ui.screens.disciplines.DisciplineListFragment;
 
 import java.util.List;
@@ -97,6 +98,16 @@ public class MeetingListFragment extends Fragment implements MenuItem.OnMenuItem
         } else {
             faButton.setVisibility(View.INVISIBLE);
         }
+
+        View.OnClickListener faClicked = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity mainActivity = (MainActivity) requireActivity();
+                mainActivity.replaceFragment(AddMeetingFragment.newInstance());
+            }
+        };
+
+        faButton.setOnClickListener(faClicked);
         return view;
     }
 

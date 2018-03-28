@@ -53,6 +53,7 @@
   <string name="Main.NoAccount">You doesn\'t have an account</string>
   <string name="Register.Error.CheckInputData">Сheck the entered data</string>
   <string name="Auth.Create_an_account">Create an account</string>
+  <string name="AddMeeting.Error.MeetingCreationError">Meeting creation error</string>
   <!-- Edit Profile -->
   <string name="EditProfile.Birth_Date_Hint">Birth Date (DD-MM-YYYY)</string>
   <string name="EditProfile.Phone_Number_Hint">Phone Number (+380 XX XXX-XX-XX)</string>
