@@ -119,12 +119,13 @@ public class AddMeetingFragment extends Fragment{
 
     }
 
-    private void creatingDone() {
+    private void creatingDone(Meeting meeting) {
         if (progressDialog != null) {
             progressDialog.dismiss();
             progressDialog = null;
         }
 
+        requireActivity().onBackPressed(); // FIXME: 30.03.2018
     }
     private void showErrorMessage(String errorMessage) {
         new AlertDialog.Builder(requireContext())

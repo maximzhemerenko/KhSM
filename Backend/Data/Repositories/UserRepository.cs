@@ -52,7 +52,7 @@ namespace Backend.Data.Repositories
                 return null;
 
             Debug.Assert(user.Id != null, "user.Id != null");
-            user.Roles = ReadRoles(user.Id.Value, transaction);
+            user.Roles = ReadRoles(Connection, user.Id.Value, transaction);
             
             return user;
         }
@@ -76,7 +76,7 @@ namespace Backend.Data.Repositories
             if (user == null) return null;
 
             Debug.Assert(user.Id != null, "user.Id != null");
-            user.Roles = ReadRoles(user.Id.Value, transaction);
+            user.Roles = ReadRoles(Connection, user.Id.Value, transaction);
 
             return user;
         }
@@ -138,12 +138,12 @@ namespace Backend.Data.Repositories
                 user.City = !reader.IsDBNull(reader.GetOrdinal("city")) ? reader.GetString("city") : null;
                 user.WCAID = !reader.IsDBNull(reader.GetOrdinal("wca_id")) ? reader.GetString("wca_id") : null;
                 user.PhoneNumber = !reader.IsDBNull(reader.GetOrdinal("phone_number")) ? reader.GetString("phone_number") : null;
-                user.BirthDate = !reader.IsDBNull(reader.GetOrdinal("birth_date")) ? (DateTimeOffset?)reader.GetDateTimeOffset("birth_date") : null;
+                user.BirthDate = !reader.IsDBNull(reader.GetOrdinal("birth_date")) ? (DateTime?)reader.GetDateTime("birth_date") : null;
             }
 
             if (readAdminFields)
             {
-                user.Approved =  !reader.IsDBNull(reader.GetOrdinal("approved")) ? (DateTimeOffset?)reader.GetDateTimeOffset("approved") : null;    
+                user.Approved =  !reader.IsDBNull(reader.GetOrdinal("approved")) ? (DateTime?)reader.GetDateTime("approved") : null;    
             }
             
             return user;
@@ -243,9 +243,9 @@ namespace Backend.Data.Repositories
             return gender == Gender.Male ? "male" : "female";
         }
 
-        private IEnumerable<string> ReadRoles(int userId, MySqlTransaction transaction)
+        public static IEnumerable<string> ReadRoles(MySqlConnection connection, int userId, MySqlTransaction transaction = null)
         {
-            using (var command = new MySqlCommand(Connection, transaction)
+            using (var command = new MySqlCommand(connection, transaction)
             {
                 CommandText =
                     $"select r.name from user_role ur join role r on ur.role_id = r.role_id where {Db.User.UserIdKey} = @{Db.User.UserIdKey}",

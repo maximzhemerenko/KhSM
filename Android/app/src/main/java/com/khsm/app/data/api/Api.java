@@ -57,7 +57,7 @@ public class Api extends ApiBase {
                 .compose(this::processResponse);
     }
 
-    public Completable createMeeting(Meeting meeting){
+    public Single<Meeting> createMeeting(Meeting meeting){
         return restApi.createMeeting(meeting)
                 .compose(this::processResponse);
     }

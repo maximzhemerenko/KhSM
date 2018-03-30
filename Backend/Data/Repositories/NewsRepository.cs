@@ -28,7 +28,7 @@ namespace Backend.Data.Repositories
                 Id = reader.GetInt32("news_id"),
                 User = UserRepository.GetUser(reader, false),
                 Text = reader.GetString("text"),
-                DateAndTime = reader.GetDateTimeOffset("date_and_time")
+                DateAndTime = reader.GetDateTime("date_and_time")
             };
             return news;
         }

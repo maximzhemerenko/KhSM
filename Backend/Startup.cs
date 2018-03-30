@@ -31,6 +31,7 @@ namespace Backend
                     
                     serializerSettings.NullValueHandling = NullValueHandling.Ignore;
                     serializerSettings.Converters.Add(new StringEnumConverter(true));
+                    serializerSettings.DateFormatString = "yyyy-MM-dd'T'HH:mm:ss";
                 });
 
             services.AddSwaggerGen(c =>

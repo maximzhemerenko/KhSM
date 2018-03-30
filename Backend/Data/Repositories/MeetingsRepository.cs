@@ -56,7 +56,7 @@ namespace Backend.Data.Repositories
             {
                 Id = reader.GetInt32("meeting_id"),
                 Number = reader.GetInt32("meeting_number"),
-                Date = reader.GetDateTimeOffset("date")
+                Date = reader.GetDateTime("date")
             };
         }
 

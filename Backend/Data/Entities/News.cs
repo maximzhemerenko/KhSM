@@ -12,6 +12,6 @@ namespace Backend.Data.Entities
         [Required]
         public String Text { get; set; }
         [Required]
-        public DateTimeOffset DateAndTime { get; set; }
+        public DateTime DateAndTime { get; set; }
     }
 }

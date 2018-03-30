@@ -43,7 +43,7 @@ interface RestApi {
     Single<Session> register(@Body CreateUserRequest createUserRequest);
 
     @POST("meetings")
-    Completable createMeeting(@Body Meeting meeting);
+    Single<Meeting> createMeeting(@Body Meeting meeting);
 
     @PUT("users/me")
     Single<User> updateUser(@Body User user);

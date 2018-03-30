@@ -27,7 +27,7 @@ public class MeetingsManager {
         return api.getLastMeeting();
     }
 
-    public Completable createMeeting(Meeting meeting) {
+    public Single<Meeting> createMeeting(Meeting meeting) {
         return api.createMeeting(meeting);
     }
 }

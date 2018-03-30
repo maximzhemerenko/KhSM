@@ -17,8 +17,8 @@ namespace Backend.Data.Entities
         public string PhoneNumber { get; set; }
         [Required]
         public Gender? Gender { get; set; }
-        public DateTimeOffset? BirthDate { get; set; }
-        public DateTimeOffset? Approved { get; set; }
+        public DateTime? BirthDate { get; set; }
+        public DateTime? Approved { get; set; }
         [Required]
         public string Email { get; set; }
         public IEnumerable<string> Roles { get; set; }

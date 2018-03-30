@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/Meeting_Number"
-            android:inputType="textPersonName" />
+            android:inputType="text" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/Meeting_Date"
-            android:inputType="textPersonName" />
+            android:inputType="date" />
 
     </android.support.design.widget.TextInputLayout>
 
