@@ -14,6 +14,7 @@ import com.khsm.app.data.entities.User;
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Single;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -40,6 +41,9 @@ interface RestApi {
 
     @POST("users")
     Single<Session> register(@Body CreateUserRequest createUserRequest);
+
+    @POST("meetings")
+    Single<Meeting> createMeeting(@Body Meeting meeting);
 
     @PUT("users/me")
     Single<User> updateUser(@Body User user);

@@ -9,6 +9,7 @@ import com.khsm.app.data.entities.Meeting;
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Single;
 
 public class MeetingsManager {
@@ -24,5 +25,9 @@ public class MeetingsManager {
 
     public Single<Meeting> getLastMeeting() {
         return api.getLastMeeting();
+    }
+
+    public Single<Meeting> createMeeting(Meeting meeting) {
+        return api.createMeeting(meeting);
     }
 }

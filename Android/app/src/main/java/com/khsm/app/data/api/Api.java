@@ -16,6 +16,7 @@ import com.khsm.app.data.entities.User;
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Single;
 
 public class Api extends ApiBase {
@@ -53,6 +54,11 @@ public class Api extends ApiBase {
 
     public Single<Session> register(CreateUserRequest createUserRequest) {
         return restApi.register(createUserRequest)
+                .compose(this::processResponse);
+    }
+
+    public Single<Meeting> createMeeting(Meeting meeting){
+        return restApi.createMeeting(meeting)
                 .compose(this::processResponse);
     }
 

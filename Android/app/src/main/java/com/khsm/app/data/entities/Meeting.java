@@ -13,4 +13,8 @@ public class Meeting implements Serializable {
         this.number = number;
         this.date = date;
     }
+
+    public Meeting(Integer number, Date date){
+        this(null, number, date);
+    }
 }

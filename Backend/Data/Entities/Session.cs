@@ -10,6 +10,6 @@ namespace Backend.Data.Entities
         [Required]
         public string Token { get; set; }
         [Required]
-        public DateTimeOffset Created { get; set; }
+        public DateTime Created { get; set; }
     }
 }

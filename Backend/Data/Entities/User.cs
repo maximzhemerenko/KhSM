@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Backend.Data.Entities
@@ -16,10 +17,11 @@ namespace Backend.Data.Entities
         public string PhoneNumber { get; set; }
         [Required]
         public Gender? Gender { get; set; }
-        public DateTimeOffset? BirthDate { get; set; }
-        public DateTimeOffset? Approved { get; set; }
+        public DateTime? BirthDate { get; set; }
+        public DateTime? Approved { get; set; }
         [Required]
         public string Email { get; set; }
+        public IEnumerable<string> Roles { get; set; }
 
         protected bool Equals(User other)
         {
