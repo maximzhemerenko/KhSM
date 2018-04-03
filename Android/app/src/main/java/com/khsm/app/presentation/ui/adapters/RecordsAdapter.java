@@ -82,17 +82,40 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.ViewHold
         DisciplineRecord disciplineRecord = disciplineRecords.get(position);
 
         holder.discipline_textView.setText(disciplineRecord.discipline.name);
-        holder.bestSingleResult_textView.setText(formatResult(disciplineRecord.bestSingleResult));
-        holder.bestAverageResult_textView.setText(formatResult(disciplineRecord.bestAverageResult));
+        holder.bestSingleResult_textView.setText(formatResult(disciplineRecord.bestSingleResult, true));
+        holder.bestAverageResult_textView.setText(formatResult(disciplineRecord.bestAverageResult, false));
 
         holder.disciplineRecord = disciplineRecord;
     }
 
-    private String formatResult(Result result) {
-        return String.format("%s (%s)",
-                formatTime(result.average),
-                dateFormat.format(result.meeting.date)
-        );
+    private String formatResult(Result result, boolean showSingle) {
+        if (!showSingle) {
+            return String.format("%s (%s)",
+                    formatTime(result.average),
+                    dateFormat.format(result.meeting.date)
+            );
+        } else {
+            return String.format("%s (%s)",
+                    formatTime(findSingle(result)),
+                    dateFormat.format(result.meeting.date)
+            );
+        }
+    }
+
+    @Nullable
+    private Float findSingle(@NonNull Result result) {
+        List<Float> attempts = result.attempts;
+
+        Float best = null;
+
+        for (int i = 0; i < attempts.size(); i++) {
+            Float attempt = attempts.get(i);
+            if (best == null || best > attempt) {
+                best = attempt;
+            }
+        }
+
+        return best;
     }
 
     private String formatTime(Float time) {

@@ -50,7 +50,7 @@
     </RadioGroup>
 
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/both_male_female_radios"
+        android:id="@+id/Both_Male_Female_radios"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >

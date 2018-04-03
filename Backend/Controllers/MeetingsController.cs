@@ -60,7 +60,7 @@ namespace Backend.Controllers
             return Json(results);
         }
 
-        /*[HttpPost]
+        [HttpPost]
         public void CreateMeeting([FromBody] Meeting meeting)
         {
             _meetingsManager.AddMeeting(meeting);
@@ -70,6 +70,6 @@ namespace Backend.Controllers
         public void CreateResult([FromBody] Result result)
         {
             _resultsManager.AddResult(result);
-        }*/
+        }
     }
 }
