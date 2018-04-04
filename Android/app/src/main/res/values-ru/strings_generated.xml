@@ -31,7 +31,7 @@
   <string name="News">Новости</string>
   <string name="OK">OK</string>
   <string name="Password">Пароль</string>
-  <string name="Please_WaitD3">Пожалуйста, подождите…</string>
+  <string name="Please_WaitD3">Пожалуйста, подождите...</string>
   <string name="Rankings">Рейтинг</string>
   <string name="Records">Рекорды</string>
   <string name="Register">Регистрация</string>
@@ -43,6 +43,9 @@
   <string name="Meeting_Number">Номер встречи</string>
   <string name="Meeting_Date">Дата встречи</string>
   <string name="Done">Готово</string>
+  <string name="Add_Results">Добавить результаты</string>
+  <string name="Users">Участники</string>
+  <string name="Add">Добавить</string>
   <!-- Common -->
   <string name="Rankings.Filter">ФИЛЬТР</string>
   <string name="Rankings.Filter.DialogFragment">Фильтр</string>

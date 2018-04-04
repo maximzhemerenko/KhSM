@@ -31,7 +31,7 @@
   <string name="News">News</string>
   <string name="OK">OK</string>
   <string name="Password">Password</string>
-  <string name="Please_WaitD3">Please, wait…</string>
+  <string name="Please_WaitD3">Please, wait...</string>
   <string name="Rankings">Rankings</string>
   <string name="Records">Records</string>
   <string name="Register">Register</string>
@@ -43,6 +43,9 @@
   <string name="Meeting_Number">Meeting Number</string>
   <string name="Meeting_Date">Meeting Date</string>
   <string name="Done">Done</string>
+  <string name="Add_Results">Add Results</string>
+  <string name="Users">Users</string>
+  <string name="Add">Add</string>
   <!-- Common -->
   <string name="Rankings.Filter">SORT &amp; FILTER</string>
   <string name="Rankings.Filter.DialogFragment">Sort &amp; Filter</string>
