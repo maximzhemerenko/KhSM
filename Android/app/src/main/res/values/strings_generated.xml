@@ -46,6 +46,9 @@
   <string name="Add_Results">Add Results</string>
   <string name="Users">Users</string>
   <string name="Add">Add</string>
+  <string name="Add_News">Add News</string>
+  <string name="Add_News_Date">Add News Date</string>
+  <string name="Message_News_Text">Мessage News Text</string>
   <!-- Common -->
   <string name="Rankings.Filter">SORT &amp; FILTER</string>
   <string name="Rankings.Filter.DialogFragment">Sort &amp; Filter</string>
@@ -57,6 +60,7 @@
   <string name="Register.Error.CheckInputData">Сheck the entered data</string>
   <string name="Auth.Create_an_account">Create an account</string>
   <string name="AddMeeting.Error.MeetingCreationError">Meeting creation error</string>
+  <string name="AddNews.Error.NewsCreationError">News creation error</string>
   <!-- Edit Profile -->
   <string name="EditProfile.Birth_Date_Hint">Birth Date (DD-MM-YYYY)</string>
   <string name="EditProfile.Phone_Number_Hint">Phone Number (+380 XX XXX-XX-XX)</string>

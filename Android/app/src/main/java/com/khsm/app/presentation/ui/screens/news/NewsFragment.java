@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +18,8 @@ import android.widget.ProgressBar;
 
 import com.khsm.app.R;
 import com.khsm.app.data.entities.News;
+import com.khsm.app.data.entities.Session;
+import com.khsm.app.domain.AuthManager;
 import com.khsm.app.domain.NewsManager;
 import com.khsm.app.presentation.ui.screens.MainActivity;
 
@@ -28,11 +31,16 @@ import io.reactivex.schedulers.Schedulers;
 
 public class NewsFragment extends Fragment {
 
+    public static final String ROLE_ADMIN = "Admin";
+    private AuthManager authManager;
+
     private NewsAdapter adapter;
     private NewsManager newsManager;
     private Toolbar toolbar;
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
+
+    private FloatingActionButton addNews_fab;
 
     @Nullable
     private Disposable loadDisposable;
@@ -44,6 +52,7 @@ public class NewsFragment extends Fragment {
 
         newsManager = new NewsManager(context);
         adapter = new NewsAdapter(context);
+        authManager = new AuthManager(getContext());
     }
 
     @Override
@@ -67,9 +76,33 @@ public class NewsFragment extends Fragment {
         progressBar = view.findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
 
+        addNews_fab = view.findViewById(R.id.addNews_fab);
+        Session session = authManager.getSession();
+        if (isAdmin(session.user.roles)) {
+            addNews_fab.setVisibility(View.VISIBLE);
+        } else {
+            addNews_fab.setVisibility(View.INVISIBLE);
+        }
+
         loadDisciplines();
 
+        View.OnClickListener addNews = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity mainActivity = (MainActivity) requireActivity();
+                mainActivity.replaceFragment(AddNewsFragment.newInstance());
+            }
+        };
+
+        addNews_fab.setOnClickListener(addNews);
         return view;
+    }
+
+    public boolean isAdmin(List<String> roles) {
+        if (roles.contains(ROLE_ADMIN)) {
+            return true;
+        }
+        return false;
     }
 
     private void loadDisciplines() {

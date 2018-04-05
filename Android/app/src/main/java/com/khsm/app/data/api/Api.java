@@ -86,4 +86,9 @@ public class Api extends ApiBase {
         return restApi.getNews()
                 .compose(this::processResponse);
     }
+
+    public Single<News> addNews(News news){
+        return restApi.addNews(news)
+                .compose(this::processResponse);
+    }
 }

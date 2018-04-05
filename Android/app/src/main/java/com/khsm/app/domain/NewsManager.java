@@ -18,4 +18,8 @@ public class NewsManager {
     public NewsManager(@NonNull Context context) { api = ApiFactory.createApi(context); }
 
     public Single<List<News>> getNews() { return api.getNews(); }
+
+    public Single<News> addNews(News news) {
+        return api.addNews(news);
+    }
 }

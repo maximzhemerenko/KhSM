@@ -59,4 +59,7 @@ interface RestApi {
 
     @GET("news")
     Single<List<News>> getNews();
+
+    @POST("news")
+    Single<News> addNews(@Body News news);
 }
