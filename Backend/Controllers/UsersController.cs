@@ -80,11 +80,46 @@ namespace Backend.Controllers
             var id = me.Id.Value;
             
             if (user.Id.HasValue && user.Id.Value != id)
-                throw new Exception("Not consistent user id provided");
+                return Unauthorized();
 
             user.Id = id;
             
             return Json(_usersManager.UpdateUser(user));
+        }
+
+        [HttpPut("{id}/password")]
+        [ProducesResponseType((int) HttpStatusCode.OK)]
+        [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
+        public IActionResult UpdatePassword(int id, [FromBody] UpdatePasswordRequest updatePasswordRequest)
+        {
+            var me = User;
+            if (me == null)
+                return Unauthorized();
+
+            Debug.Assert(me.Id != null, "me.Id != null");
+            if (me.Id.Value != id)
+                return Unauthorized();
+
+            _usersManager.UpdatePassword(id, updatePasswordRequest.Password);
+
+            return Ok();
+        }
+
+        [HttpPut("me/password")]
+        [ProducesResponseType((int) HttpStatusCode.OK)]
+        [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
+        public IActionResult UpdatePassword([FromBody] UpdatePasswordRequest updatePasswordRequest)
+        {
+            var me = User;
+            if (me == null)
+                return Unauthorized();
+
+            Debug.Assert(me.Id != null, "me.Id != null");
+            var id = me.Id.Value;
+
+            _usersManager.UpdatePassword(id, updatePasswordRequest.Password);
+
+            return Ok();
         }
 
         [HttpGet("{id}/results")]

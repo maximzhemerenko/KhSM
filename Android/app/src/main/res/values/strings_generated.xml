@@ -43,6 +43,12 @@
   <string name="Meeting_Number">Meeting Number</string>
   <string name="Meeting_Date">Meeting Date</string>
   <string name="Done">Done</string>
+  <string name="Add_Results">Add Results</string>
+  <string name="Users">Users</string>
+  <string name="Add">Add</string>
+  <string name="Add_News">Add News</string>
+  <string name="Add_News_Date">Add News Date</string>
+  <string name="Message_News_Text">Мessage News Text</string>
   <!-- Common -->
   <string name="Rankings.Filter">SORT &amp; FILTER</string>
   <string name="Rankings.Filter.DialogFragment">Sort &amp; Filter</string>

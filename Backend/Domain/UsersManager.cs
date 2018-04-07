@@ -130,5 +130,10 @@ namespace Backend.Domain
                 User = user
             };
         }
+
+        public void UpdatePassword(int userId, string password)
+        {
+            _userRepository.UpdatePassword(userId, Hash(password));
+        }
     }
 }

@@ -43,6 +43,12 @@
   <string name="Meeting_Number">Номер встречи</string>
   <string name="Meeting_Date">Дата встречи</string>
   <string name="Done">Готово</string>
+  <string name="Add_Results">Добавить результаты</string>
+  <string name="Users">Участники</string>
+  <string name="Add">Добавить</string>
+  <string name="Add_News">Добавить новость</string>
+  <string name="Add_News_Date">Дата новости</string>
+  <string name="Message_News_Text">Новое сообщение</string>
   <!-- Common -->
   <string name="Rankings.Filter">ФИЛЬТР</string>
   <string name="Rankings.Filter.DialogFragment">Фильтр</string>
