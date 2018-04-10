@@ -43,6 +43,10 @@ public class UserManager {
         return api.getMeetingResults(id);
     }
 
+    public Single<List<DisciplineResults>> getNewsResults(int id) {
+        return api.getNewsResults(id);
+    }
+
     public Single<List<DisciplineResults>> getMyResults() {
         return api.getMyResults();
     }

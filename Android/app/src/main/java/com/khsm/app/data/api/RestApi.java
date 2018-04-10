@@ -60,6 +60,16 @@ interface RestApi {
     @GET("news")
     Single<List<News>> getNews();
 
+    @GET("news/last")
+    Single<News> getLastNews();
+
+    @GET("news/{id}/results")
+    Single<List<DisciplineResults>> getNewsResults(@Path("id") int id);
+
     @POST("news")
     Single<News> addNews(@Body News news);
+
+
+
+
 }

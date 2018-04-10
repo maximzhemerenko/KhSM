@@ -19,6 +19,10 @@ public class NewsManager {
 
     public Single<List<News>> getNews() { return api.getNews(); }
 
+    public Single<News> getLastNews() {
+        return api.getLastNews();
+    }
+
     public Single<News> addNews(News news) {
         return api.addNews(news);
     }
