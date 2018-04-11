@@ -37,6 +37,11 @@ public class Api extends ApiBase {
                 .compose(this::processResponse);
     }
 
+    public Single<List<User>> getUsers() {
+        return restApi.getUsers()
+                .compose(this::processResponse);
+    }
+
     public Single<List<DisciplineResults>> getMeetingResults(int id) {
         return restApi.getMeetingResults(id)
                 .compose(this::processResponse);

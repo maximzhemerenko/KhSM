@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Net;
 using Backend.Data.Entities;
 using Backend.Domain;
@@ -49,6 +50,17 @@ namespace Backend.Controllers
                 return Unauthorized();
             
             return Json(user);
+        }
+        
+        [HttpGet]
+        public IActionResult GetUsers()
+        {
+            var user = User;
+            if (user == null)
+                return Unauthorized();
+            if (!user.Roles.Contains("Admin"))
+                return Unauthorized();
+            return Json(_usersManager.GetUsers(false));
         }
 
         [HttpPut("{id}")]

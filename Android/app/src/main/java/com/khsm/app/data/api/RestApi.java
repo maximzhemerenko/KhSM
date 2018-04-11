@@ -59,4 +59,7 @@ interface RestApi {
 
     @GET("news")
     Single<List<News>> getNews();
+
+    @GET("users")
+    Single<List<User>> getUsers();
 }
