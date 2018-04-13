@@ -77,9 +77,18 @@ namespace Backend.Controllers
         }
 
         [HttpPost("results")]
-        public void CreateResult([FromBody] Result result)
+        public IActionResult CreateResult([FromBody] Result result)
         {
+            var user = User;
+            if (user == null)
+                return Unauthorized();
+            
+            if (!user.Roles.Contains("Admin"))
+                return Unauthorized();
+            
             _resultsManager.AddResult(result);
+            
+            return Json(result);
         }
     }
 }

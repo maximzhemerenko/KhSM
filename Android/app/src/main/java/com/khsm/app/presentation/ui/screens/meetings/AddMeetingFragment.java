@@ -125,7 +125,7 @@ public class AddMeetingFragment extends Fragment{
         }
 
         MainActivity mainActivity = (MainActivity) requireActivity();
-        mainActivity.replaceFragment(AddResultsFragment.newInstance());
+        mainActivity.replaceFragment(AddResultsFragment.newInstance(meeting));
 
     }
 

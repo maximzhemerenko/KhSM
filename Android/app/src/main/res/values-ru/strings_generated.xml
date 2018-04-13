@@ -49,6 +49,7 @@
   <string name="Add_News">Добавить новость</string>
   <string name="Add_News_Date">Дата новости</string>
   <string name="Message_News_Text">Новое сообщение</string>
+  <string name="Write_Results">Введите результаты(один результат на каждой строке)</string>
   <!-- Common -->
   <string name="Rankings.Filter">ФИЛЬТР</string>
   <string name="Rankings.Filter.DialogFragment">Фильтр</string>
@@ -61,6 +62,7 @@
   <string name="Auth.Create_an_account">Создать учетную запись</string>
   <string name="AddMeeting.Error.MeetingCreationError">Произошла ошибка при добавлении встречи</string>
   <string name="AddNews.Error.NewsCreationError">Произошла ошибка при добавлении новости</string>
+  <string name="AddResult.Error.ResultCreationError">Произошла ошибка при добавлении результата</string>
   <!-- Edit Profile -->
   <string name="EditProfile.Birth_Date_Hint">Дата рождения (ДД-ММ-ГГГГ)</string>
   <string name="EditProfile.Phone_Number_Hint">Номер телефона (+380 XX XXX-XX-XX)</string>

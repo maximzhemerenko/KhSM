@@ -9,6 +9,7 @@ import com.khsm.app.data.entities.DisciplineResults;
 import com.khsm.app.data.entities.Gender;
 import com.khsm.app.data.entities.Meeting;
 import com.khsm.app.data.entities.News;
+import com.khsm.app.data.entities.Result;
 import com.khsm.app.data.entities.Session;
 import com.khsm.app.data.entities.User;
 
@@ -44,6 +45,9 @@ interface RestApi {
 
     @POST("meetings")
     Single<Meeting> createMeeting(@Body Meeting meeting);
+
+    @POST("meetings/results")
+    Single<Result> createResult(@Body Result result);
 
     @PUT("users/me")
     Single<User> updateUser(@Body User user);
