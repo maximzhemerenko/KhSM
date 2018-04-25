@@ -130,8 +130,7 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
         progressBar.setVisibility(View.INVISIBLE);
 
         faButton = view.findViewById(R.id.fabutton);
-        Session session = authManager.getSession();
-        if (isAdmin(session.user.roles)) {
+        if (authManager.isAdmin()) {
             faButton.setVisibility(View.VISIBLE);
         } else {
             faButton.setVisibility(View.INVISIBLE);
@@ -175,10 +174,7 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
     }
 
     public boolean isAdmin(List<String> roles) {
-        if (roles.contains(ROLE_ADMIN)) {
-            return true;
-        }
-        return false;
+        return roles.contains(ROLE_ADMIN);
     }
 
     @Override
@@ -211,7 +207,7 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
 
         progressBar.setVisibility(View.VISIBLE);
 
-        toolbar.setTitle(dateFormat.format(meeting.date));
+        toolbar.setTitle(dateFormat.format(meeting.date) + " (" +  meeting.number + ")");
 
         loadResults();
     }
@@ -283,7 +279,7 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
     }
 
     private void setDisciplineResults(@NonNull DisciplineResults disciplineResults) {
-        adapter.setResults(disciplineResults.results);
+        adapter.setResults(disciplineResults.results, null);
     }
 
     private void showMeetingList() {

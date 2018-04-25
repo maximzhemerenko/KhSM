@@ -53,7 +53,7 @@ public class AddResultsFragment extends Fragment {
     private TextView tvUsers;
     private TextView tvWriteResults;
 
-    Meeting meeting;
+    private Meeting meeting;
 
     private DisciplinesSpinnerAdapter disciplinesSpinnerAdapter;
     private UsersSpinnerAdapter usersSpinnerAdapter;
@@ -65,9 +65,9 @@ public class AddResultsFragment extends Fragment {
     @Nullable
     private Disposable loadDisposable;
 
-    DisciplinesManager disciplinesManager;
-    UserManager userManager;
-    MeetingsManager meetingsManager;
+    private DisciplinesManager disciplinesManager;
+    private UserManager userManager;
+    private MeetingsManager meetingsManager;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

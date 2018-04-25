@@ -23,6 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
+            android:textSize="20dp"
             android:textAlignment="center"
             android:text="@string/Meeting_Number" />
 
@@ -30,36 +31,45 @@
             android:id="@+id/tvDisciplines"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:layout_marginLeft="8dp"
             android:text="@string/Disciplines" />
 
         <Spinner
             android:id="@+id/spinnerDisciplines"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
             android:layout_marginBottom="16dp" />
 
         <TextView
             android:id="@+id/tvUsers"
+            android:layout_marginLeft="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="16dp"
             android:text="@string/Users" />
 
         <Spinner
             android:id="@+id/spinnerUsers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
             android:layout_marginBottom="16dp" />
 
         <TextView
             android:id="@+id/tvAddResults"
             android:layout_width="match_parent"
+            android:layout_marginLeft="8dp"
             android:layout_height="wrap_content"
+            android:textSize="16dp"
             android:text="@string/Write_Results" />
 
         <EditText
             android:id="@+id/results"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginLeft="8dp"
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textMultiLine" />

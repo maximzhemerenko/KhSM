@@ -37,7 +37,6 @@ public class MeetingListFragment extends Fragment implements MenuItem.OnMenuItem
         return new MeetingListFragment();
     }
 
-    public static final String ROLE_ADMIN = "Admin";
     private MeetingsManager meetingsManager;
     private AuthManager authManager;
     @Nullable
@@ -92,8 +91,7 @@ public class MeetingListFragment extends Fragment implements MenuItem.OnMenuItem
         progressBar.setVisibility(View.INVISIBLE);
 
         faButton = view.findViewById(R.id.fabutton);
-        Session session = authManager.getSession();
-        if (isAdmin(session.user.roles)) {
+        if (authManager.isAdmin()) {
             faButton.setVisibility(View.VISIBLE);
         } else {
             faButton.setVisibility(View.INVISIBLE);
@@ -109,13 +107,6 @@ public class MeetingListFragment extends Fragment implements MenuItem.OnMenuItem
 
         faButton.setOnClickListener(faClicked);
         return view;
-    }
-
-    public boolean isAdmin(List<String> roles) {
-        if (roles.contains(ROLE_ADMIN)) {
-            return true;
-        }
-        return false;
     }
 
     @Override

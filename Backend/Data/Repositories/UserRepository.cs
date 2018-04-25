@@ -177,6 +177,7 @@ namespace Backend.Data.Repositories
                 command.ExecuteNonQuery();
 
                 user.Id = (int) command.LastInsertedId;
+                user.Roles = new List<string>();
             }
         }
 

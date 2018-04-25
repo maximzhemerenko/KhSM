@@ -60,7 +60,7 @@ public class MeetingListAdapter extends RecyclerView.Adapter<MeetingListAdapter.
     @Override
     public void onBindViewHolder(MeetingListAdapter.ViewHolder holder, int position) {
         Meeting meeting = meetings.get(position);
-        holder.meetingDate.setText(dateFormat.format(meeting.date));
+        holder.meetingDate.setText(dateFormat.format(meeting.date) + " (" + meeting.number + ")");
         holder.meeting = meeting;
     }
 

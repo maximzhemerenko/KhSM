@@ -161,6 +161,6 @@ public class MyResultsFragment extends Fragment {
     }
 
     private void setDisciplineResults(@NonNull DisciplineResults disciplineResults) {
-        adapter.setResults(disciplineResults.results);
+        adapter.setResults(disciplineResults.results, null);
     }
 }

@@ -25,6 +25,7 @@ import com.khsm.app.presentation.ui.screens.MainActivity;
 
 import java.util.List;
 
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -183,7 +184,16 @@ public class RankingsFragment extends Fragment implements Toolbar.OnMenuItemClic
     }
 
     private void setDisciplineResults(@NonNull DisciplineResults disciplineResults) {
-        adapter.setResults(disciplineResults.results);
+        ResultsAdapter.SortMode sortMode;
+        if (filterInfo.filterType.equals(RankingsFilterInfo.FilterType.Average)) {
+            sortMode = ResultsAdapter.SortMode.Average;
+        } else if (filterInfo.filterType.equals(RankingsFilterInfo.FilterType.Single)) {
+            sortMode = ResultsAdapter.SortMode.Single;
+        } else {
+            throw new RuntimeException();
+        }
+
+        adapter.setResults(disciplineResults.results, sortMode);
     }
 
     @Override
