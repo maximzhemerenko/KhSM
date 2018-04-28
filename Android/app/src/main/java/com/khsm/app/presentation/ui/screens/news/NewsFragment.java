@@ -77,8 +77,8 @@ public class NewsFragment extends Fragment {
         progressBar.setVisibility(View.INVISIBLE);
 
         addNews_fab = view.findViewById(R.id.addNews_fab);
-        Session session = authManager.getSession();
-        if (isAdmin(session.user.roles)) {
+
+        if (authManager.isAdmin()) {
             addNews_fab.setVisibility(View.VISIBLE);
         } else {
             addNews_fab.setVisibility(View.INVISIBLE);
@@ -96,13 +96,6 @@ public class NewsFragment extends Fragment {
 
         addNews_fab.setOnClickListener(addNews);
         return view;
-    }
-
-    public boolean isAdmin(List<String> roles) {
-        if (roles.contains(ROLE_ADMIN)) {
-            return true;
-        }
-        return false;
     }
 
     private void loadDisciplines() {
