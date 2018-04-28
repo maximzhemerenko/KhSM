@@ -9,12 +9,12 @@ import com.khsm.app.data.entities.DisciplineResults;
 import com.khsm.app.data.entities.Gender;
 import com.khsm.app.data.entities.Meeting;
 import com.khsm.app.data.entities.News;
+import com.khsm.app.data.entities.Result;
 import com.khsm.app.data.entities.Session;
 import com.khsm.app.data.entities.User;
 
 import java.util.List;
 
-import io.reactivex.Completable;
 import io.reactivex.Single;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -45,6 +45,9 @@ interface RestApi {
     @POST("meetings")
     Single<Meeting> createMeeting(@Body Meeting meeting);
 
+    @POST("meetings/results")
+    Single<Result> createResult(@Body Result result);
+
     @PUT("users/me")
     Single<User> updateUser(@Body User user);
 
@@ -69,7 +72,6 @@ interface RestApi {
     @POST("news")
     Single<News> addNews(@Body News news);
 
-
-
-
+    @GET("users")
+    Single<List<User>> getUsers();
 }

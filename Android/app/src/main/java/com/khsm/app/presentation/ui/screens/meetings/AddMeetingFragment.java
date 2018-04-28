@@ -116,7 +116,6 @@ public class AddMeetingFragment extends Fragment{
                         this::creatingDone,
                         this::handleError
                 );
-
     }
 
     private void creatingDone(Meeting meeting) {
@@ -125,8 +124,11 @@ public class AddMeetingFragment extends Fragment{
             progressDialog = null;
         }
 
-        requireActivity().onBackPressed(); // FIXME: 30.03.2018
+        MainActivity mainActivity = (MainActivity) requireActivity();
+        mainActivity.replaceFragment(AddResultsFragment.newInstance(meeting));
+
     }
+
     private void showErrorMessage(String errorMessage) {
         new AlertDialog.Builder(requireContext())
                 .setTitle(R.string.Error)

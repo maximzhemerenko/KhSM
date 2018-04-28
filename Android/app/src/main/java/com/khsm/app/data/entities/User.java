@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.List;
 
 public class User {
+    public static final String ROLE_ADMIN = "Admin";
+
     public final  Integer id;
     public final String firstName;
     public final String lastName;

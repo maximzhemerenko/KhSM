@@ -51,6 +51,10 @@ public class UserManager {
         return api.getMyResults();
     }
 
+    public Single<List<User>> getUsers() {
+        return api.getUsers();
+    }
+
     public Single<List<DisciplineRecord>> getMyRecords() {
         return api.getMyRecords();
     }

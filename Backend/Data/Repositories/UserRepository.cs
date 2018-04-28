@@ -177,6 +177,7 @@ namespace Backend.Data.Repositories
                 command.ExecuteNonQuery();
 
                 user.Id = (int) command.LastInsertedId;
+                user.Roles = new List<string>();
             }
         }
 
@@ -184,12 +185,12 @@ namespace Backend.Data.Repositories
         {
             using (var command = new MySqlCommand(Connection, transaction)
             {
-                CommandText = $"insert into login({Db.User.UserIdKey}, {Db.User.PasswordHashKey}) " +
-                              $"values(@{Db.User.UserIdKey}, @{Db.User.PasswordHashKey})",
+                CommandText = $"insert into {Db.LoginKey}({Db.Login.UserIdKey}, {Db.Login.PasswordHashKey}) " +
+                              $"values(@{Db.Login.UserIdKey}, @{Db.Login.PasswordHashKey})",
                 Parameters =
                 {
-                    new MySqlParameter(Db.User.UserIdKey, user.Id),
-                    new MySqlParameter(Db.User.PasswordHashKey, passwordHash)
+                    new MySqlParameter(Db.Login.UserIdKey, user.Id),
+                    new MySqlParameter(Db.Login.PasswordHashKey, passwordHash)
                 }
             })
             {
@@ -203,7 +204,7 @@ namespace Backend.Data.Repositories
         {
             using (var command = new MySqlCommand(Connection, transaction)
             {
-                CommandText = $"select * from login where {Db.User.UserIdKey} = @{Db.User.UserIdKey}",
+                CommandText = $"select * from {Db.LoginKey} where {Db.User.UserIdKey} = @{Db.User.UserIdKey}",
                 Parameters =
                 {
                     new MySqlParameter(Db.User.UserIdKey, userId)
@@ -263,6 +264,22 @@ namespace Backend.Data.Repositories
                 }
 
                 return roles;
+            }
+        }
+
+        public void UpdatePassword(int userId, byte[] passwordHash, MySqlTransaction transaction = null)
+        {
+            using (var command = new MySqlCommand(Connection, transaction)
+            {
+                CommandText = $"update {Db.LoginKey} set {Db.Login.PasswordHashKey} = @{Db.Login.PasswordHashKey} where {Db.Login.UserIdKey} = @{Db.Login.UserIdKey}",
+                Parameters =
+                {
+                    new MySqlParameter(Db.Login.UserIdKey, userId),
+                    new MySqlParameter(Db.Login.PasswordHashKey, passwordHash)
+                }
+            })
+            {
+                command.ExecuteNonQuery();
             }
         }
     }

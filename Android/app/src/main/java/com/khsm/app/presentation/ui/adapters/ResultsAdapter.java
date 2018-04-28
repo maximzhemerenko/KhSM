@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ViewHolder> {
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.ENGLISH);
 
     private final Context context;
 
@@ -26,6 +26,8 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ViewHold
 
     @Nullable
     private List<Result> results;
+    @Nullable
+    private SortMode sortMode;
 
     public ResultsAdapter(@NonNull Context context, DisplayMode displayMode) {
         this.context = context;
@@ -33,8 +35,9 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ViewHold
         this.displayMode = displayMode;
     }
 
-    public void setResults(List<Result> results) {
+    public void setResults(List<Result> results, @Nullable SortMode sortMode) {
         this.results = results;
+        this.sortMode = sortMode;
         notifyDataSetChanged();
     }
 
@@ -65,7 +68,12 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ViewHold
         }
         holder.title.setText(title);
 
-        StringBuilder results = new StringBuilder(formatResultTime(result.average));
+        Float actualResult = result.average;
+        if (sortMode != null && sortMode.equals(SortMode.Single)) {
+            actualResult = AdapterUtils.findSingle(result);
+        }
+
+        StringBuilder results = new StringBuilder(AdapterUtils.formatResultTime(context, actualResult));
 
         List<Float> attempts = result.attempts;
         if (attempts.size() > 0) {
@@ -74,7 +82,7 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ViewHold
                 if (i > 0)
                     results.append(" ");
 
-                results.append(formatResultTime(attempts.get(i)));
+                results.append(AdapterUtils.formatResultTime(context, attempts.get(i)));
             }
 
             int dnsCount = result.attemptCount - attempts.size();
@@ -91,10 +99,6 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ViewHold
         }
 
         holder.results.setText(results);
-    }
-
-    private String formatResultTime(Float time) {
-        return time != null ? String.format(Locale.ENGLISH, "%.2f", time) : context.getString(R.string.DNF);
     }
 
     @Override
@@ -118,5 +122,9 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ViewHold
 
     public enum DisplayMode {
         User, Date, UserAndDate
+    }
+
+    public enum SortMode {
+        Average, Single
     }
 }

@@ -11,6 +11,7 @@ import com.khsm.app.data.entities.DisciplineRecord;
 import com.khsm.app.data.entities.DisciplineResults;
 import com.khsm.app.data.entities.Meeting;
 import com.khsm.app.data.entities.News;
+import com.khsm.app.data.entities.Result;
 import com.khsm.app.data.entities.Session;
 import com.khsm.app.data.entities.User;
 
@@ -37,6 +38,11 @@ public class Api extends ApiBase {
                 .compose(this::processResponse);
     }
 
+    public Single<List<User>> getUsers() {
+        return restApi.getUsers()
+                .compose(this::processResponse);
+    }
+
     public Single<List<DisciplineResults>> getMeetingResults(int id) {
         return restApi.getMeetingResults(id)
                 .compose(this::processResponse);
@@ -59,6 +65,11 @@ public class Api extends ApiBase {
 
     public Single<Meeting> createMeeting(Meeting meeting){
         return restApi.createMeeting(meeting)
+                .compose(this::processResponse);
+    }
+
+    public Single<Result> createResult(Result result){
+        return restApi.createResult(result)
                 .compose(this::processResponse);
     }
 

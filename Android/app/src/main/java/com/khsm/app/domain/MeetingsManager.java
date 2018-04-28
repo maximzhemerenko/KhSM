@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import com.khsm.app.data.api.Api;
 import com.khsm.app.data.api.ApiFactory;
 import com.khsm.app.data.entities.Meeting;
+import com.khsm.app.data.entities.Result;
 
 import java.util.List;
 
@@ -30,4 +31,9 @@ public class MeetingsManager {
     public Single<Meeting> createMeeting(Meeting meeting) {
         return api.createMeeting(meeting);
     }
+
+    public Single<Result> createResult(Result result) {
+        return api.createResult(result);
+    }
+
 }

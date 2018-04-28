@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -20,6 +21,8 @@ import android.widget.ProgressBar;
 import com.khsm.app.R;
 import com.khsm.app.data.entities.DisciplineResults;
 import com.khsm.app.data.entities.Meeting;
+import com.khsm.app.data.entities.Session;
+import com.khsm.app.domain.AuthManager;
 import com.khsm.app.domain.MeetingsManager;
 import com.khsm.app.domain.UserManager;
 import com.khsm.app.presentation.ui.adapters.ResultsAdapter;
@@ -35,6 +38,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuItemClickListener {
     private static final String KEY_MEETING = "KEY_MEETING";
+    public static final String ROLE_ADMIN = "Admin";
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
 
@@ -59,6 +63,8 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
 
     private MeetingsManager meetingsManager;
     private UserManager userManager;
+    private AuthManager authManager;
+
 
     private Meeting meeting;
 
@@ -72,6 +78,8 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
     @SuppressWarnings("FieldCanBeLocal")
     private boolean lastMeetingMode;
 
+    private FloatingActionButton faButton;
+
     @Nullable
     private MenuItem meetings_menuItem;
 
@@ -83,6 +91,8 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
 
         meetingsManager = new MeetingsManager(context);
         userManager = new UserManager(context);
+        authManager = new AuthManager(context);
+
         adapter = new ResultsAdapter(context, ResultsAdapter.DisplayMode.User);
     }
 
@@ -119,6 +129,22 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
         progressBar = view.findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
 
+        faButton = view.findViewById(R.id.fabutton);
+        if (authManager.isAdmin()) {
+            faButton.setVisibility(View.VISIBLE);
+        } else {
+            faButton.setVisibility(View.INVISIBLE);
+        }
+
+        View.OnClickListener faClicked = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity mainActivity = (MainActivity) requireActivity();
+                mainActivity.replaceFragment(AddResultsFragment.newInstance(meeting));
+            }
+        };
+
+        faButton.setOnClickListener(faClicked);
         return view;
     }
 
@@ -145,6 +171,10 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
         } else {
             loadLastMeeting();
         }
+    }
+
+    public boolean isAdmin(List<String> roles) {
+        return roles.contains(ROLE_ADMIN);
     }
 
     @Override
@@ -177,7 +207,7 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
 
         progressBar.setVisibility(View.VISIBLE);
 
-        toolbar.setTitle(dateFormat.format(meeting.date));
+        toolbar.setTitle(dateFormat.format(meeting.date) + " (" +  meeting.number + ")");
 
         loadResults();
     }
@@ -249,7 +279,7 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
     }
 
     private void setDisciplineResults(@NonNull DisciplineResults disciplineResults) {
-        adapter.setResults(disciplineResults.results);
+        adapter.setResults(disciplineResults.results, null);
     }
 
     private void showMeetingList() {

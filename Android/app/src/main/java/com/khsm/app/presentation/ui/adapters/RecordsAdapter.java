@@ -96,26 +96,10 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.ViewHold
             );
         } else {
             return String.format("%s (%s)",
-                    formatTime(findSingle(result)),
+                    formatTime(AdapterUtils.findSingle(result)),
                     dateFormat.format(result.meeting.date)
             );
         }
-    }
-
-    @Nullable
-    private Float findSingle(@NonNull Result result) {
-        List<Float> attempts = result.attempts;
-
-        Float best = null;
-
-        for (int i = 0; i < attempts.size(); i++) {
-            Float attempt = attempts.get(i);
-            if (best == null || best > attempt) {
-                best = attempt;
-            }
-        }
-
-        return best;
     }
 
     private String formatTime(Float time) {
@@ -138,7 +122,7 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.ViewHold
     private void showResultDetails(Discipline discipline, Result result, String recordType) {
         String title = discipline.name + " " + recordType + " (" + dateFormat.format(result.meeting.date) + ")";
 
-        SpannableStringBuilder message = new SpannableStringBuilder(formatResultTime(result.average));
+        SpannableStringBuilder message = new SpannableStringBuilder(AdapterUtils.formatResultTime(context, result.average));
 
         List<Float> attempts = result.attempts;
         if (attempts.size() > 0) {
@@ -162,7 +146,7 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.ViewHold
                     message.append(" ");
 
                 Float time = attempts.get(i);
-                SpannableString spannableString = new SpannableString(formatResultTime(time));
+                SpannableString spannableString = new SpannableString(AdapterUtils.formatResultTime(context, time));
                 if (time != null && min != null && time.equals(min))
                     spannableString.setSpan(new ForegroundColorSpan(Color.RED), 0, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
@@ -187,10 +171,6 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.ViewHold
                 .setMessage(message)
                 .setPositiveButton(R.string.OK, null)
                 .show();
-    }
-
-    private String formatResultTime(Float time) {
-        return time != null ? String.format(Locale.ENGLISH, "%.2f", time) : context.getString(R.string.DNF);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
