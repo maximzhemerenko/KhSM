@@ -61,15 +61,25 @@ namespace Backend.Controllers
         }
 
         [HttpPost]
-        public void CreateMeeting([FromBody] Meeting meeting)
+        public IActionResult CreateMeeting([FromBody] Meeting meeting)
         {
+            if (!IsAdmin())
+                return Unauthorized();
+            
             _meetingsManager.AddMeeting(meeting);
+
+            return Json(meeting);
         }
 
         [HttpPost("results")]
-        public void CreateResult([FromBody] Result result)
+        public IActionResult CreateResult([FromBody] Result result)
         {
+            if (!IsAdmin())
+                return Unauthorized();
+            
             _resultsManager.AddResult(result);
+            
+            return Json(result);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Backend.Data.Entities
         [Required]
         public int Number { get; set; }
         [Required]
-        public DateTimeOffset Date { get; set; }
+        public DateTime Date { get; set; }
 
         protected bool Equals(Meeting other)
         {

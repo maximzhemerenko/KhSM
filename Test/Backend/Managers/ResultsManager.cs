@@ -34,7 +34,7 @@ namespace TestProject.Managers
         {
             var meeting = new Meeting
             {
-                Date = DateTimeOffset.Now
+                Date = DateTime.Now
             };
             
             _meetingsManager.AddMeeting(meeting);
@@ -47,7 +47,7 @@ namespace TestProject.Managers
         {
             Random random = new Random();
             
-            var meeting = new Meeting {Date = DateTimeOffset.Now};
+            var meeting = new Meeting {Date = DateTime.Now};
             _meetingsManager.AddMeeting(meeting);
             Assert.NotNull(meeting);
 

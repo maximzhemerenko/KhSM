@@ -38,6 +38,13 @@ Request: [User](#user)
 
 Response: [User](#user)
 
+## Change password
+PUT users/{id}/password
+
+PUT users/me/password
+
+Request: [ChangePasswordRequest](#changepasswordrequest)
+
 ## Get user records
 GET users/{id}/records
 
@@ -168,3 +175,6 @@ Responce: Array\<[News](#news)\>
 - user: [User](#user)
 - average: Nullable\<Float\>
 - attempts: Array\<Nullable\<Float\>\>
+
+## ChangePasswordRequest
+- password: String

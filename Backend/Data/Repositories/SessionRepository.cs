@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Backend.Data.Database;
 using Backend.Data.Entities;
 using MySql.Data.MySqlClient;
@@ -18,7 +19,7 @@ namespace Backend.Data.Repositories
             const string tokenKey = "session_key";
             const string createdKey = "created";
          
-            session.Created = DateTimeOffset.Now;
+            session.Created = DateTime.Now;
             
             using (var command = new MySqlCommand(Connection, transaction)
             {
@@ -39,6 +40,8 @@ namespace Backend.Data.Repositories
         public Session GetSessionByToken(string token)
         {
             const string tokenKey = "session_key";
+
+            Session session;
             
             using (var command =
                 new MySqlCommand($"select * from session_user where {tokenKey} = @{tokenKey}", Connection)
@@ -47,8 +50,15 @@ namespace Backend.Data.Repositories
                 })
             using (var reader = command.ExecuteReader())
             {
-                return ReadSession(reader);
+                session = ReadSession(reader);
             }
+            
+            var user = session.User;
+                
+            Debug.Assert(user.Id != null, "user.Id != null");
+            user.Roles = UserRepository.ReadRoles(Connection, user.Id.Value);
+                
+            return session;
         }
         
         public static Session ReadSession(MySqlDataReader reader)
@@ -58,11 +68,13 @@ namespace Backend.Data.Repositories
 
         public static Session GetSession(MySqlDataReader reader)
         {
+            var user = UserRepository.GetUser(reader, true, true);
+            
             return new Session
             {
-                Created = reader.GetDateTimeOffset("created"),
+                Created = reader.GetDateTime("created"),
                 Token = reader.GetString("session_key"),
-                User = UserRepository.GetUser(reader, true)
+                User = user
             };
         }
     }

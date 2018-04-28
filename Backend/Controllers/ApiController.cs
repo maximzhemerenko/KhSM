@@ -37,6 +37,32 @@ namespace Backend.Controllers
             return User?.Id == userId;
         }
 
+        protected bool IsAuthenticated()
+        {
+            // ReSharper disable once UnusedVariable
+            return IsAuthenticated(out var user);
+        }
+
+        // ReSharper disable once MemberCanBePrivate.Global
+        protected bool IsAuthenticated(out User user)
+        {
+            user = User;
+            return user == null;
+        }
+
+        // ReSharper disable once MemberCanBePrivate.Global
+        protected bool IsAdmin(out User user)
+        {
+            return IsAuthenticated(out user) && user.IsAdmin();
+        }
+
+        // ReSharper disable once UnusedMember.Global
+        protected bool IsAdmin()
+        {
+            // ReSharper disable once UnusedVariable
+            return IsAdmin(out var user);
+        }
+
         private void Authenticate(string sessionToken)
         {
             if (sessionToken == null) return;

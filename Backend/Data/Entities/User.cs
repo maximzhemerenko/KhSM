@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace Backend.Data.Entities
 {
     public class User
     {
+        public const string RoleAdmin = "Admin";
+        
         public int? Id { get; set; }
         [Required]
         public string FirstName { get; set; }
@@ -16,10 +20,11 @@ namespace Backend.Data.Entities
         public string PhoneNumber { get; set; }
         [Required]
         public Gender? Gender { get; set; }
-        public DateTimeOffset? BirthDate { get; set; }
-        public DateTimeOffset? Approved { get; set; }
+        public DateTime? BirthDate { get; set; }
+        public DateTime? Approved { get; set; }
         [Required]
         public string Email { get; set; }
+        public IEnumerable<string> Roles { get; set; }
 
         protected bool Equals(User other)
         {
@@ -37,6 +42,11 @@ namespace Backend.Data.Entities
         public override int GetHashCode()
         {
             return Id.GetHashCode();
+        }
+        
+        public bool IsAdmin()
+        {
+            return Roles != null && Roles.Contains(RoleAdmin);
         }
     }
 }

@@ -34,6 +34,7 @@ namespace Backend.Data.Repositories
 
         public User GetUser(int id, bool readPrivateFields, MySqlTransaction transaction = null)
         {
+            User user;
             using (var command = new MySqlCommand(Connection, transaction)
             {
                 CommandText = $"select * from user where {Db.User.UserIdKey} = @{Db.User.UserIdKey}",
@@ -44,12 +45,21 @@ namespace Backend.Data.Repositories
             })
             using (var reader = command.ExecuteReader())
             {
-                return reader.Read() ? GetUser(reader, readPrivateFields) : null;
+                user = reader.Read() ? GetUser(reader, readPrivateFields) : null;
             }
+
+            if (user == null)
+                return null;
+
+            Debug.Assert(user.Id != null, "user.Id != null");
+            user.Roles = ReadRoles(Connection, user.Id.Value, transaction);
+            
+            return user;
         }
 
         public User GetUserByEmail(string email, bool readPrivateFields, MySqlTransaction transaction)
         {
+            User user;
             using (var command = new MySqlCommand(Connection, transaction)
             {
                 CommandText = $"select * from user where {Db.User.EmailKey} = @{Db.User.EmailKey}",
@@ -60,8 +70,15 @@ namespace Backend.Data.Repositories
             })
             using (var reader = command.ExecuteReader())
             {
-                return reader.Read() ? GetUser(reader, readPrivateFields) : null;
+                user = reader.Read() ? GetUser(reader, readPrivateFields) : null;
             }
+
+            if (user == null) return null;
+
+            Debug.Assert(user.Id != null, "user.Id != null");
+            user.Roles = ReadRoles(Connection, user.Id.Value, transaction);
+
+            return user;
         }
         
         public void UpdateUser(User user, MySqlTransaction transaction)
@@ -121,12 +138,12 @@ namespace Backend.Data.Repositories
                 user.City = !reader.IsDBNull(reader.GetOrdinal("city")) ? reader.GetString("city") : null;
                 user.WCAID = !reader.IsDBNull(reader.GetOrdinal("wca_id")) ? reader.GetString("wca_id") : null;
                 user.PhoneNumber = !reader.IsDBNull(reader.GetOrdinal("phone_number")) ? reader.GetString("phone_number") : null;
-                user.BirthDate = !reader.IsDBNull(reader.GetOrdinal("birth_date")) ? (DateTimeOffset?)reader.GetDateTimeOffset("birth_date") : null;
+                user.BirthDate = !reader.IsDBNull(reader.GetOrdinal("birth_date")) ? (DateTime?)reader.GetDateTime("birth_date") : null;
             }
 
             if (readAdminFields)
             {
-                user.Approved =  !reader.IsDBNull(reader.GetOrdinal("approved")) ? (DateTimeOffset?)reader.GetDateTimeOffset("approved") : null;    
+                user.Approved =  !reader.IsDBNull(reader.GetOrdinal("approved")) ? (DateTime?)reader.GetDateTime("approved") : null;    
             }
             
             return user;
@@ -160,6 +177,7 @@ namespace Backend.Data.Repositories
                 command.ExecuteNonQuery();
 
                 user.Id = (int) command.LastInsertedId;
+                user.Roles = new List<string>();
             }
         }
 
@@ -167,12 +185,12 @@ namespace Backend.Data.Repositories
         {
             using (var command = new MySqlCommand(Connection, transaction)
             {
-                CommandText = $"insert into login({Db.User.UserIdKey}, {Db.User.PasswordHashKey}) " +
-                              $"values(@{Db.User.UserIdKey}, @{Db.User.PasswordHashKey})",
+                CommandText = $"insert into {Db.LoginKey}({Db.Login.UserIdKey}, {Db.Login.PasswordHashKey}) " +
+                              $"values(@{Db.Login.UserIdKey}, @{Db.Login.PasswordHashKey})",
                 Parameters =
                 {
-                    new MySqlParameter(Db.User.UserIdKey, user.Id),
-                    new MySqlParameter(Db.User.PasswordHashKey, passwordHash)
+                    new MySqlParameter(Db.Login.UserIdKey, user.Id),
+                    new MySqlParameter(Db.Login.PasswordHashKey, passwordHash)
                 }
             })
             {
@@ -186,7 +204,7 @@ namespace Backend.Data.Repositories
         {
             using (var command = new MySqlCommand(Connection, transaction)
             {
-                CommandText = $"select * from login where {Db.User.UserIdKey} = @{Db.User.UserIdKey}",
+                CommandText = $"select * from {Db.LoginKey} where {Db.User.UserIdKey} = @{Db.User.UserIdKey}",
                 Parameters =
                 {
                     new MySqlParameter(Db.User.UserIdKey, userId)
@@ -224,6 +242,45 @@ namespace Backend.Data.Repositories
             if (gender == null) return null;
             
             return gender == Gender.Male ? "male" : "female";
+        }
+
+        public static IEnumerable<string> ReadRoles(MySqlConnection connection, int userId, MySqlTransaction transaction = null)
+        {
+            using (var command = new MySqlCommand(connection, transaction)
+            {
+                CommandText =
+                    $"select r.name from user_role ur join role r on ur.role_id = r.role_id where {Db.User.UserIdKey} = @{Db.User.UserIdKey}",
+                Parameters =
+                {
+                    new MySqlParameter(Db.User.UserIdKey, userId)
+                }
+            })
+            using (var reader = command.ExecuteReader())
+            {
+                var roles = new List<string>();
+                while (reader.Read())
+                {
+                    roles.Add(reader["name"].ToString());
+                }
+
+                return roles;
+            }
+        }
+
+        public void UpdatePassword(int userId, byte[] passwordHash, MySqlTransaction transaction = null)
+        {
+            using (var command = new MySqlCommand(Connection, transaction)
+            {
+                CommandText = $"update {Db.LoginKey} set {Db.Login.PasswordHashKey} = @{Db.Login.PasswordHashKey} where {Db.Login.UserIdKey} = @{Db.Login.UserIdKey}",
+                Parameters =
+                {
+                    new MySqlParameter(Db.Login.UserIdKey, userId),
+                    new MySqlParameter(Db.Login.PasswordHashKey, passwordHash)
+                }
+            })
+            {
+                command.ExecuteNonQuery();
+            }
         }
     }
 }

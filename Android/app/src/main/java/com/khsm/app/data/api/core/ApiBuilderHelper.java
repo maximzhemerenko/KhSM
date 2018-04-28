@@ -71,6 +71,8 @@ public class ApiBuilderHelper {
             gsonBuilder.registerTypeAdapter(entry.getKey(), entry.getValue());
         }
 
+        gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+
         return GsonConverterFactory.create(gsonBuilder.create());
     }
 
