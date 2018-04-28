@@ -15,7 +15,6 @@ import com.khsm.app.data.entities.User;
 
 import java.util.List;
 
-import io.reactivex.Completable;
 import io.reactivex.Single;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -63,6 +62,15 @@ interface RestApi {
 
     @GET("news")
     Single<List<News>> getNews();
+
+    @GET("news/last")
+    Single<News> getLastNews();
+
+    @GET("news/{id}/results")
+    Single<List<DisciplineResults>> getNewsResults(@Path("id") int id);
+
+    @POST("news")
+    Single<News> addNews(@Body News news);
 
     @GET("users")
     Single<List<User>> getUsers();
