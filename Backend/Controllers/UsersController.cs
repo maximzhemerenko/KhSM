@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Net;
 using Backend.Data.Entities;
 using Backend.Domain;
@@ -45,8 +44,7 @@ namespace Backend.Controllers
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         public IActionResult GetUser()
         {
-            var user = User;
-            if (user == null)
+            if (!IsAuthenticated(out var user))
                 return Unauthorized();
             
             return Json(user);
@@ -55,11 +53,9 @@ namespace Backend.Controllers
         [HttpGet]
         public IActionResult GetUsers()
         {
-            var user = User;
-            if (user == null)
+            if (!IsAdmin())
                 return Unauthorized();
-            if (!user.Roles.Contains("Admin"))
-                return Unauthorized();
+            
             return Json(_usersManager.GetUsers(false));
         }
 
@@ -84,8 +80,7 @@ namespace Backend.Controllers
         [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
         public IActionResult UpdateUser([FromBody] User user)
         {
-            var me = User;
-            if (me == null)
+            if (!IsAuthenticated(out var me))
                 return Unauthorized();
 
             Debug.Assert(me.Id != null, "me.Id != null");
@@ -104,8 +99,7 @@ namespace Backend.Controllers
         [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
         public IActionResult UpdatePassword(int id, [FromBody] UpdatePasswordRequest updatePasswordRequest)
         {
-            var me = User;
-            if (me == null)
+            if (!IsAuthenticated(out var me))
                 return Unauthorized();
 
             Debug.Assert(me.Id != null, "me.Id != null");
@@ -122,8 +116,7 @@ namespace Backend.Controllers
         [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
         public IActionResult UpdatePassword([FromBody] UpdatePasswordRequest updatePasswordRequest)
         {
-            var me = User;
-            if (me == null)
+            if (!IsAuthenticated(out var me))
                 return Unauthorized();
 
             Debug.Assert(me.Id != null, "me.Id != null");
@@ -154,8 +147,7 @@ namespace Backend.Controllers
         [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
         public IActionResult GetUserResults()
         {
-            var me = User;
-            if (me == null)
+            if (!IsAuthenticated(out var me))
                 return Unauthorized();
 
             Debug.Assert(me.Id != null, "me.Id != null");
@@ -188,8 +180,7 @@ namespace Backend.Controllers
         [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
         public IActionResult GetUserRecords()
         {
-            var me = User;
-            if (me == null)
+            if (!IsAuthenticated(out var me))
                 return Unauthorized();
 
             Debug.Assert(me.Id != null, "me.Id != null");

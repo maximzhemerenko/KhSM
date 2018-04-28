@@ -47,8 +47,8 @@ project.ext {
     versionCode = 1
     versionName = "1.0"
 
-    ANDROID_SUPPORT_VERSION = "27.1.0"
-    CONSTRAINT_LAYOUT_VERSION = "1.0.2"
+    ANDROID_SUPPORT_VERSION = "27.1.1"
+    CONSTRAINT_LAYOUT_VERSION = "1.1.0"
 
     RX_ANDROID_VERSION = "2.0.2"
     RX_JAVA_VERSION = "2.1.9"

@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace Backend.Data.Entities
 {
     public class User
     {
+        public const string RoleAdmin = "Admin";
+        
         public int? Id { get; set; }
         [Required]
         public string FirstName { get; set; }
@@ -39,6 +42,11 @@ namespace Backend.Data.Entities
         public override int GetHashCode()
         {
             return Id.GetHashCode();
+        }
+        
+        public bool IsAdmin()
+        {
+            return Roles != null && Roles.Contains(RoleAdmin);
         }
     }
 }
