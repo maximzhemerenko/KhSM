@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using Backend.Data.Entities;
 using Backend.Domain;
@@ -64,13 +63,9 @@ namespace Backend.Controllers
         [HttpPost]
         public IActionResult CreateMeeting([FromBody] Meeting meeting)
         {
-            var user = User;
-            if (user == null)
+            if (!IsAdmin())
                 return Unauthorized();
             
-            if (!user.Roles.Contains("Admin"))
-                return Unauthorized();
-
             _meetingsManager.AddMeeting(meeting);
 
             return Json(meeting);
@@ -79,11 +74,7 @@ namespace Backend.Controllers
         [HttpPost("results")]
         public IActionResult CreateResult([FromBody] Result result)
         {
-            var user = User;
-            if (user == null)
-                return Unauthorized();
-            
-            if (!user.Roles.Contains("Admin"))
+            if (!IsAdmin())
                 return Unauthorized();
             
             _resultsManager.AddResult(result);

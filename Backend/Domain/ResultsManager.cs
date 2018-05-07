@@ -27,6 +27,12 @@ namespace Backend.Domain
             var results = _resultsRepository.GetResults(filter: (meetingId, null), readDiscipline: true, readUser: true);
             return GroupResultsByDiscipline(results);
         }
+        
+        public IEnumerable<DisciplineResults> GetNewsResults(int newsId)
+        {
+            var results = _resultsRepository.GetResults(filter: (newsId, null), readDiscipline: true, readUser: true);
+            return GroupResultsByDiscipline(results);
+        }
 
         public IEnumerable<DisciplineResults> GetUserResults(int userId)
         {
