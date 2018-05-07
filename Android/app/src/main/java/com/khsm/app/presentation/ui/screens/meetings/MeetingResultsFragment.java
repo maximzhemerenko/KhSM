@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.print.PrintHelper;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,12 +22,15 @@ import android.widget.ProgressBar;
 import com.khsm.app.R;
 import com.khsm.app.data.entities.DisciplineResults;
 import com.khsm.app.data.entities.Meeting;
-import com.khsm.app.data.entities.Session;
+import com.khsm.app.data.entities.Result;
+import com.khsm.app.data.entities.User;
 import com.khsm.app.domain.AuthManager;
 import com.khsm.app.domain.MeetingsManager;
 import com.khsm.app.domain.UserManager;
+import com.khsm.app.presentation.ui.adapters.AdapterUtils;
 import com.khsm.app.presentation.ui.adapters.ResultsAdapter;
 import com.khsm.app.presentation.ui.screens.MainActivity;
+import com.khsm.app.presentation.ui.utils.PrintBitmapBuilder;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -65,8 +69,9 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
     private UserManager userManager;
     private AuthManager authManager;
 
-
     private Meeting meeting;
+    @Nullable
+    private List<DisciplineResults> disciplineResults;
 
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private Toolbar toolbar;
@@ -82,6 +87,7 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
 
     @Nullable
     private MenuItem meetings_menuItem;
+    private MenuItem print_menuItem;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,7 +99,7 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
         userManager = new UserManager(context);
         authManager = new AuthManager(context);
 
-        adapter = new ResultsAdapter(context, ResultsAdapter.DisplayMode.User);
+        adapter = new ResultsAdapter(context, AdapterUtils.DisplayMode.User);
     }
 
     @Override
@@ -117,6 +123,10 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
         meetings_menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         meetings_menuItem.setOnMenuItemClickListener(this);
         meetings_menuItem.setVisible(false);
+
+        print_menuItem = menu.add(R.string.Print);
+        print_menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        print_menuItem.setOnMenuItemClickListener(this);
 
         tabLayout = view.findViewById(R.id.tabLayout);
         tabLayout.setVisibility(View.INVISIBLE);
@@ -250,6 +260,8 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
     }
 
     private void setDisciplineResults(List<DisciplineResults> disciplineResults) {
+        this.disciplineResults = disciplineResults;
+
         progressBar.setVisibility(View.INVISIBLE);
 
         tabLayout.removeAllTabs();
@@ -287,10 +299,49 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
         mainActivity.replaceFragment(MeetingListFragment.newInstance());
     }
 
+    private void print() {
+        Context context = requireContext();
+
+        @Nullable List<DisciplineResults> disciplineResults = this.disciplineResults;
+        if (disciplineResults == null)
+            return;
+
+        PrintBitmapBuilder builder = new PrintBitmapBuilder(context);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(dateFormat.format(meeting.date)).append(" (").append(meeting.number).append(")\n\n");
+        builder.setTextAlign(PrintBitmapBuilder.ReceiptTextAlign.CENTER);
+        builder.appendString(sb.toString());
+
+        sb = new StringBuilder();
+
+        for (DisciplineResults disciplineResult : disciplineResults) {
+            sb.append("--- ").append(disciplineResult.discipline.name).append(" ---").append("\n");
+
+            for (int i = 0; i < disciplineResult.results.size(); i++) {
+                Result result = disciplineResult.results.get(i);
+                User user = result.user;
+                sb.append(i).append(". ").append(user.firstName).append(" ").append(user.lastName).append(" ");
+                sb.append(AdapterUtils.formatResults(AdapterUtils.SortMode.Average, result, context)).append("\n");
+            }
+
+            sb.append("\n");
+        }
+
+        builder.setTextAlign(PrintBitmapBuilder.ReceiptTextAlign.LEFT);
+        builder.appendString(sb.toString());
+
+        PrintHelper printHelper = new PrintHelper(context);
+        printHelper.printBitmap("Print", builder.build());
+    }
+
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         if (item == meetings_menuItem) {
             showMeetingList();
+            return true;
+        } else if (item == print_menuItem) {
+            print();
             return true;
         }
 

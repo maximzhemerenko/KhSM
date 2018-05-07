@@ -22,20 +22,20 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ViewHold
     private final Context context;
 
     private final LayoutInflater inflater;
-    private final DisplayMode displayMode;
+    private final AdapterUtils.DisplayMode displayMode;
 
     @Nullable
     private List<Result> results;
     @Nullable
-    private SortMode sortMode;
+    private AdapterUtils.SortMode sortMode;
 
-    public ResultsAdapter(@NonNull Context context, DisplayMode displayMode) {
+    public ResultsAdapter(@NonNull Context context, AdapterUtils.DisplayMode displayMode) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.displayMode = displayMode;
     }
 
-    public void setResults(List<Result> results, @Nullable SortMode sortMode) {
+    public void setResults(List<Result> results, @Nullable AdapterUtils.SortMode sortMode) {
         this.results = results;
         this.sortMode = sortMode;
         notifyDataSetChanged();
@@ -57,48 +57,18 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ViewHold
         Result result = results.get(position);
 
         String title;
-        if (displayMode.equals(DisplayMode.User)) {
+        if (displayMode.equals(AdapterUtils.DisplayMode.User)) {
             title = (position + 1) + " " + result.user.firstName + " " + result.user.lastName;
-        } else if (displayMode.equals(DisplayMode.Date)) {
+        } else if (displayMode.equals(AdapterUtils.DisplayMode.Date)) {
             title = dateFormat.format(result.meeting.date);
-        } else if (displayMode.equals(DisplayMode.UserAndDate)) {
+        } else if (displayMode.equals(AdapterUtils.DisplayMode.UserAndDate)) {
             title = (position + 1) + " " + result.user.firstName + " " + result.user.lastName + " (" + dateFormat.format(result.meeting.date) + ")";
         } else {
             throw new RuntimeException("Not supported display mode");
         }
         holder.title.setText(title);
 
-        Float actualResult = result.average;
-        if (sortMode != null && sortMode.equals(SortMode.Single)) {
-            actualResult = AdapterUtils.findSingle(result);
-        }
-
-        StringBuilder results = new StringBuilder(AdapterUtils.formatResultTime(context, actualResult));
-
-        List<Float> attempts = result.attempts;
-        if (attempts.size() > 0) {
-            results.append(" (");
-            for (int i = 0; i < attempts.size(); i++) {
-                if (i > 0)
-                    results.append(" ");
-
-                results.append(AdapterUtils.formatResultTime(context, attempts.get(i)));
-            }
-
-            int dnsCount = result.attemptCount - attempts.size();
-            if (dnsCount < 0) dnsCount = 0;
-
-            for (int i = 0; i < dnsCount; i++) {
-                if (attempts.size() > 0 || i > 0) {
-                    results.append(" ");
-                }
-                results.append(context.getString(R.string.DNS));
-            }
-
-            results.append(")");
-        }
-
-        holder.results.setText(results);
+        holder.results.setText(AdapterUtils.formatResults(sortMode, result, context));
     }
 
     @Override
@@ -118,13 +88,5 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ViewHold
             title = view.findViewById(R.id.title);
             results = view.findViewById(R.id.results);
         }
-    }
-
-    public enum DisplayMode {
-        User, Date, UserAndDate
-    }
-
-    public enum SortMode {
-        Average, Single
     }
 }

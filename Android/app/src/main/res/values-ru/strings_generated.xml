@@ -50,6 +50,7 @@
   <string name="Add_News_Date">Дата новости</string>
   <string name="Message_News_Text">Новое сообщение</string>
   <string name="Write_Results">Введите результаты(один результат на каждой строке)</string>
+  <string name="Print">Печать</string>
   <!-- Common -->
   <string name="Rankings.Filter">ФИЛЬТР</string>
   <string name="Rankings.Filter.DialogFragment">Фильтр</string>
