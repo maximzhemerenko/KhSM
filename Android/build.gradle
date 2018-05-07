@@ -7,7 +7,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.0-alpha12'
+        classpath 'com.android.tools.build:gradle:3.2.0-alpha13'
     }
 }
 
@@ -42,7 +42,7 @@ task updateLocalizationResources {
 
 project.ext {
     compileSdkVersion = 27
-    minSdkVersion = 16
+    minSdkVersion = 17
     targetSdkVersion = 27
     versionCode = 1
     versionName = "1.0"

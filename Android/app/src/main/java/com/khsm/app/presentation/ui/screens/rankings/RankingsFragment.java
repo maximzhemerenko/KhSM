@@ -20,6 +20,7 @@ import com.khsm.app.R;
 import com.khsm.app.data.api.entities.RankingsFilterInfo;
 import com.khsm.app.data.entities.DisciplineResults;
 import com.khsm.app.domain.RankingsManager;
+import com.khsm.app.presentation.ui.adapters.AdapterUtils;
 import com.khsm.app.presentation.ui.adapters.ResultsAdapter;
 import com.khsm.app.presentation.ui.screens.MainActivity;
 
@@ -63,7 +64,7 @@ public class RankingsFragment extends Fragment implements Toolbar.OnMenuItemClic
         Context context = requireContext();
 
         rankingsManager = new RankingsManager(context);
-        adapter = new ResultsAdapter(context, ResultsAdapter.DisplayMode.UserAndDate);
+        adapter = new ResultsAdapter(context, AdapterUtils.DisplayMode.UserAndDate);
 
         if (savedInstanceState != null) {
             filterInfo = (RankingsFilterInfo) savedInstanceState.getSerializable(KEY_FILTER_INFO);
@@ -184,11 +185,11 @@ public class RankingsFragment extends Fragment implements Toolbar.OnMenuItemClic
     }
 
     private void setDisciplineResults(@NonNull DisciplineResults disciplineResults) {
-        ResultsAdapter.SortMode sortMode;
+        AdapterUtils.SortMode sortMode;
         if (filterInfo.filterType.equals(RankingsFilterInfo.FilterType.Average)) {
-            sortMode = ResultsAdapter.SortMode.Average;
+            sortMode = AdapterUtils.SortMode.Average;
         } else if (filterInfo.filterType.equals(RankingsFilterInfo.FilterType.Single)) {
-            sortMode = ResultsAdapter.SortMode.Single;
+            sortMode = AdapterUtils.SortMode.Single;
         } else {
             throw new RuntimeException();
         }
@@ -203,7 +204,6 @@ public class RankingsFragment extends Fragment implements Toolbar.OnMenuItemClic
                 showFilterDialog(filterInfo);
                 return true;
         }
-
 
         return false;
     }

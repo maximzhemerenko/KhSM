@@ -55,4 +55,47 @@ public class AdapterUtils {
 
         return result;
     }
+
+    @NonNull
+    public static String formatResults(@Nullable AdapterUtils.SortMode sortMode, @NonNull Result result, @NonNull Context context) {
+        Float actualResult = result.average;
+        if (sortMode != null && sortMode.equals(AdapterUtils.SortMode.Single)) {
+            actualResult = AdapterUtils.findSingle(result);
+        }
+
+        StringBuilder results = new StringBuilder(AdapterUtils.formatResultTime(context, actualResult));
+
+        List<Float> attempts = result.attempts;
+        if (attempts.size() > 0) {
+            results.append(" (");
+            for (int i = 0; i < attempts.size(); i++) {
+                if (i > 0)
+                    results.append(" ");
+
+                results.append(AdapterUtils.formatResultTime(context, attempts.get(i)));
+            }
+
+            int dnsCount = result.attemptCount - attempts.size();
+            if (dnsCount < 0) dnsCount = 0;
+
+            for (int i = 0; i < dnsCount; i++) {
+                if (attempts.size() > 0 || i > 0) {
+                    results.append(" ");
+                }
+                results.append(context.getString(R.string.DNS));
+            }
+
+            results.append(")");
+        }
+
+        return results.toString();
+    }
+
+    public enum DisplayMode {
+        User, Date, UserAndDate
+    }
+
+    public enum SortMode {
+        Average, Single
+    }
 }

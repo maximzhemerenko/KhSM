@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 import com.khsm.app.R;
 import com.khsm.app.data.entities.DisciplineResults;
 import com.khsm.app.domain.UserManager;
+import com.khsm.app.presentation.ui.adapters.AdapterUtils;
 import com.khsm.app.presentation.ui.adapters.ResultsAdapter;
 import com.khsm.app.presentation.ui.screens.MainActivity;
 
@@ -56,7 +57,7 @@ public class MyResultsFragment extends Fragment {
         Context context = requireContext();
 
         userManager = new UserManager(context);
-        adapter = new ResultsAdapter(context, ResultsAdapter.DisplayMode.Date);
+        adapter = new ResultsAdapter(context, AdapterUtils.DisplayMode.Date);
     }
 
     @Override
