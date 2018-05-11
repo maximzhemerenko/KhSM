@@ -1,10 +1,13 @@
 language: android
 android:
   components:
-    - build-tools-26.0.2
+    - build-tools-27.0.3
+    - tools
+    - platform-tools
+    - android-27
   licenses:
-    - 'android-sdk-preview-license-52d11cd2'
     - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
     - 'google-gdk-license-.+'
 
 before_install:
