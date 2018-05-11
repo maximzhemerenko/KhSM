@@ -3,5 +3,9 @@ android:
   components:
     - build-tools-26.0.2
 
+before_install:
+  - cd Android
+  - chmod +x gradlew
+
 script:
-  - ./Android/gradlew assemble
+  - ./gradlew assemble
