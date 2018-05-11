@@ -74,8 +74,10 @@ namespace Backend.Domain
                             .Distinct(new ResultUserEqualityComparer())
                     };
                 });
+
             if (sort == SortType.Descending)
                 disciplineResults = disciplineResults.Reverse();
+
             return disciplineResults;
         }
 
