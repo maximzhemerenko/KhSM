@@ -22,6 +22,7 @@ import com.khsm.app.presentation.ui.utils.maskedittext.EditTextMask;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -34,10 +35,10 @@ public class AddNewsFragment extends Fragment {
     return new AddNewsFragment();
     }
 
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+    //private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
 
     private Toolbar toolbar;
-    private EditText add_news_date;
+    //private EditText add_news_date;
     private EditText message_news_text;
     private Button add_button;
 
@@ -72,8 +73,8 @@ public class AddNewsFragment extends Fragment {
             }
         });
 
-        add_news_date = view.findViewById(R.id.add_news_date);
-        EditTextMask.setup(add_news_date, "##-##-####");
+        //add_news_date = view.findViewById(R.id.add_news_date);
+        //EditTextMask.setup(add_news_date, "##-##-####");
 
         add_button = view.findViewById(R.id.add_button);
         add_button.setOnClickListener(cm -> addNews());
@@ -86,18 +87,18 @@ public class AddNewsFragment extends Fragment {
     public void addNews() {
 
         if (message_news_text.length() < 1
-                || add_news_date.length() < 1) {
+                /*|| add_news_date.length() < 1*/) {
             showErrorMessage(getString(R.string.Register_Error_CheckInputData));
             return;
         }
 
-        Date newsDate;
-        try {
+        /*try {
             newsDate = stringToJavaDate(this.add_news_date.getText().toString());
         } catch (ParseException e) {
             showErrorMessage(getString(R.string.Register_Error_CheckInputData));
             return;
-        }
+        }*/
+        Date newsDate = Calendar.getInstance().getTime();
 
         News news = new News( null, null, message_news_text.getText().toString(), newsDate);
 
@@ -130,14 +131,14 @@ public class AddNewsFragment extends Fragment {
         requireActivity().onBackPressed(); // FIXME: 30.03.2018
     }
 
-    private java.util.Date stringToJavaDate(@NonNull String dateString) throws ParseException {
+   /* private java.util.Date stringToJavaDate(@NonNull String dateString) throws ParseException {
         dateString = dateString.trim();
 
         if (dateString.isEmpty())
             return null;
 
         return dateFormat.parse(dateString);
-    }
+    }*/
 
     private void showErrorMessage(String errorMessage) {
         new AlertDialog.Builder(requireContext())

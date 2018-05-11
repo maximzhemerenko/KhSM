@@ -14,32 +14,21 @@
         app:title="@string/Add_News"
         app:navigationIcon="@drawable/ic_menu_white_24dp" />
 
-    <android.support.design.widget.TextInputLayout
+    <TextView
+        android:id="@+id/tvWriteText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:textSize="16dp"
+        android:layout_marginLeft="8dp"
+        android:text="@string/Write_Text" />
 
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/add_news_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/Add_News_Date"
-            android:inputType="date" />
-
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
+    <EditText
+        android:id="@+id/message_news_text"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/message_news_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/Message_News_Text"
-            android:inputType="text" />
-    </android.support.design.widget.TextInputLayout>
-
+        android:layout_marginLeft="8dp"
+        android:layout_weight="1"
+        android:inputType="textMultiLine" />
 
     <Button
         android:id="@+id/add_button"
