@@ -4,5 +4,4 @@ android:
     - build-tools-26.0.2
 
 script:
-  - cd Android
-  - ./gradlew assemble
+  - ./Android/gradlew assemble
