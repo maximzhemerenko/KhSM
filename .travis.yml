@@ -5,3 +5,4 @@ android:
 
 script:
   - cd Android
+  - ./gradlew assemble
