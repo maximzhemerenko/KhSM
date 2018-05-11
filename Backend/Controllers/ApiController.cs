@@ -47,7 +47,7 @@ namespace Backend.Controllers
         protected bool IsAuthenticated(out User user)
         {
             user = User;
-            return user == null;
+            return user != null;
         }
 
         // ReSharper disable once MemberCanBePrivate.Global

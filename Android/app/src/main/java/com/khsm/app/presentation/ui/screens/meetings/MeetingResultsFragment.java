@@ -321,7 +321,7 @@ public class MeetingResultsFragment extends Fragment implements MenuItem.OnMenuI
             for (int i = 0; i < disciplineResult.results.size(); i++) {
                 Result result = disciplineResult.results.get(i);
                 User user = result.user;
-                sb.append(i).append(". ").append(user.firstName).append(" ").append(user.lastName).append(" ");
+                sb.append(i + 1).append(". ").append(user.firstName).append(" ").append(user.lastName).append(" ");
                 sb.append(AdapterUtils.formatResults(AdapterUtils.SortMode.Average, result, context)).append("\n");
             }
 
