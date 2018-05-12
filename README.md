@@ -1,6 +1,14 @@
 
 # KhSM
 
+develop:
+
+[![Build Status](https://travis-ci.org/maximzhemerenko/KhSM.svg?branch=develop)](https://travis-ci.org/maximzhemerenko/KhSM)
+
+master:
+
+[![Build Status](https://travis-ci.org/maximzhemerenko/KhSM.svg?branch=master)](https://travis-ci.org/maximzhemerenko/KhSM)
+
 **Resources**
 
 https://www.draw.io/

@@ -24,18 +24,23 @@ task clean(type: Delete) {
 
 task updateLocalizationResources {
     Properties properties = new Properties()
-    properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
-    def projectPathProperty = 'com.SpryRocks.AppLocalizationUtil.ProjectPath'
-    def configFileProperty = 'com.SpryRocks.AppLocalizationUtil.ConfigFile'
+    def localPropertiesFile = project.rootProject.file('local.properties')
 
-    def projectPath = properties.getProperty(projectPathProperty)
-    if (projectPath != null) {
-        exec {
-            executable "dotnet"
-            args 'run',
-                    '--project', projectPath,
-                    '--ConfigFile', project.property(configFileProperty)
+    if (localPropertiesFile.exists()) {
+        properties.load(localPropertiesFile.newDataInputStream())
+
+        def projectPathProperty = 'com.SpryRocks.AppLocalizationUtil.ProjectPath'
+        def configFileProperty = 'com.SpryRocks.AppLocalizationUtil.ConfigFile'
+
+        def projectPath = properties.getProperty(projectPathProperty)
+        if (projectPath != null) {
+            exec {
+                executable "dotnet"
+                args 'run',
+                        '--project', projectPath,
+                        '--ConfigFile', project.property(configFileProperty)
+            }
         }
     }
 }
