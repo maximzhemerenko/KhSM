@@ -241,7 +241,7 @@ public class EditProfileFragment extends Fragment implements Toolbar.OnMenuItemC
 
         // TODO: 26.02.2018 fix this temporary implementation
         Glide.with(this)
-                .load("http://animals.yakohl.com/pic/schneeeule-2592013.jpg")
+                .load(R.drawable.avatar_default)
                 .apply(RequestOptions.circleCropTransform())
                 .into(avatar_imageView);
     }

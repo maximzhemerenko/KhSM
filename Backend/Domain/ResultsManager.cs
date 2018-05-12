@@ -66,17 +66,18 @@ namespace Backend.Domain
             var disciplineResults = GroupResultsByDiscipline(results)
                 .Select(dr =>
                 {
+                    var orderedResults = dr.Results
+                        .OrderBy(r => r, type == FilterType.Average ? averageResultComparer : singleResultComparer)
+                        .Distinct(new ResultUserEqualityComparer());
+                    if (sort == SortType.Descending)
+                        orderedResults = orderedResults.Reverse();
+                    
                     return new DisciplineResults
                     {
                         Discipline = dr.Discipline,
-                        Results = dr.Results
-                            .OrderBy(r => r, type == FilterType.Average ? averageResultComparer : singleResultComparer)
-                            .Distinct(new ResultUserEqualityComparer())
+                        Results = orderedResults
                     };
                 });
-
-            if (sort == SortType.Descending)
-                disciplineResults = disciplineResults.Reverse();
 
             return disciplineResults;
         }

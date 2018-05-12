@@ -14,7 +14,7 @@ namespace Backend.Data.Repositories
 
         public IEnumerable<Meeting> GetMeetings()
         {
-            using (var command = new MySqlCommand("select * from meeting", Connection))
+            using (var command = new MySqlCommand("select * from meeting order by date desc", Connection))
             using (var reader = command.ExecuteReader())
             {
                 var meetings = new List<Meeting>();
