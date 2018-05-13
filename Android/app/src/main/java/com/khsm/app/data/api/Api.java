@@ -17,7 +17,6 @@ import com.khsm.app.data.entities.User;
 
 import java.util.List;
 
-import io.reactivex.Completable;
 import io.reactivex.Single;
 
 public class Api extends ApiBase {
