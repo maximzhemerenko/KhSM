@@ -240,10 +240,23 @@ public class EditProfileFragment extends Fragment implements Toolbar.OnMenuItemC
             female.setChecked(true);
 
         // TODO: 26.02.2018 fix this temporary implementation
-        Glide.with(this)
-                .load(R.drawable.avatar_default)
-                .apply(RequestOptions.circleCropTransform())
-                .into(avatar_imageView);
+        if (user.gender == Gender.FEMALE)
+        {
+            Glide.with(this)
+                    .load(R.drawable.avatar_female)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(avatar_imageView);
+        } else if (user.gender == Gender.MALE) {
+            Glide.with(this)
+                    .load(R.drawable.avatar_male)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(avatar_imageView);
+        } else {
+            Glide.with(this)
+                    .load(R.drawable.avatar_nobody)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(avatar_imageView);
+        }
     }
 
     @Override
