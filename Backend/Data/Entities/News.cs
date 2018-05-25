@@ -12,7 +12,7 @@ namespace Backend.Data.Entities
         [Required]
         public String Text { get; set; }
         [Required]
-        public DateTime DateAndTime { get; set; }
+        public DateTime? DateAndTime { get; set; }
         
         protected bool Equals(News other)
         {

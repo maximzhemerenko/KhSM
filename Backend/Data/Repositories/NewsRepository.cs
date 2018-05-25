@@ -14,7 +14,7 @@ namespace Backend.Data.Repositories
         public IEnumerable<News> GetNews()
         {
             using (var command = new MySqlCommand("select * from news n " +
-                                                  "inner join user u on n.user_id = u.user_id;", Connection))
+                                                  "inner join user u on n.user_id = u.user_id order by n.date_and_time desc;", Connection))
             using (var reader = command.ExecuteReader())
             {
                 var news = new List<News>();
@@ -25,8 +25,6 @@ namespace Backend.Data.Repositories
                 }
 
                 return news;
-                
-                // return ReadNews(reader);
             }
         }
         

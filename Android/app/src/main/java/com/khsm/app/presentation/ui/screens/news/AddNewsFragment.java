@@ -15,29 +15,20 @@ import android.widget.EditText;
 
 import com.khsm.app.R;
 import com.khsm.app.data.entities.News;
-import com.khsm.app.data.entities.User;
 import com.khsm.app.domain.NewsManager;
 import com.khsm.app.presentation.ui.screens.MainActivity;
-import com.khsm.app.presentation.ui.utils.maskedittext.EditTextMask;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class AddNewsFragment extends Fragment {
     public static AddNewsFragment newInstance() {
     return new AddNewsFragment();
     }
 
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-
     private Toolbar toolbar;
-    private EditText add_news_date;
     private EditText message_news_text;
     private Button add_button;
 
@@ -60,20 +51,13 @@ public class AddNewsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.add_news_fragment, container, false);
 
         toolbar = view.findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainActivity mainActivity = (MainActivity) requireActivity();
-                mainActivity.showMenu();
-            }
+        toolbar.setNavigationOnClickListener(v -> {
+            MainActivity mainActivity = (MainActivity) requireActivity();
+            mainActivity.showMenu();
         });
-
-        add_news_date = view.findViewById(R.id.add_news_date);
-        EditTextMask.setup(add_news_date, "##-##-####");
 
         add_button = view.findViewById(R.id.add_button);
         add_button.setOnClickListener(cm -> addNews());
@@ -84,22 +68,12 @@ public class AddNewsFragment extends Fragment {
     }
 
     public void addNews() {
-
-        if (message_news_text.length() < 1
-                || add_news_date.length() < 1) {
+        if (message_news_text.length() < 1) {
             showErrorMessage(getString(R.string.Register_Error_CheckInputData));
             return;
         }
 
-        Date newsDate;
-        try {
-            newsDate = stringToJavaDate(this.add_news_date.getText().toString());
-        } catch (ParseException e) {
-            showErrorMessage(getString(R.string.Register_Error_CheckInputData));
-            return;
-        }
-
-        News news = new News( null, null, message_news_text.getText().toString(), newsDate);
+        News news = new News( null, null, message_news_text.getText().toString(), null);
 
         if (progressDialog != null) {
             progressDialog.dismiss();
@@ -121,22 +95,13 @@ public class AddNewsFragment extends Fragment {
                 );
     }
 
-    private void addDone(News news) {
+    private void addDone(@SuppressWarnings("unused") News news) {
         if (progressDialog != null) {
             progressDialog.dismiss();
             progressDialog = null;
         }
 
         requireActivity().onBackPressed(); // FIXME: 30.03.2018
-    }
-
-    private java.util.Date stringToJavaDate(@NonNull String dateString) throws ParseException {
-        dateString = dateString.trim();
-
-        if (dateString.isEmpty())
-            return null;
-
-        return dateFormat.parse(dateString);
     }
 
     private void showErrorMessage(String errorMessage) {
@@ -147,7 +112,7 @@ public class AddNewsFragment extends Fragment {
                 .show();
     }
 
-    private void handleError(Throwable throwable) {
+    private void handleError(@SuppressWarnings("unused") Throwable throwable) {
         if (progressDialog != null) {
             progressDialog.dismiss();
             progressDialog = null;

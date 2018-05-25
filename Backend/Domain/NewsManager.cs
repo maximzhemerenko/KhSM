@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Backend.Data.Database;
 using Backend.Data.Entities;
 using Backend.Data.Repositories;
@@ -33,6 +34,9 @@ namespace Backend.Domain
         
         public void AddNews(News news)
         {
+            if (news.DateAndTime == null)
+                news.DateAndTime = DateTime.Now;
+
             _databaseContext.UseTransaction(transaction =>
                 _newsRepository.AddNews(news, transaction)
             );

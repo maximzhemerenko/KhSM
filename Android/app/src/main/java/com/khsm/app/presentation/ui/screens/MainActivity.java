@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.khsm.app.R;
+import com.khsm.app.data.entities.Gender;
 import com.khsm.app.data.entities.Session;
 import com.khsm.app.data.entities.User;
 import com.khsm.app.domain.AuthManager;
@@ -96,10 +97,23 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // TODO: 26.02.2018 fix this temporary implementation
-        Glide.with(this)
-                .load("http://animals.yakohl.com/pic/schneeeule-2592013.jpg")
-                .apply(RequestOptions.circleCropTransform())
-                .into(avatar_imageView);
+        if (session != null && session.user.gender == Gender.FEMALE)
+        {
+            Glide.with(this)
+                    .load(R.drawable.avatar_female)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(avatar_imageView);
+        } else if (session != null && session.user.gender == Gender.MALE) {
+            Glide.with(this)
+                    .load(R.drawable.avatar_male)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(avatar_imageView);
+        } else if (session == null) {
+            Glide.with(this)
+                    .load(R.drawable.avatar_nobody)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(avatar_imageView);
+        }
     }
 
     private NavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener = new NavigationView.OnNavigationItemSelectedListener() {

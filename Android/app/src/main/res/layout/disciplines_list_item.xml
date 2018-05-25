@@ -11,6 +11,7 @@
     <TextView
         android:id="@+id/disciplineName"
         android:layout_width="match_parent"
+        android:textSize="16dp"
         android:layout_height="wrap_content" />
 
 </LinearLayout>

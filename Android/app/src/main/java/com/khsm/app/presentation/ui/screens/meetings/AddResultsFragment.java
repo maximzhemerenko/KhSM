@@ -146,7 +146,6 @@ public class AddResultsFragment extends Fragment {
         }
         progressDialog = ProgressDialog.show(requireContext(), null, getString(R.string.Please_WaitD3), true, false);
 
-
         if (loadDisposable != null) {
             loadDisposable.dispose();
             loadDisposable = null;
@@ -190,11 +189,16 @@ public class AddResultsFragment extends Fragment {
         array = results.split("\n");
         List<Float> attempts = new ArrayList<>();
         for (String a : array) {
-            try {
-                attempts.add(Float.parseFloat(a));
-            } catch (Exception e) {
-                showErrorMessage(getString(R.string.Register_Error_CheckInputData));
-                return null;
+            if (a.equals("DNF") || a.equals("dnf") || a.equals("ДНФ") || a.equals("днф") || a.equals("-")) {
+                attempts.add(null);
+            }
+            else {
+                try {
+                    attempts.add(Float.parseFloat(a));
+                } catch (Exception e) {
+                    showErrorMessage(getString(R.string.Register_Error_CheckInputData));
+                    return null;
+                }
             }
         }
         return attempts;

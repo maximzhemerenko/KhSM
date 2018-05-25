@@ -61,21 +61,26 @@ namespace Backend.Domain
             var singleResultComparer = new Result.Comparer(Result.Comparer.Mode.Single);
             
             var results = _resultsRepository.GetResults(filter: (null, null), readDiscipline: true, readMeeting: true, readUser: true);
+            
             if (gender != null)
                 results = results.Where(r => r.User.Gender == gender);
+            
             var disciplineResults = GroupResultsByDiscipline(results)
                 .Select(dr =>
                 {
+                    var orderedResults = dr.Results
+                        .OrderBy(r => r, type == FilterType.Average ? averageResultComparer : singleResultComparer)
+                        .Distinct(new ResultUserEqualityComparer());
+                    if (sort == SortType.Descending)
+                        orderedResults = orderedResults.Reverse();
+                    
                     return new DisciplineResults
                     {
                         Discipline = dr.Discipline,
-                        Results = dr.Results
-                            .OrderBy(r => r, type == FilterType.Average ? averageResultComparer : singleResultComparer)
-                            .Distinct(new ResultUserEqualityComparer())
+                        Results = orderedResults
                     };
                 });
-            if (sort == SortType.Descending)
-                disciplineResults = disciplineResults.Reverse();
+
             return disciplineResults;
         }
 

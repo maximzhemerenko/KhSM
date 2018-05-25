@@ -75,6 +75,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     }
 
     private CharSequence prepareNewsText(String source) {
+        source = source.replace("\n", "<br/>");
+
         SpannableStringBuilder text = new SpannableStringBuilder(Html.fromHtml(source));
         URLSpan[] spans = text.getSpans(0, text.length(), URLSpan.class);
         for (URLSpan span : spans) {
