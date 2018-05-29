@@ -1,6 +1,72 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
   <!-- Dictionary -->
+  <string name="Apply">Применить</string>
+  <string name="Ascending">По-возрастанию</string>
+  <string name="Average">Среднее</string>
+  <string name="Best">Лучший</string>
+  <string name="Both">Оба</string>
+  <string name="Cancel">Отмена</string>
+  <string name="City">Город</string>
+  <string name="Confirm_Password">Повторить пароль</string>
+  <string name="Descending">По-убыванию</string>
+  <string name="details">детали</string>
+  <string name="Disciplines">Дисциплины</string>
+  <string name="DNF">DNF</string>
+  <string name="DNS">DNS</string>
+  <string name="Edit_Profile">Изменить профиль</string>
+  <string name="Email">Email</string>
   <string name="Error">Ошибка</string>
+  <string name="Female">Женский</string>
+  <string name="First_Name">Имя</string>
+  <string name="Last_Meeting">Последняя встреча</string>
+  <string name="Last_Name">Фамилия</string>
+  <string name="Login">Вход</string>
+  <string name="Logout">Выход</string>
+  <string name="Male">Мужской</string>
+  <string name="Meetings">Встречи</string>
+  <string name="My_Profile">Мой профиль</string>
+  <string name="My_Records">Мои рекорды</string>
+  <string name="My_Results">Мои результаты</string>
+  <string name="News">Новости</string>
   <string name="OK">OK</string>
+  <string name="Password">Пароль</string>
+  <string name="Please_WaitD3">Пожалуйста, подождите…</string>
+  <string name="Rankings">Рейтинг</string>
+  <string name="Records">Рекорды</string>
+  <string name="Register">Регистрация</string>
+  <string name="Results">Результаты</string>
+  <string name="Save">Сохранить</string>
+  <string name="Single">Единичный</string>
+  <string name="WCA_ID">WCA ID</string>
+  <string name="Add_Meeting">Добавить встречу</string>
+  <string name="Meeting_Number">Номер встречи</string>
+  <string name="Meeting_Date">Дата встречи</string>
+  <string name="Done">Готово</string>
+  <string name="Add_Results">Добавить результаты</string>
+  <string name="Users">Участники</string>
+  <string name="Add">Добавить</string>
+  <string name="Add_News">Добавить новость</string>
+  <string name="Add_News_Date">Дата новости</string>
+  <string name="Message_News_Text">Новое сообщение</string>
+  <string name="Write_Results">Введите результаты(один результат на каждой строке)</string>
+  <string name="Print">Печать</string>
+  <string name="Write_Text">Введите текст</string>
+  <!-- Common -->
+  <string name="Rankings.Filter">ФИЛЬТР</string>
+  <string name="Rankings.Filter.DialogFragment">Фильтр</string>
+  <!-- Auth -->
+  <string name="Login.Error.CheckInputData">Проверьте введенные данные</string>
+  <string name="Login.Error.Authentication">Произошла ошибка при аутентификации</string>
+  <string name="Register.Error.UserRegisterError">Произошла ошибка при регистрации</string>
+  <string name="Main.NoAccount">У вас нет учетной записи</string>
+  <string name="Register.Error.CheckInputData">Проверьте введенные данные</string>
+  <string name="Auth.Create_an_account">Создать учетную запись</string>
+  <string name="AddMeeting.Error.MeetingCreationError">Произошла ошибка при добавлении встречи</string>
+  <string name="AddNews.Error.NewsCreationError">Произошла ошибка при добавлении новости</string>
+  <string name="AddResult.Error.ResultCreationError">Произошла ошибка при добавлении результата</string>
+  <!-- Edit Profile -->
+  <string name="EditProfile.Birth_Date_Hint">Дата рождения (ДД-ММ-ГГГГ)</string>
+  <string name="EditProfile.Phone_Number_Hint">Номер телефона (+380 XX XXX-XX-XX)</string>
+  <string name="EditProfile.SuccessMessageE">Информация обновлена успешно! 😀</string>
 </resources>

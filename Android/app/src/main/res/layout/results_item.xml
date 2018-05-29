@@ -3,18 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:padding="16dp">
 
     <TextView
-        android:id="@+id/id"
+        android:id="@+id/title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Index" />
+        android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/firstName"
+        android:id="@+id/results"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="FirstName" />
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

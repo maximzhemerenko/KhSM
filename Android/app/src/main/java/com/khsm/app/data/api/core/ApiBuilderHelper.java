@@ -1,6 +1,7 @@
 package com.khsm.app.data.api.core;
 
 import com.google.gson.GsonBuilder;
+import com.khsm.app.data.api.converters.EnumRetrofitConverterFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,6 +44,7 @@ public class ApiBuilderHelper {
                     .baseUrl(url)
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(provideGsonConverterFactory())
+                    .addConverterFactory(new EnumRetrofitConverterFactory())
                     .client(createOkHttpClient())
                     .build();
         }
@@ -68,6 +70,8 @@ public class ApiBuilderHelper {
         for (Map.Entry<Class<?>, Object> entry : gsonTypeAdapters.entrySet()) {
             gsonBuilder.registerTypeAdapter(entry.getKey(), entry.getValue());
         }
+
+        gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
         return GsonConverterFactory.create(gsonBuilder.create());
     }

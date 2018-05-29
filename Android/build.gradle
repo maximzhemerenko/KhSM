@@ -7,7 +7,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.0-alpha03'
+        classpath 'com.android.tools.build:gradle:3.2.0-alpha14'
     }
 }
 
@@ -24,37 +24,46 @@ task clean(type: Delete) {
 
 task updateLocalizationResources {
     Properties properties = new Properties()
-    properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
-    def projectPathProperty = 'com.SpryRocks.AppLocalizationUtil.ProjectPath'
-    def configFileProperty = 'com.SpryRocks.AppLocalizationUtil.ConfigFile'
+    def localPropertiesFile = project.rootProject.file('local.properties')
 
-    def projectPath = properties.getProperty(projectPathProperty)
-    if (projectPath != null) {
-        exec {
-            executable "dotnet"
-            args 'run',
-                    '--project', projectPath,
-                    '--ConfigFile', project.property(configFileProperty)
+    if (localPropertiesFile.exists()) {
+        properties.load(localPropertiesFile.newDataInputStream())
+
+        def projectPathProperty = 'com.SpryRocks.AppLocalizationUtil.ProjectPath'
+        def configFileProperty = 'com.SpryRocks.AppLocalizationUtil.ConfigFile'
+
+        def projectPath = properties.getProperty(projectPathProperty)
+        if (projectPath != null) {
+            exec {
+                executable "dotnet"
+                args 'run',
+                        '--project', projectPath,
+                        '--ConfigFile', project.property(configFileProperty)
+            }
         }
     }
 }
 
 project.ext {
     compileSdkVersion = 27
-    minSdkVersion = 16
+    minSdkVersion = 17
     targetSdkVersion = 27
     versionCode = 1
     versionName = "1.0"
 
-    ANDROID_SUPPORT_VERSION = "27.0.2"
-    CONSTRAINT_LAYOUT_VERSION = "1.0.2"
+    ANDROID_SUPPORT_VERSION = "27.1.1"
+    CONSTRAINT_LAYOUT_VERSION = "1.1.0"
 
-    RX_ANDROID_VERSION = "2.0.1"
-    RX_JAVA_VERSION = "2.1.8"
+    RX_ANDROID_VERSION = "2.0.2"
+    RX_JAVA_VERSION = "2.1.9"
 
     RETROFIT_VERSION = "2.3.0"
     RETROFIT_ADAPTER_RXJAVA2 = RETROFIT_VERSION
 
     OKHTTP3_VERSION = "3.9.1"
+
+    GLIDE_VERSION = "4.6.1"
+
+    RX_PREFERENCES_VERSION = "2.0.0-RC3"
 }

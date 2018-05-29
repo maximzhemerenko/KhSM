@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/last_meeting"
+            android:title="@string/Last_Meeting" />
+        <item
+            android:id="@+id/my_profile"
+            android:title="@string/My_Profile" />
+        <item
+            android:id="@+id/Rankings"
+            android:title="@string/Rankings" />
+        <item
+            android:id="@+id/meetings"
+            android:title="@string/Meetings" />
+        <item
+            android:id="@+id/news"
+            android:title="@string/News" />
+        <item
+            android:id="@+id/disciplines"
+            android:title="@string/Disciplines" />
+        <item
+            android:id="@+id/login"
+            android:title="@string/Login" />
+        <item
+            android:id="@+id/logout"
+            android:title="@string/Logout" />
+    </group>
+
+</menu>

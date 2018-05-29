@@ -1,9 +1,9 @@
 ﻿using System;
-using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
 
 namespace Backend.Data.Database
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class DatabaseContext : IDisposable
     {
         public MySqlConnection Connection { get; }
@@ -17,6 +17,47 @@ namespace Backend.Data.Database
         public void Dispose()
         {
             Connection.Dispose();
+        }
+
+        public void UseTransaction(Action<MySqlTransaction> action)
+        {
+            MySqlTransaction transaction = null;
+            try
+            {
+                transaction = Connection.BeginTransaction();
+                action(transaction);
+                transaction.Commit();
+            }
+            catch
+            {
+                transaction?.Rollback();
+                throw;
+            }
+            finally
+            {
+                transaction?.Dispose();
+            }
+        }
+
+        public T UseTransaction<T>(Func<MySqlTransaction, T> action)
+        {
+            MySqlTransaction transaction = null;
+            try
+            {
+                transaction = Connection.BeginTransaction();
+                var value = action(transaction);
+                transaction.Commit();
+                return value;
+            }
+            catch
+            {
+                transaction?.Rollback();
+                throw;
+            }
+            finally
+            {
+                transaction?.Dispose();
+            }
         }
 
         private static MySqlConnection CreateConnection()
@@ -33,6 +74,5 @@ namespace Backend.Data.Database
                 Password = "sKiLlet",
                 Database = "kh_sm"
             }.ToString();
-
     }
 }

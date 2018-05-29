@@ -25,24 +25,48 @@ Response: [Session](#session)
 ## Get user
 GET users/{id}
 
+GET users/me
+
 Response: [User](#user)
 
 ## Update user
 PUT users/{id}
 
+PUT users/me
+
 Request: [User](#user)
 
 Response: [User](#user)
 
+## Change password
+PUT users/{id}/password
+
+PUT users/me/password
+
+Request: [ChangePasswordRequest](#changepasswordrequest)
+
 ## Get user records
 GET users/{id}/records
+
+GET users/me/records
 
 Response: Array<[DisciplineRecord](#disciplinerecord)>
 
 ## Get user results
 GET users/{id}/results
 
+GET users/me/results
+
 Response: Array<[DisciplineResults](#disciplineresults)>
+
+## Insert user result
+POST users/{id}/results
+
+POST users/me/results
+
+Request: [Result](#result)
+
+Response: [Result](#result)
 
 ## Get meetings
 GET meetings
@@ -59,6 +83,11 @@ GET meetings/{id}/results
 
 Response: Array\<[DisciplineResults](#disciplineresults)\>
 
+## Get last meeting
+GET meetings/last
+
+Response: [Meeting](#meeting)
+
 ## Get disciplines
 GET disciplines
 
@@ -73,6 +102,11 @@ Query:
 - gender: [String\<Gender\>](#stringgender)
 
 Response: Array\<[DisciplineResults](#disciplineresults)\>
+
+## Get news
+GET news
+
+Responce: Array\<[News](#news)\>
 
 # Entities
 
@@ -105,6 +139,12 @@ Response: Array\<[DisciplineResults](#disciplineresults)\>
 - birth_date: Date
 - phoneNumber: String
 
+## News
+- id: Integer
+- user: [User](#user)
+- text: String
+- date: Date
+
 ## String\<Gender\>
 - "female"
 - "male"
@@ -118,7 +158,7 @@ Response: Array\<[DisciplineResults](#disciplineresults)\>
 - id: Integer
 - name: String
 - description: String
-- attempsCount: Integer
+- attemptsCount: Integer
 
 ## DisciplineResults
 - discipline: [Discipline](#discipline)
@@ -126,8 +166,8 @@ Response: Array\<[DisciplineResults](#disciplineresults)\>
 
 ## DisciplineRecord
 - discipline: [Discipline](#discipline)
-- bestTime: [Result](#result)
-- bestOverageTime: [Result](#result)
+- bestSingleResult: [Result](#result)
+- bestAverageResult: [Result](#result)
 
 ## Result
 - id: Integer
@@ -135,3 +175,6 @@ Response: Array\<[DisciplineResults](#disciplineresults)\>
 - user: [User](#user)
 - average: Nullable\<Float\>
 - attempts: Array\<Nullable\<Float\>\>
+
+## ChangePasswordRequest
+- password: String

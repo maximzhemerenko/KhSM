@@ -1,6 +1,72 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
   <!-- Dictionary -->
+  <string name="Apply">Apply</string>
+  <string name="Ascending">Ascending</string>
+  <string name="Average">Average</string>
+  <string name="Best">Best</string>
+  <string name="Both">Both</string>
+  <string name="Cancel">Cancel</string>
+  <string name="City">City</string>
+  <string name="Confirm_Password">Confirm Password</string>
+  <string name="Descending">Descending</string>
+  <string name="details">details</string>
+  <string name="Disciplines">Disciplines</string>
+  <string name="DNF">DNF</string>
+  <string name="DNS">DNS</string>
+  <string name="Edit_Profile">Edit Profile</string>
+  <string name="Email">Email</string>
   <string name="Error">Error</string>
+  <string name="Female">Female</string>
+  <string name="First_Name">First Name</string>
+  <string name="Last_Meeting">Last Meeting</string>
+  <string name="Last_Name">Last Name</string>
+  <string name="Login">Login</string>
+  <string name="Logout">Logout</string>
+  <string name="Male">Male</string>
+  <string name="Meetings">Meetings</string>
+  <string name="My_Profile">My Profile</string>
+  <string name="My_Records">My Records</string>
+  <string name="My_Results">My Results</string>
+  <string name="News">News</string>
   <string name="OK">OK</string>
+  <string name="Password">Password</string>
+  <string name="Please_WaitD3">Please, wait…</string>
+  <string name="Rankings">Rankings</string>
+  <string name="Records">Records</string>
+  <string name="Register">Register</string>
+  <string name="Results">Results</string>
+  <string name="Save">Save</string>
+  <string name="Single">Single</string>
+  <string name="WCA_ID">WCA ID</string>
+  <string name="Add_Meeting">Add Meeting</string>
+  <string name="Meeting_Number">Meeting Number</string>
+  <string name="Meeting_Date">Meeting Date</string>
+  <string name="Done">Done</string>
+  <string name="Add_Results">Add Results</string>
+  <string name="Users">Users</string>
+  <string name="Add">Add</string>
+  <string name="Add_News">Add News</string>
+  <string name="Add_News_Date">Add News Date</string>
+  <string name="Message_News_Text">Мessage News Text</string>
+  <string name="Write_Results">Write results(one on each row)</string>
+  <string name="Print">Print</string>
+  <string name="Write_Text">Write the text</string>
+  <!-- Common -->
+  <string name="Rankings.Filter">SORT &amp; FILTER</string>
+  <string name="Rankings.Filter.DialogFragment">Sort &amp; Filter</string>
+  <!-- Auth -->
+  <string name="Login.Error.CheckInputData">Check the entered data</string>
+  <string name="Login.Error.Authentication">User authentication error</string>
+  <string name="Register.Error.UserRegisterError">User register error</string>
+  <string name="Main.NoAccount">You doesn\'t have an account</string>
+  <string name="Register.Error.CheckInputData">Сheck the entered data</string>
+  <string name="Auth.Create_an_account">Create an account</string>
+  <string name="AddMeeting.Error.MeetingCreationError">Meeting creation error</string>
+  <string name="AddNews.Error.NewsCreationError">News creation error</string>
+  <string name="AddResult.Error.ResultCreationError">Result creation error</string>
+  <!-- Edit Profile -->
+  <string name="EditProfile.Birth_Date_Hint">Birth Date (DD-MM-YYYY)</string>
+  <string name="EditProfile.Phone_Number_Hint">Phone Number (+380 XX XXX-XX-XX)</string>
+  <string name="EditProfile.SuccessMessageE">User information was updated successfully! 😀</string>
 </resources>
